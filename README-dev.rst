@@ -56,7 +56,7 @@ Install the Conda environment
 
 For development, you need a **Conda** environments. you can install it running the ``setup-dev.bat`` or::
 
-    $ [path\to\my-app]\devtools\setup-dev.bat
+    $ [path\to\plate-simulation]\devtools\setup-dev.bat
 
 This command install a local environment at the base of your repository: ``.conda-env``.
 This environment should automatically be recognized by the Conda installation.
@@ -287,7 +287,7 @@ and select the desired environment from the list (the one in the ``.conda-env`` 
         :width: 80%
 
 Then you can check the list of installed packages in the ``Packages`` table. You should see
-**my-app** and its dependencies. Make sure to turn off the ``Use Conda Package Manager``
+**plate-simulation** and its dependencies. Make sure to turn off the ``Use Conda Package Manager``
 option to see also the packages installed through pip:
 
     ..  image:: devtools/images/pycharm-list_all_conda_packages.png

@@ -10,6 +10,8 @@ from abc import ABC, abstractmethod
 import numpy as np
 from geoh5py.objects import Octree, Surface
 from simpeg_drivers.utils.utils import active_from_xyz
+from trimesh import Trimesh
+from trimesh.proximity import ProximityQuery
 
 # pylint: disable=too-few-public-methods
 
@@ -82,6 +84,25 @@ class Erosion(Event):
         return model
 
 
+class Anomaly(Event):
+    """
+    Enrich or deplete the model within a close surface.
+
+    :param surface: Closed surface within which the model will be filled
+        with the anomaly value.
+    :param value: Model value assigned to the anomaly.
+    """
+
+    def __init__(self, surface: Surface, value: float):
+        self.surface = Body(surface)
+        self.value = value
+
+    def realize(self, mesh: Octree, model: np.ndarray) -> np.ndarray:
+        """Fill the model within the surface with the anomaly value."""
+        model[self.surface.mask(mesh)] = self.value
+        return model
+
+
 class Boundary:
     """
     Represents a boundary in a model.
@@ -125,3 +146,16 @@ class Boundary:
         """
 
         return active_from_xyz(mesh, self.vertical_shift(offset), reference)
+
+
+class Body:
+    """Represents a closed surface in the model."""
+
+    def __init__(self, surface: Surface):
+        self.surface = surface
+
+    def mask(self, mesh: Octree):
+        trimesh = Trimesh(vertices=self.surface.vertices, faces=self.surface.cells)
+        proximity_query = ProximityQuery(trimesh)
+        dist = proximity_query.signed_distance(mesh.centroids)
+        return dist > 0

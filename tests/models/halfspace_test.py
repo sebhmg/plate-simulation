@@ -11,14 +11,8 @@ from geoh5py.objects import Surface
 from octree_creation_app.driver import OctreeDriver
 from octree_creation_app.params import OctreeParams
 
-from plate_simulation.models.main import (
-    Deposition,
-    Erosion,
-    GeologyViolationError,
-    Lithology,
-    Overburden,
-    Scenario,
-)
+from plate_simulation.models.events import Deposition, Erosion, Overburden
+from plate_simulation.models.series import GeologyViolationError, Lithology, Scenario
 
 
 # pylint: disable=unbalanced-tuple-unpacking

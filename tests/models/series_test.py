@@ -53,31 +53,32 @@ def test_lithology(tmp_path):
         assert all(model.values[octree.centroids[:, 2] < -10.0] == 3.0)
 
 
-def test_scenario(tmp_path):  # pylint: disable=too-many-locals
+def test_scenario(tmp_path):
     with Workspace(tmp_path / "test.geoh5") as ws:
         topography, octree = get_topo_mesh(ws)
         surfaces = {}
         for n_layer, elevation in enumerate([-2.0, -5.0, -10.0]):
-            vertices = np.array(
-                [
-                    [0.0, 0.0, elevation],
-                    [10.0, 0.0, elevation],
-                    [10.0, 10.0, elevation],
-                    [0.0, 10.0, elevation],
-                ]
-            )
-            cells = np.array([[0, 1, 2], [0, 2, 3]])
-
             surfaces[f"layer{n_layer+1}"] = Surface.create(
-                ws, name="topo", vertices=vertices, cells=cells
+                ws,
+                name="topo",
+                vertices=np.array(
+                    [
+                        [0.0, 0.0, elevation],
+                        [10.0, 0.0, elevation],
+                        [10.0, 10.0, elevation],
+                        [0.0, 10.0, elevation],
+                    ]
+                ),
+                cells=np.array([[0, 1, 2], [0, 2, 3]]),
             )
 
-        layers = [
-            Deposition(surface=surfaces["layer3"], value=3.0),
-            Deposition(surface=surfaces["layer2"], value=2.0),
-            Deposition(surface=surfaces["layer1"], value=1.0),
-        ]
-        lithology = Lithology(history=layers)
+        lithology = Lithology(
+            history=[
+                Deposition(surface=surfaces["layer3"], value=3.0),
+                Deposition(surface=surfaces["layer2"], value=2.0),
+                Deposition(surface=surfaces["layer1"], value=1.0),
+            ]
+        )
         overburden = Overburden(topography=topography, thickness=1.0, value=10.0)
         erosion = Erosion(surface=topography)
 
@@ -85,7 +86,7 @@ def test_scenario(tmp_path):  # pylint: disable=too-many-locals
             GeologyViolationError,
             match="Overburden events must occur before the final erosion in the history.",
         ):
-            scenario = Scenario(
+            Scenario(
                 mesh=octree,
                 background=0.0,
                 history=[lithology, erosion, overburden],
@@ -96,7 +97,7 @@ def test_scenario(tmp_path):  # pylint: disable=too-many-locals
             GeologyViolationError,
             match="The last event in a geological history must be an erosion.",
         ):
-            scenario = Scenario(
+            Scenario(
                 mesh=octree,
                 background=0.0,
                 history=[overburden, lithology],
@@ -111,25 +112,21 @@ def test_scenario(tmp_path):  # pylint: disable=too-many-locals
         )
         model = scenario.geologize()
 
-        core_region_ind = (
-            (octree.centroids[:, 0] < 10.0)
-            & (octree.centroids[:, 0] > 0.0)
-            & (octree.centroids[:, 1] < 10.0)
-            & (octree.centroids[:, 1] > 0.0)
-        )
-        air_ind = octree.centroids[:, 2] > 0.0
-        assert all(np.isnan(model.values[air_ind & core_region_ind]))
-        overburden_ind = (octree.centroids[:, 2] < 0.0) & (
-            octree.centroids[:, 2] > -1.0
-        )
-        assert all(model.values[overburden_ind & core_region_ind] == 10.0)
-        background_ind = (octree.centroids[:, 2] < -1.0) & (
-            octree.centroids[:, 2] > -2.0
-        )
-        assert all(model.values[background_ind & core_region_ind] == 0.0)
-        layer1_ind = (octree.centroids[:, 2] < -2.0) & (octree.centroids[:, 2] > -5.0)
-        assert all(model.values[layer1_ind & core_region_ind] == 1.0)
-        layer2_ind = (octree.centroids[:, 2] < -5.0) & (octree.centroids[:, 2] > -10.0)
-        assert all(model.values[layer2_ind & core_region_ind] == 2.0)
-        layer3_ind = octree.centroids[:, 2] < -10.0
-        assert all(model.values[layer3_ind & core_region_ind] == 3.0)
+        # ind = (
+        #     (octree.centroids[:, 0] < 10.0)
+        #     & (octree.centroids[:, 0] > 0.0)
+        #     & (octree.centroids[:, 1] < 10.0)
+        #     & (octree.centroids[:, 1] > 0.0)
+        # )
+        ind = octree.centroids[:, 2] > 0.0
+        assert all(np.isnan(model.values[ind]))
+        ind = (octree.centroids[:, 2] < 0.0) & (octree.centroids[:, 2] > -1.0)
+        assert all(model.values[ind] == 10.0)
+        ind = (octree.centroids[:, 2] < -1.0) & (octree.centroids[:, 2] > -2.0)
+        assert all(model.values[ind] == 0.0)
+        ind = (octree.centroids[:, 2] < -2.0) & (octree.centroids[:, 2] > -5.0)
+        assert all(model.values[ind] == 1.0)
+        ind = (octree.centroids[:, 2] < -5.0) & (octree.centroids[:, 2] > -10.0)
+        assert all(model.values[ind] == 2.0)
+        ind = octree.centroids[:, 2] < -10.0
+        assert all(model.values[ind] == 3.0)

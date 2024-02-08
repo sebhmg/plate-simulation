@@ -9,19 +9,18 @@ import numpy as np
 import pytest
 from geoh5py import Workspace
 from geoh5py.objects import Surface
-from octree_creation_app.driver import OctreeDriver
-from octree_creation_app.params import OctreeParams
 
 from plate_simulation.models.events import Deposition, Erosion, Overburden
 from plate_simulation.models.series import GeologyViolationError, Lithology, Scenario
 
-# pylint: disable=unbalanced-tuple-unpacking, duplicate-code
+from . import get_topo_mesh
 
 
-def test_lithology(tmp_path):  # pylint: disable=too-many-locals
+def test_lithology(tmp_path):
     with Workspace(tmp_path / "test.geoh5") as ws:
-        surfaces = []
-        for elevation in [0.0, -2.0, -5.0, -10.0]:
+        _, octree = get_topo_mesh(ws)
+        surfaces = {}
+        for n_layer, elevation in enumerate([-2.0, -5.0, -10.0]):
             vertices = np.array(
                 [
                     [0.0, 0.0, elevation],
@@ -32,51 +31,33 @@ def test_lithology(tmp_path):  # pylint: disable=too-many-locals
             )
             cells = np.array([[0, 1, 2], [0, 2, 3]])
 
-            surfaces.append(
-                Surface.create(ws, name="topo", vertices=vertices, cells=cells)
+            surfaces[f"layer{n_layer+1}"] = Surface.create(
+                ws, name="topo", vertices=vertices, cells=cells
             )
-        topography, layer1, layer2, layer3 = surfaces
 
-        kwargs = {
-            "geoh5": ws,
-            "objects": topography,
-            "u_cell_size": 0.5,
-            "v_cell_size": 0.5,
-            "w_cell_size": 0.5,
-            "horizontal_padding": 10.0,
-            "vertical_padding": 10.0,
-            "depth_core": 5.0,
-            "minimum_level": 4,
-            "diagonal_balance": False,
-            "Refinement A object": topography.uid,
-            "Refinement A levels": [4, 2, 1],
-            "Refinement A type": "surface",
-        }
-        driver = OctreeDriver(OctreeParams(**kwargs))
-        octree = driver.run()
-        layers = [
-            Deposition(surface=layer3, value=3.0),
-            Deposition(surface=layer2, value=2.0),
-            Deposition(surface=layer1, value=1.0),
-        ]
-        lithology = Lithology(history=layers)
+        lithology = Lithology(
+            history=[
+                Deposition(surface=surfaces["layer3"], value=3.0),
+                Deposition(surface=surfaces["layer2"], value=2.0),
+                Deposition(surface=surfaces["layer1"], value=1.0),
+            ]
+        )
         lithology_model = lithology.realize(mesh=octree, model=np.zeros(octree.n_cells))
         model = octree.add_data({"model": {"values": lithology_model}})
 
-        ind_background = octree.centroids[:, 2] > -2.0
-        assert all(model.values[ind_background] == 0.0)
+        assert all(model.values[octree.centroids[:, 2] > -2.0] == 0.0)
         ind_layer_1 = (octree.centroids[:, 2] < -2.0) & (octree.centroids[:, 2] > -5.0)
         assert all(model.values[ind_layer_1] == 1.0)
         ind_layer_2 = (octree.centroids[:, 2] < -5.0) & (octree.centroids[:, 2] > -10.0)
         assert all(model.values[ind_layer_2] == 2.0)
-        ind_layer_3 = octree.centroids[:, 2] < -10.0
-        assert all(model.values[ind_layer_3] == 3.0)
+        assert all(model.values[octree.centroids[:, 2] < -10.0] == 3.0)
 
 
 def test_scenario(tmp_path):  # pylint: disable=too-many-locals
     with Workspace(tmp_path / "test.geoh5") as ws:
-        surfaces = []
-        for elevation in [0.0, -2.0, -5.0, -10.0]:
+        topography, octree = get_topo_mesh(ws)
+        surfaces = {}
+        for n_layer, elevation in enumerate([-2.0, -5.0, -10.0]):
             vertices = np.array(
                 [
                     [0.0, 0.0, elevation],
@@ -87,32 +68,14 @@ def test_scenario(tmp_path):  # pylint: disable=too-many-locals
             )
             cells = np.array([[0, 1, 2], [0, 2, 3]])
 
-            surfaces.append(
-                Surface.create(ws, name="topo", vertices=vertices, cells=cells)
+            surfaces[f"layer{n_layer+1}"] = Surface.create(
+                ws, name="topo", vertices=vertices, cells=cells
             )
-        topography, layer1, layer2, layer3 = surfaces
 
-        kwargs = {
-            "geoh5": ws,
-            "objects": topography,
-            "u_cell_size": 0.5,
-            "v_cell_size": 0.5,
-            "w_cell_size": 0.5,
-            "horizontal_padding": 10.0,
-            "vertical_padding": 10.0,
-            "depth_core": 5.0,
-            "minimum_level": 4,
-            "diagonal_balance": False,
-            "Refinement A object": topography.uid,
-            "Refinement A levels": [4, 2, 1],
-            "Refinement A type": "surface",
-        }
-        driver = OctreeDriver(OctreeParams(**kwargs))
-        octree = driver.run()
         layers = [
-            Deposition(surface=layer3, value=3.0),
-            Deposition(surface=layer2, value=2.0),
-            Deposition(surface=layer1, value=1.0),
+            Deposition(surface=surfaces["layer3"], value=3.0),
+            Deposition(surface=surfaces["layer2"], value=2.0),
+            Deposition(surface=surfaces["layer1"], value=1.0),
         ]
         lithology = Lithology(history=layers)
         overburden = Overburden(topography=topography, thickness=1.0, value=10.0)

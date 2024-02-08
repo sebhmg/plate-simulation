@@ -5,12 +5,17 @@
 #  All rights reserved.
 #
 
-from typing import Sequence
+from __future__ import annotations
+
+from collections.abc import Sequence
+
 import numpy as np
 from geoapps_utils.transformations import rotate_xyz
 from geoh5py import Workspace
 from geoh5py.objects import Surface
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
+
+from plate_simulation.models.params import PlateParams
 
 
 class Plate(BaseModel):
@@ -27,6 +32,10 @@ class Plate(BaseModel):
     :param reference: Point of rotation to be 'center' or 'top'.
     """
 
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+    name: str
+    workspace: Workspace
     center_x: float
     center_y: float
     center_z: float
@@ -36,16 +45,33 @@ class Plate(BaseModel):
     dip: float = 0.0
     azimuth: float = 0.0
     reference: str = "center"
+    _surface: Surface | None = None
 
-    def surface(self, workspace: Workspace, name: str) -> Surface:
-        return Surface.create(
-            workspace, vertices=self.vertices, cells=self.triangles, name=name
-        )
+    @classmethod
+    def from_params(cls, params: PlateParams):
+        return cls(**params.__dict__)
+
+    @property
+    def surface(self) -> Surface:
+        """Surface of plate"""
+
+        if self._surface is None:
+            self._surface = Surface.create(
+                self.workspace,
+                vertices=self.vertices,
+                cells=self.triangles,
+                name=self.name,
+            )
+        return self._surface
 
     @property
     def center(self) -> Sequence[float]:
         """Center of the block."""
-        return [self.center_x, self.center_y, self.center_z]  # pylint: disable=no-member
+        return [
+            self.center_x,  # pylint: disable=no-member
+            self.center_y,  # pylint: disable=no-member
+            self.center_z,  # pylint: disable=no-member
+        ]
 
     @property
     def triangles(self) -> np.ndarray:
@@ -71,12 +97,12 @@ class Plate(BaseModel):
     def vertices(self) -> np.ndarray:
         """Vertices for triangulation of a rectangular prism in 3D space."""
 
-        x_1 = self.center_x - (self.length / 2.0)
-        x_2 = self.center_x + (self.length / 2.0)
-        y_1 = self.center_y - (self.width / 2.0)
-        y_2 = self.center_y + (self.width / 2.0)
-        z_1 = self.center_z - (self.depth / 2.0)
-        z_2 = self.center_z + (self.depth / 2.0)
+        x_1 = self.center_x - (self.length / 2.0) # pylint:disable=no-member
+        x_2 = self.center_x + (self.length / 2.0) # pylint:disable=no-member
+        y_1 = self.center_y - (self.width / 2.0) # pylint:disable=no-member
+        y_2 = self.center_y + (self.width / 2.0) # pylint:disable=no-member
+        z_1 = self.center_z - (self.depth / 2.0) # pylint:disable=no-member
+        z_2 = self.center_z + (self.depth / 2.0) # pylint:disable=no-member
 
         vertices = np.array(
             [
@@ -102,9 +128,9 @@ class Plate(BaseModel):
 
         if self.reference == "top":
             offset = np.mean(rotated_vertices[4:, :], axis=0) - self.center
-            self.center_x -= offset[0]
-            self.center_y -= offset[1]
-            self.center_z -= offset[2]
+            self.center_x -= offset[0] # pylint: disable=no-member
+            self.center_y -= offset[1] # pylint: disable=no-member
+            self.center_z -= offset[2] # pylint: disable=no-member
             rotated_vertices -= offset
 
         return rotated_vertices

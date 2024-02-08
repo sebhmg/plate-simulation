@@ -112,12 +112,6 @@ def test_scenario(tmp_path):
         )
         model = scenario.geologize()
 
-        # ind = (
-        #     (octree.centroids[:, 0] < 10.0)
-        #     & (octree.centroids[:, 0] > 0.0)
-        #     & (octree.centroids[:, 1] < 10.0)
-        #     & (octree.centroids[:, 1] > 0.0)
-        # )
         ind = octree.centroids[:, 2] > 0.0
         assert all(np.isnan(model.values[ind]))
         ind = (octree.centroids[:, 2] < 0.0) & (octree.centroids[:, 2] > -1.0)

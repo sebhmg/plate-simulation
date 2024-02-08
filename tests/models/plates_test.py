@@ -15,6 +15,8 @@ from plate_simulation.models.plates import Plate
 def test_plate(tmp_path):
     workspace = Workspace(tmp_path / "test.geoh5")
     plate = Plate(
+        name="my plate",
+        workspace=workspace,
         center_x=0.0,
         center_y=0.0,
         center_z=0.0,
@@ -22,7 +24,7 @@ def test_plate(tmp_path):
         width=10.0,
         depth=500.0,
     )
-    vertical_striking_north = plate.surface(workspace, "my plate")
+    vertical_striking_north = plate.surface
     assert vertical_striking_north.vertices is not None
     assert vertical_striking_north.extent is not None
     assert np.isclose(
@@ -48,6 +50,8 @@ def test_plate(tmp_path):
     )  # pylint: disable=no-member
 
     plate = Plate(
+        name="my other plate",
+        workspace=workspace,
         center_x=0.0,
         center_y=0.0,
         center_z=0.0,
@@ -58,13 +62,15 @@ def test_plate(tmp_path):
         azimuth=0.0,
         reference="center",
     )
-    dipping_striking_north = plate.surface(workspace, "my other plate")
+    dipping_striking_north = plate.surface
     locs = rotate_xyz(dipping_striking_north.vertices, [0.0, 0.0, 0.0], -90.0, 0.0)
     locs = rotate_xyz(locs, [0.0, 0.0, 0.0], 0.0, 45.0)
     locs = rotate_xyz(locs, [0.0, 0.0, 0.0], 90.0, 0.0)
     assert np.allclose(locs, vertical_striking_north.vertices)
 
     plate = Plate(
+        name="my third plate",
+        workspace=workspace,
         center_x=0.0,
         center_y=0.0,
         center_z=0.0,
@@ -75,6 +81,6 @@ def test_plate(tmp_path):
         azimuth=45.0,
         reference="center",
     )
-    vertical_striking_northeast = plate.surface(workspace, "my third plate")
+    vertical_striking_northeast = plate.surface
     locs = rotate_xyz(vertical_striking_northeast.vertices, [0.0, 0.0, 0.0], 45.0, 0.0)
     assert np.allclose(locs, vertical_striking_north.vertices)

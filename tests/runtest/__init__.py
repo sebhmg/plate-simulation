@@ -11,10 +11,10 @@ from SimPEG import utils
 
 
 def get_survey(workspace, n_receivers, n_lines):
-    X, Y = np.meshgrid(
+    X, Y = np.meshgrid(  # pylint: disable=invalid-name
         np.linspace(-250, 250, n_receivers), np.linspace(-250, 250, n_lines)
     )
-    Z = np.zeros_like(X)
+    Z = np.zeros_like(X)  # pylint: disable=invalid-name
 
     vertices = np.c_[
         utils.mkvc(X.T),

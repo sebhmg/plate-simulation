@@ -97,12 +97,12 @@ class Plate(BaseModel):
     def vertices(self) -> np.ndarray:
         """Vertices for triangulation of a rectangular prism in 3D space."""
 
-        x_1 = self.center_x - (self.length / 2.0) # pylint:disable=no-member
-        x_2 = self.center_x + (self.length / 2.0) # pylint:disable=no-member
-        y_1 = self.center_y - (self.width / 2.0) # pylint:disable=no-member
-        y_2 = self.center_y + (self.width / 2.0) # pylint:disable=no-member
-        z_1 = self.center_z - (self.depth / 2.0) # pylint:disable=no-member
-        z_2 = self.center_z + (self.depth / 2.0) # pylint:disable=no-member
+        x_1 = self.center_x - (self.length / 2.0)  # pylint:disable=no-member
+        x_2 = self.center_x + (self.length / 2.0)  # pylint:disable=no-member
+        y_1 = self.center_y - (self.width / 2.0)  # pylint:disable=no-member
+        y_2 = self.center_y + (self.width / 2.0)  # pylint:disable=no-member
+        z_1 = self.center_z - (self.depth / 2.0)  # pylint:disable=no-member
+        z_2 = self.center_z + (self.depth / 2.0)  # pylint:disable=no-member
 
         vertices = np.array(
             [
@@ -128,9 +128,9 @@ class Plate(BaseModel):
 
         if self.reference == "top":
             offset = np.mean(rotated_vertices[4:, :], axis=0) - self.center
-            self.center_x -= offset[0] # pylint: disable=no-member
-            self.center_y -= offset[1] # pylint: disable=no-member
-            self.center_z -= offset[2] # pylint: disable=no-member
+            self.center_x -= offset[0]  # pylint: disable=no-member
+            self.center_y -= offset[1]  # pylint: disable=no-member
+            self.center_z -= offset[2]  # pylint: disable=no-member
             rotated_vertices -= offset
 
         return rotated_vertices

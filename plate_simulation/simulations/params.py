@@ -10,6 +10,7 @@ from geoh5py.ui_json import InputFile
 
 # pylint: disable=import-outside-toplevel, too-few-public-methods
 
+
 class SimulationParams:
     @classmethod
     def from_simpeg_group(cls, group: SimPEGGroup):

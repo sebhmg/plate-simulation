@@ -45,6 +45,7 @@ octree-creation-app = {version = "0.1.0a2", source = "pypi", allow-prereleases =
 ## indirect dependencies, forcing them here for installation through Conda not pip
 h5py = "*" # from geoh5py
 Pillow = "*" # from geoh5py
+dask = {version = "2022.10.*", extras = ["distributed"]}
 
 ## about pip dependencies
 # to be specified to work with conda-lock

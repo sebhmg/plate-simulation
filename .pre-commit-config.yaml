@@ -41,7 +41,8 @@ repos:
             numpy==1.23.*,
             types-toml,
             types-PyYAML,
-            tomli # to read config from pyproject.toml
+            tomli, # to read config from pyproject.toml
+            pydantic=2.5.*,
         ]
 -   repo: https://github.com/codingjoe/relint
     rev: 3.1.0

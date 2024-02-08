@@ -155,7 +155,9 @@ class Body:
         self.surface = surface
 
     def mask(self, mesh: Octree):
-        trimesh = Trimesh(vertices=self.surface.vertices, faces=self.surface.cells)
-        proximity_query = ProximityQuery(trimesh)
+        triangulation = Trimesh(
+            vertices=self.surface.vertices, faces=self.surface.cells
+        )
+        proximity_query = ProximityQuery(triangulation)
         dist = proximity_query.signed_distance(mesh.centroids)
         return dist > 0

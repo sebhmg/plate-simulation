@@ -47,6 +47,7 @@ simpeg-drivers = { url = "https://github.com/MiraGeoscience/simpeg-drivers/archi
 h5py = "*" # from geoh5py
 Pillow = "*" # from geoh5py
 dask = {version = "2022.10.*", extras = ["distributed"]}
+pydiso = {version = "~0.0.3", optional = true} # from simpeg
 
 ## about pip dependencies
 # to be specified to work with conda-lock

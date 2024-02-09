@@ -15,8 +15,8 @@
 version: 1
 metadata:
   content_hash:
-    win-64: 6d44680c3bc1e4b68330865ff4e92e6990db6be108906d1b68417faf92858d2b
-    linux-64: ffae8f94e5c3f68e5a8aa6ff81e2a52765bac1ffa336196524c5884d6b84c64e
+    win-64: b64aaed57558c6e407619fb4d5ed486e99b4a8f3cfb6d1f81e3c0b10ebeeca2f
+    linux-64: c29c9336c5b0d287959caa2a534ea0bdc88577e276525d7df10d11827f28ea7d
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -44,11 +44,11 @@ package:
   platform: linux-64
   dependencies:
     _libgcc_mutex: '0.1'
-    libgomp: '>=7.5.0'
-  url: https://conda.anaconda.org/conda-forge/linux-64/_openmp_mutex-4.5-2_gnu.tar.bz2
+    llvm-openmp: '>=9.0.1'
+  url: https://conda.anaconda.org/conda-forge/linux-64/_openmp_mutex-4.5-2_kmp_llvm.tar.bz2
   hash:
-    md5: 73aaf86a425cc6e73fcf236a5a46396d
-    sha256: fbe2c5e56a653bebb982eda4876a9178aedfc2b545f25d0ce9c4c0b508253d22
+    md5: 562b26ba2e19059551a811e72ab7f793
+    sha256: 84a66275da3a66e3f3e70e9d8f10496d807d01a9e4ec16cd2274cc5e28c478fc
   category: main
   optional: false
 - name: astroid
@@ -542,6 +542,19 @@ package:
     sha256: 89bbb2c878e1b6c6073ef5f1f25eac97ed48393541a4a44a7d182da5ede3dc98
   category: main
   optional: false
+- name: icu
+  version: '73.2'
+  manager: conda
+  platform: linux-64
+  dependencies:
+    libgcc-ng: '>=12'
+    libstdcxx-ng: '>=12'
+  url: https://conda.anaconda.org/conda-forge/linux-64/icu-73.2-h59595ed_0.conda
+  hash:
+    md5: cc47e1facc155f91abd89b11e48e72ff
+    sha256: e12fd90ef6601da2875ebc432452590bc82a893041473bc1c13ef29001a73ea8
+  category: main
+  optional: false
 - name: iniconfig
   version: 2.0.0
   manager: conda
@@ -757,11 +770,11 @@ package:
   manager: conda
   platform: win-64
   dependencies:
-    mkl: 2024.0.0
-  url: https://conda.anaconda.org/conda-forge/win-64/libblas-3.9.0-21_win64_mkl.conda
+    mkl: 2022.1.0
+  url: https://conda.anaconda.org/conda-forge/win-64/libblas-3.9.0-18_win64_mkl.conda
   hash:
-    md5: ebba3846d11201fe54277e4965ba5250
-    sha256: ad47053cee17802df875203aba191b04d97a50d820dbf75a114a50972c517334
+    md5: b241da5b7a888f72bb3c3e82747334f4
+    sha256: 5aef8d69197108f3c320a5d4ad4d19ab9c809cdbbf731c7ab988c227de42d6b5
   category: main
   optional: false
 - name: libcblas
@@ -782,10 +795,10 @@ package:
   platform: win-64
   dependencies:
     libblas: 3.9.0
-  url: https://conda.anaconda.org/conda-forge/win-64/libcblas-3.9.0-21_win64_mkl.conda
+  url: https://conda.anaconda.org/conda-forge/win-64/libcblas-3.9.0-18_win64_mkl.conda
   hash:
-    md5: 38e5ec23bc2b62f9dd971143aa9dddb7
-    sha256: 886505d0a4a5b508b2255991395aadecdad140719ba0d413411fec86491a9283
+    md5: fb0b514194c14342a97dfe31a41d60fc
+    sha256: d5f60ed6508b3889a77caf5ff2b66203714e45ec4eea6e5cdb12fe6e8ef2bbdb
   category: main
   optional: false
 - name: libcurl
@@ -936,16 +949,18 @@ package:
     sha256: ba8d94e8493222ce155bb264d9de4200e41498a458e866fedf444de809bde8b6
   category: main
   optional: false
-- name: libgomp
-  version: 13.2.0
+- name: libhwloc
+  version: 2.9.3
   manager: conda
   platform: linux-64
   dependencies:
-    _libgcc_mutex: '0.1'
-  url: https://conda.anaconda.org/conda-forge/linux-64/libgomp-13.2.0-h807b86a_5.conda
+    libgcc-ng: '>=12'
+    libstdcxx-ng: '>=12'
+    libxml2: '>=2.11.5,<3.0.0a0'
+  url: https://conda.anaconda.org/conda-forge/linux-64/libhwloc-2.9.3-default_h554bfaf_1009.conda
   hash:
-    md5: d211c42b9ce49aee3734fdc828731689
-    sha256: 0d3d4b1b0134283ea02d58e8eb5accf3655464cf7159abf098cc694002f8d34e
+    md5: f36ddc11ca46958197a45effdd286e45
+    sha256: 6950fee24766d03406e0f6f965262a5d98829c71eed8d1004f313892423b559b
   category: main
   optional: false
 - name: libhwloc
@@ -962,6 +977,18 @@ package:
   hash:
     md5: 87da045f6d26ce9fe20ad76a18f6a18a
     sha256: 2e8c4bb7173f281a8e13f333a23c9fb7a1c86d342d7dccdd74f2eb583ddde450
+  category: main
+  optional: false
+- name: libiconv
+  version: '1.17'
+  manager: conda
+  platform: linux-64
+  dependencies:
+    libgcc-ng: '>=12'
+  url: https://conda.anaconda.org/conda-forge/linux-64/libiconv-1.17-hd590300_2.conda
+  hash:
+    md5: d66573916ffcf376178462f1b61c941e
+    sha256: 8ac2f6a9f186e76539439e50505d98581472fedb347a20e7d1f36429849f05c9
   category: main
   optional: false
 - name: libiconv
@@ -1022,10 +1049,10 @@ package:
   platform: win-64
   dependencies:
     libblas: 3.9.0
-  url: https://conda.anaconda.org/conda-forge/win-64/liblapack-3.9.0-21_win64_mkl.conda
+  url: https://conda.anaconda.org/conda-forge/win-64/liblapack-3.9.0-18_win64_mkl.conda
   hash:
-    md5: c4740f091cb75987390087934354a621
-    sha256: 3fa7c08dd4edf59cb0907d2e5b74e6be890e0671f845e1bae892d212d118a7e9
+    md5: 82117ef735a916ace2df6f2de4df4824
+    sha256: f90d96695938659fad4dd47d92dbeebff4a3824979bfb1aac33c8287a83e9d23
   category: main
   optional: false
 - name: libnghttp2
@@ -1317,6 +1344,22 @@ package:
 - name: libxml2
   version: 2.12.5
   manager: conda
+  platform: linux-64
+  dependencies:
+    icu: '>=73.2,<74.0a0'
+    libgcc-ng: '>=12'
+    libiconv: '>=1.17,<2.0a0'
+    libzlib: '>=1.2.13,<1.3.0a0'
+    xz: '>=5.2.6,<6.0a0'
+  url: https://conda.anaconda.org/conda-forge/linux-64/libxml2-2.12.5-h232c23b_0.conda
+  hash:
+    md5: c442ebfda7a475f5e78f1c8e45f1e919
+    sha256: db9bf97e9e367985204331b58a059ebd5a4e0cb9e1c8754e9ecb23046b7b7bc1
+  category: main
+  optional: false
+- name: libxml2
+  version: 2.12.5
+  manager: conda
   platform: win-64
   dependencies:
     libiconv: '>=1.17,<2.0a0'
@@ -1354,6 +1397,19 @@ package:
   hash:
     md5: 5fdb9c6a113b6b6cb5e517fd972d5f41
     sha256: c161822ee8130b71e08b6d282b9919c1de2c5274b29921a867bca0f7d30cad26
+  category: main
+  optional: false
+- name: llvm-openmp
+  version: 17.0.6
+  manager: conda
+  platform: linux-64
+  dependencies:
+    libzlib: '>=1.2.13,<1.3.0a0'
+    zstd: '>=1.5.5,<1.6.0a0'
+  url: https://conda.anaconda.org/conda-forge/linux-64/llvm-openmp-17.0.6-h4dfa4b3_0.conda
+  hash:
+    md5: c1665f9c1c9f6c93d8b4e492a6a39056
+    sha256: 18a9db4cc139e72e8eac80a34f6536491fe318d3785bc2c35fac42cd00676376
   category: main
   optional: false
 - name: locket
@@ -1472,16 +1528,30 @@ package:
   category: dev
   optional: true
 - name: mkl
-  version: 2024.0.0
+  version: 2022.2.1
+  manager: conda
+  platform: linux-64
+  dependencies:
+    _openmp_mutex: '>=4.5'
+    llvm-openmp: '>=15.0.6'
+    tbb: 2021.*
+  url: https://conda.anaconda.org/conda-forge/linux-64/mkl-2022.2.1-h84fe81f_16997.conda
+  hash:
+    md5: a7ce56d5757f5b57e7daabe703ade5bb
+    sha256: 5322750d5e96ff5d96b1457db5fb6b10300f2bc4030545e940e17b57c4e96d00
+  category: main
+  optional: false
+- name: mkl
+  version: 2022.1.0
   manager: conda
   platform: win-64
   dependencies:
-    intel-openmp: 2024.*
+    intel-openmp: ''
     tbb: 2021.*
-  url: https://conda.anaconda.org/conda-forge/win-64/mkl-2024.0.0-h66d3029_49657.conda
+  url: https://conda.anaconda.org/conda-forge/win-64/mkl-2022.1.0-h6a75c08_874.tar.bz2
   hash:
-    md5: 006b65d9cd436247dfe053df772e041d
-    sha256: 928bed978827e4c891d0879d79ecda6c9104ed7df1f1d4e2e392c9c80b471be7
+    md5: 2ff89a7337a9636029b4db9466e9f8e3
+    sha256: b130d13dba6a798cbcce8f19c52e9765b75b8668d2f8f95ba8210c63b6fa84eb
   category: main
   optional: false
 - name: msys2-conda-epoch
@@ -1815,6 +1885,42 @@ package:
   hash:
     md5: e2da8758d7d51ff6aa78a14dfb9dbed4
     sha256: 576a228630a72f25d255a5e345e5f10878e153221a96560f2498040cd6f54005
+  category: main
+  optional: false
+- name: pydiso
+  version: 0.0.3
+  manager: conda
+  platform: linux-64
+  dependencies:
+    libgcc-ng: '>=12'
+    mkl: '>=2022.1.0,<2023.0a0'
+    numpy: '>=1.20.3,<2.0a0'
+    python: '>=3.9,<3.10.0a0'
+    python_abi: 3.9.*
+    scipy: '>=0.13'
+  url: https://conda.anaconda.org/conda-forge/linux-64/pydiso-0.0.3-py39h051f8f4_4.tar.bz2
+  hash:
+    md5: e39f58c96cb2d15abf86c73b73c280a8
+    sha256: e29addcede74fc759ef484900f2796a2cec5accca93a184317d26676dea8c410
+  category: main
+  optional: false
+- name: pydiso
+  version: 0.0.3
+  manager: conda
+  platform: win-64
+  dependencies:
+    mkl: '>=2022.1.0,<2023.0a0'
+    numpy: '>=1.20.3,<2.0a0'
+    python: '>=3.9,<3.10.0a0'
+    python_abi: 3.9.*
+    scipy: '>=0.13'
+    ucrt: '>=10.0.20348.0'
+    vc: '>=14.2,<15'
+    vs2015_runtime: '>=14.29.30139'
+  url: https://conda.anaconda.org/conda-forge/win-64/pydiso-0.0.3-py39h9be9993_4.tar.bz2
+  hash:
+    md5: d33169c9110fd4e697b92fb3373df4bd
+    sha256: f293370dcb860a3643c6348cef18206d3b9667238ec2f9a2e968961477b32797
   category: main
   optional: false
 - name: pygments
@@ -2156,6 +2262,20 @@ package:
   hash:
     md5: 40695fdfd15a92121ed2922900d0308b
     sha256: 0fe2a0473ad03dac6c7f5c42ef36a8e90673c88a0350dfefdea4b08d43803db2
+  category: main
+  optional: false
+- name: tbb
+  version: 2021.11.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    libgcc-ng: '>=12'
+    libhwloc: '>=2.9.3,<2.9.4.0a0'
+    libstdcxx-ng: '>=12'
+  url: https://conda.anaconda.org/conda-forge/linux-64/tbb-2021.11.0-h00ab1b0_1.conda
+  hash:
+    md5: 4531d2927578e7e254ff3bcf6457518c
+    sha256: ded4de0d5a3eb7b47ed829f0ed0e3c61ccd428308bde52d8d22ced228038223b
   category: main
   optional: false
 - name: tbb
@@ -2900,16 +3020,6 @@ package:
 - name: intel-openmp
   version: 2022.2.1
   manager: pip
-  platform: linux-64
-  dependencies: {}
-  url: https://files.pythonhosted.org/packages/ae/56/e23cd9e2611ce3ef4395fa9af1da28ee91df43395456df8dba078d5a1630/intel_openmp-2022.2.1-py2.py3-none-manylinux1_x86_64.whl
-  hash:
-    sha256: 342c9e2b6e1500a9fb8d39828293ab5f9bb310b81fad7eba5c9d865001b95a7e
-  category: main
-  optional: false
-- name: intel-openmp
-  version: 2022.2.1
-  manager: pip
   platform: win-64
   dependencies: {}
   url: https://files.pythonhosted.org/packages/a0/39/9be1803f45c779ef2df43920fe24140915b992a1e42bf9a37e3beec1ee48/intel_openmp-2022.2.1-py2.py3-none-win_amd64.whl
@@ -3093,18 +3203,6 @@ package:
   url: https://files.pythonhosted.org/packages/a6/a1/fed04083345fde74d6f7012dd21c7e8f91bd98fedc17b1e5e182623844fc/mira_simpeg-0.19.0.dev7-py2.py3-none-any.whl
   hash:
     sha256: d3ec1138f09611404ae302510b8298ca72e35d70dc623bcd5f499333d8adce01
-  category: main
-  optional: false
-- name: mkl
-  version: 2022.2.1
-  manager: pip
-  platform: linux-64
-  dependencies:
-    intel-openmp: '>=2022.0.0,<2023.0.0'
-    tbb: '>=2021.0.0,<2022.0.0'
-  url: https://files.pythonhosted.org/packages/3c/13/8445ec0b958830f2342280193fd9271c261db9bbdb2f07e418dfe649ca1e/mkl-2022.2.1-py2.py3-none-manylinux1_x86_64.whl
-  hash:
-    sha256: 0cf6cbb639bc4ecf3b77e5337d4ceb2e24ef025043f764e2abcc32f6797a7138
   category: main
   optional: false
 - name: mkl
@@ -3365,30 +3463,6 @@ package:
     sha256: aca48506a9c20f68ee61c87f2008f81f8ee99f8d7f0104bff3c47e2d148f89d9
   category: main
   optional: false
-- name: pydiso
-  version: 0.0.3
-  manager: pip
-  platform: linux-64
-  dependencies:
-    numpy: '>=1.8'
-    scipy: '>=0.13'
-  url: https://files.pythonhosted.org/packages/28/74/9188dc916f9dcb57667160e4461230df119d36654cf7c018f56e6c5033e9/pydiso-0.0.3.tar.gz
-  hash:
-    sha256: 883e1c4bda04afebd4ac364f1a2992e26123be0f8965c5ac59571549c6cec608
-  category: main
-  optional: false
-- name: pydiso
-  version: 0.0.3
-  manager: pip
-  platform: win-64
-  dependencies:
-    numpy: '>=1.8'
-    scipy: '>=0.13'
-  url: https://files.pythonhosted.org/packages/28/74/9188dc916f9dcb57667160e4461230df119d36654cf7c018f56e6c5033e9/pydiso-0.0.3.tar.gz
-  hash:
-    sha256: 883e1c4bda04afebd4ac364f1a2992e26123be0f8965c5ac59571549c6cec608
-  category: main
-  optional: false
 - name: pymatsolver
   version: 0.2.0
   manager: pip
@@ -3560,25 +3634,25 @@ package:
   manager: pip
   platform: linux-64
   dependencies:
-    geoana: '>=0.4.0,<0.5.0'
-    scipy: '>=1.10.1,<1.11.0'
-    discretize: '>=0.10.0,<0.11.0'
-    pymatsolver: '>=0.2.0,<0.3.0'
     distributed: '>=2022.10.0,<2022.11.0'
-    pydiso: '>=0.0.3,<0.1.0'
-    octree-creation-app: '>=0.1.0a2,<0.2.0'
-    mira-simpeg: '>=0.19.0.dev4,<0.20.0'
     pillow: '*'
-    simpeg-archive: '>=0.11.0.dev6,<0.12.0'
-    numpy: '>=1.23.5,<1.24.0'
-    zarr: '>=2.14.2,<2.15.0'
-    mkl: '>=2022.0.0,<2023.0.0'
-    geoapps-utils: '>=0.3.0a1,<0.4.0'
-    geoh5py: '>=0.9.0a1,<0.10.0'
-    param-sweeps: '>=0.1.7a1,<0.2.0'
     tqdm: '>=4.64.0,<5.0.0'
-    dask: '>=2022.10.0,<2022.11.0'
+    param-sweeps: '>=0.1.7a1,<0.2.0'
+    mkl: '>=2022.0.0,<2023.0.0'
+    mira-simpeg: '>=0.19.0.dev4,<0.20.0'
+    octree-creation-app: '>=0.1.0a2,<0.2.0'
+    discretize: '>=0.10.0,<0.11.0'
+    pydiso: '>=0.0.3,<0.1.0'
+    geoh5py: '>=0.9.0a1,<0.10.0'
+    geoapps-utils: '>=0.3.0a1,<0.4.0'
+    geoana: '>=0.4.0,<0.5.0'
+    numpy: '>=1.23.5,<1.24.0'
+    pymatsolver: '>=0.2.0,<0.3.0'
+    simpeg-archive: '>=0.11.0.dev6,<0.12.0'
+    scipy: '>=1.10.1,<1.11.0'
     h5py: '*'
+    zarr: '>=2.14.2,<2.15.0'
+    dask: '>=2022.10.0,<2022.11.0'
   url: https://github.com/MiraGeoscience/simpeg-drivers/archive/refs/heads/develop.zip
   hash:
     sha256: ''
@@ -3592,25 +3666,25 @@ package:
   manager: pip
   platform: win-64
   dependencies:
-    geoana: '>=0.4.0,<0.5.0'
-    scipy: '>=1.10.1,<1.11.0'
-    discretize: '>=0.10.0,<0.11.0'
-    pymatsolver: '>=0.2.0,<0.3.0'
     distributed: '>=2022.10.0,<2022.11.0'
-    pydiso: '>=0.0.3,<0.1.0'
-    octree-creation-app: '>=0.1.0a2,<0.2.0'
-    mira-simpeg: '>=0.19.0.dev4,<0.20.0'
     pillow: '*'
-    simpeg-archive: '>=0.11.0.dev6,<0.12.0'
-    numpy: '>=1.23.5,<1.24.0'
-    zarr: '>=2.14.2,<2.15.0'
-    mkl: '>=2022.0.0,<2023.0.0'
-    geoapps-utils: '>=0.3.0a1,<0.4.0'
-    geoh5py: '>=0.9.0a1,<0.10.0'
-    param-sweeps: '>=0.1.7a1,<0.2.0'
     tqdm: '>=4.64.0,<5.0.0'
-    dask: '>=2022.10.0,<2022.11.0'
+    param-sweeps: '>=0.1.7a1,<0.2.0'
+    mkl: '>=2022.0.0,<2023.0.0'
+    mira-simpeg: '>=0.19.0.dev4,<0.20.0'
+    octree-creation-app: '>=0.1.0a2,<0.2.0'
+    discretize: '>=0.10.0,<0.11.0'
+    pydiso: '>=0.0.3,<0.1.0'
+    geoh5py: '>=0.9.0a1,<0.10.0'
+    geoapps-utils: '>=0.3.0a1,<0.4.0'
+    geoana: '>=0.4.0,<0.5.0'
+    numpy: '>=1.23.5,<1.24.0'
+    pymatsolver: '>=0.2.0,<0.3.0'
+    simpeg-archive: '>=0.11.0.dev6,<0.12.0'
+    scipy: '>=1.10.1,<1.11.0'
     h5py: '*'
+    zarr: '>=2.14.2,<2.15.0'
+    dask: '>=2022.10.0,<2022.11.0'
   url: https://github.com/MiraGeoscience/simpeg-drivers/archive/refs/heads/develop.zip
   hash:
     sha256: ''
@@ -3657,16 +3731,6 @@ package:
   url: https://files.pythonhosted.org/packages/32/46/9cb0e58b2deb7f82b84065f37f3bffeb12413f947f9388e4cac22c4621ce/sortedcontainers-2.4.0-py2.py3-none-any.whl
   hash:
     sha256: a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0
-  category: main
-  optional: false
-- name: tbb
-  version: 2021.11.0
-  manager: pip
-  platform: linux-64
-  dependencies: {}
-  url: https://files.pythonhosted.org/packages/31/fc/eeb2ab19f26e608bda910350b6f0a06e8dd1b472049b175ca36df93c81ff/tbb-2021.11.0-py2.py3-none-manylinux1_x86_64.whl
-  hash:
-    sha256: 28a95e924a84dd201d9ea1b51cd89de259a866bafa0a29618f0e61339dd8f71c
   category: main
   optional: false
 - name: tblib

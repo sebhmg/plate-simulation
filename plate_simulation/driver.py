@@ -5,6 +5,8 @@
 #  All rights reserved.
 #
 
+from geoh5py.ui_json import InputFile
+from octree_creation_app.constants import default_ui_json
 from octree_creation_app.driver import OctreeDriver
 from octree_creation_app.params import OctreeParams
 from simpeg_drivers.driver import InversionDriver
@@ -70,7 +72,19 @@ class PlateSimulationDriver:
         return self._model
 
     def make_mesh(self):
-        refinements = {
+        # TODO Prefer to dump params directly to OctreeParams.  Need to fix
+        #   octree-creation-app/driver.run method.
+        kwargs = {
+            "geoh5": self.workspace,
+            "objects": self.survey,
+            "u_cell_size": self.params.octree.u_cell_size,
+            "v_cell_size": self.params.octree.v_cell_size,
+            "w_cell_size": self.params.octree.w_cell_size,
+            "horizontal_padding": self.params.octree.horizontal_padding,
+            "vertical_padding": self.params.octree.vertical_padding,
+            "depth_core": self.params.octree.depth_core,
+            "minimum_level": self.params.octree.minimum_level,
+            "diagonal_balance": self.params.octree.diagonal_balance,
             "Refinement A object": self.params.topography,
             "Refinement A levels": [0, 2],
             "Refinement A type": "surface",
@@ -81,19 +95,9 @@ class PlateSimulationDriver:
             "Refinement C levels": [4, 2],
             "Refinement C type": "surface",
         }
-        params = OctreeParams(
-            geoh5=self.workspace,
-            objects=self.survey,
-            u_cell_size=self.params.octree.u_cell_size,
-            v_cell_size=self.params.octree.v_cell_size,
-            w_cell_size=self.params.octree.w_cell_size,
-            horizontal_padding=self.params.octree.horizontal_padding,
-            vertical_padding=self.params.octree.vertical_padding,
-            depth_core=self.params.octree.depth_core,
-            minimum_level=self.params.octree.minimum_level,
-            diagonal_balance=self.params.octree.diagonal_balance,
-            **refinements
-        )
+        ifile = InputFile(ui_json=dict(default_ui_json, **kwargs), validate=False)
+        ifile.write_ui_json(name="octree.ui.json", path=self.workspace.h5file.parent)
+        params = OctreeParams(ifile)
 
         octree_driver = OctreeDriver(params)
         return octree_driver.run()

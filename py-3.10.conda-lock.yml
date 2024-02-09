@@ -15,8 +15,8 @@
 version: 1
 metadata:
   content_hash:
-    win-64: de29290e8644fc62727ab6554fafabba3d58fab9db56ac1896a93c4e09867d96
-    linux-64: b73424f2e953abd748c8b3532acda9f818085873537e6e6d7ce8c8da18c51af8
+    win-64: f7d36d0bd621233f90be3dc1a2bdaee171eef0ec233a7b9b7a57b5a20967a02d
+    linux-64: ab2c89b90ac731a372f21057b19e84aef2d3dc6989b8e78ef582e473d788b7b9
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -1126,30 +1126,30 @@ package:
   category: main
   optional: false
 - name: libsqlite
-  version: 3.44.2
+  version: 3.45.1
   manager: conda
   platform: linux-64
   dependencies:
     libgcc-ng: '>=12'
     libzlib: '>=1.2.13,<1.3.0a0'
-  url: https://conda.anaconda.org/conda-forge/linux-64/libsqlite-3.44.2-h2797004_0.conda
+  url: https://conda.anaconda.org/conda-forge/linux-64/libsqlite-3.45.1-h2797004_0.conda
   hash:
-    md5: 3b6a9f225c3dbe0d24f4fedd4625c5bf
-    sha256: ee2c4d724a3ed60d5b458864d66122fb84c6ce1df62f735f90d8db17b66cd88a
+    md5: fc4ccadfbf6d4784de88c41704792562
+    sha256: 1b379d1c652b25d0540251d422ef767472e768fd36b77261045e97f9ba6d3faa
   category: main
   optional: false
 - name: libsqlite
-  version: 3.44.2
+  version: 3.45.1
   manager: conda
   platform: win-64
   dependencies:
     ucrt: '>=10.0.20348.0'
     vc: '>=14.2,<15'
     vc14_runtime: '>=14.29.30139'
-  url: https://conda.anaconda.org/conda-forge/win-64/libsqlite-3.44.2-hcfcfb64_0.conda
+  url: https://conda.anaconda.org/conda-forge/win-64/libsqlite-3.45.1-hcfcfb64_0.conda
   hash:
-    md5: 4a5f5ab56cbf3ccd08d71a1168061213
-    sha256: 25bfcf79ec863c2c0f0b3599981e2eac57efc5302faf2bb84f68c3f0faa55d1c
+    md5: c583c1d6999b7aa148eff3089e13c44b
+    sha256: e1010f4ac7b056d85d91e6cb6137ef118f920eba88059261689e543780b230df
   category: main
   optional: false
 - name: libssh2
@@ -2611,6 +2611,212 @@ package:
     sha256: 0641064de18ba7a25dee8f96403ebc39113d0cb953a01429249d5c7564666a43
   category: main
   optional: false
+- name: asciitree
+  version: 0.3.3
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/2d/6a/885bc91484e1aa8f618f6f0228d76d0e67000b0fdd6090673b777e311913/asciitree-0.3.3.tar.gz
+  hash:
+    sha256: 4aa4b9b649f85e3fcb343363d97564aa1fb62e249677f2e18a96765145cc0f6e
+  category: main
+  optional: false
+- name: asciitree
+  version: 0.3.3
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/2d/6a/885bc91484e1aa8f618f6f0228d76d0e67000b0fdd6090673b777e311913/asciitree-0.3.3.tar.gz
+  hash:
+    sha256: 4aa4b9b649f85e3fcb343363d97564aa1fb62e249677f2e18a96765145cc0f6e
+  category: main
+  optional: false
+- name: contourpy
+  version: 1.2.0
+  manager: pip
+  platform: linux-64
+  dependencies:
+    numpy: '>=1.20,<2.0'
+  url: https://files.pythonhosted.org/packages/58/56/e2c43dcfa1f9c7db4d5e3d6f5134b24ed953f4e2133a4b12f0062148db58/contourpy-1.2.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+  hash:
+    sha256: b69303ceb2e4d4f146bf82fda78891ef7bcd80c41bf16bfca3d0d7eb545448aa
+  category: main
+  optional: false
+- name: contourpy
+  version: 1.2.0
+  manager: pip
+  platform: win-64
+  dependencies:
+    numpy: '>=1.20,<2.0'
+  url: https://files.pythonhosted.org/packages/fd/7c/168f8343f33d861305e18c56901ef1bb675d3c7f977f435ec72751a71a54/contourpy-1.2.0-cp310-cp310-win_amd64.whl
+  hash:
+    sha256: bd2f1ae63998da104f16a8b788f685e55d65760cd1929518fd94cd682bf03e41
+  category: main
+  optional: false
+- name: cycler
+  version: 0.12.1
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl
+  hash:
+    sha256: 85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30
+  category: main
+  optional: false
+- name: cycler
+  version: 0.12.1
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl
+  hash:
+    sha256: 85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30
+  category: main
+  optional: false
+- name: distributed
+  version: 2022.10.2
+  manager: pip
+  platform: linux-64
+  dependencies:
+    click: '>=6.6'
+    cloudpickle: '>=1.5.0'
+    dask: 2022.10.2
+    jinja2: '*'
+    locket: '>=1.0.0'
+    msgpack: '>=0.6.0'
+    packaging: '>=20.0'
+    psutil: '>=5.0'
+    sortedcontainers: <2.0.0 || >2.0.0,<2.0.1 || >2.0.1
+    tblib: '>=1.6.0'
+    toolz: '>=0.8.2'
+    tornado: '>=6.0.3,<6.2'
+    urllib3: '*'
+    zict: '>=0.1.3'
+    pyyaml: '*'
+  url: https://files.pythonhosted.org/packages/28/54/62702b9c98df725de6c7e88dd67c240f078cd657b1a3938a81bd1d977489/distributed-2022.10.2-py3-none-any.whl
+  hash:
+    sha256: ae4fffdb55c6cb510ba1cbdf2856563af80ebf93e5ceacb91c1ce79e7da108d8
+  category: main
+  optional: false
+- name: distributed
+  version: 2022.10.2
+  manager: pip
+  platform: win-64
+  dependencies:
+    click: '>=6.6'
+    cloudpickle: '>=1.5.0'
+    dask: 2022.10.2
+    jinja2: '*'
+    locket: '>=1.0.0'
+    msgpack: '>=0.6.0'
+    packaging: '>=20.0'
+    psutil: '>=5.0'
+    sortedcontainers: <2.0.0 || >2.0.0,<2.0.1 || >2.0.1
+    tblib: '>=1.6.0'
+    toolz: '>=0.8.2'
+    tornado: '>=6.0.3,<6.2'
+    urllib3: '*'
+    zict: '>=0.1.3'
+    pyyaml: '*'
+  url: https://files.pythonhosted.org/packages/28/54/62702b9c98df725de6c7e88dd67c240f078cd657b1a3938a81bd1d977489/distributed-2022.10.2-py3-none-any.whl
+  hash:
+    sha256: ae4fffdb55c6cb510ba1cbdf2856563af80ebf93e5ceacb91c1ce79e7da108d8
+  category: main
+  optional: false
+- name: empymod
+  version: 2.2.2
+  manager: pip
+  platform: linux-64
+  dependencies:
+    scipy: '>=1.5'
+    numba: '>=0.50'
+  url: https://files.pythonhosted.org/packages/d1/fb/79cefe904f5b4aa49993c687406c55eb191cf2e3acae5ff13ff3f2f8a8d2/empymod-2.2.2-py3-none-any.whl
+  hash:
+    sha256: 63b0b217f2835402506f97cc593ea3ae131b8e695eb084898112450fea91f7d9
+  category: main
+  optional: false
+- name: empymod
+  version: 2.2.2
+  manager: pip
+  platform: win-64
+  dependencies:
+    scipy: '>=1.5'
+    numba: '>=0.50'
+  url: https://files.pythonhosted.org/packages/d1/fb/79cefe904f5b4aa49993c687406c55eb191cf2e3acae5ff13ff3f2f8a8d2/empymod-2.2.2-py3-none-any.whl
+  hash:
+    sha256: 63b0b217f2835402506f97cc593ea3ae131b8e695eb084898112450fea91f7d9
+  category: main
+  optional: false
+- name: fasteners
+  version: '0.19'
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/61/bf/fd60001b3abc5222d8eaa4a204cd8c0ae78e75adc688f33ce4bf25b7fafa/fasteners-0.19-py3-none-any.whl
+  hash:
+    sha256: 758819cb5d94cdedf4e836988b74de396ceacb8e2794d21f82d131fd9ee77237
+  category: main
+  optional: false
+- name: fasteners
+  version: '0.19'
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/61/bf/fd60001b3abc5222d8eaa4a204cd8c0ae78e75adc688f33ce4bf25b7fafa/fasteners-0.19-py3-none-any.whl
+  hash:
+    sha256: 758819cb5d94cdedf4e836988b74de396ceacb8e2794d21f82d131fd9ee77237
+  category: main
+  optional: false
+- name: fonttools
+  version: 4.48.1
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/a8/33/536e7d7c57248fa2cce8352ae536ed0223800e9c47d5ec40a413fea81808/fonttools-4.48.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+  hash:
+    sha256: e740a7602c2bb71e1091269b5dbe89549749a8817dc294b34628ffd8b2bf7124
+  category: main
+  optional: false
+- name: fonttools
+  version: 4.48.1
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/b7/68/d0a0c601a6ca278448f68908f7b9c1f04086dff02764d5090f5fec5ef410/fonttools-4.48.1-cp310-cp310-win_amd64.whl
+  hash:
+    sha256: f7449493886da6a17472004d3818cc050ba3f4a0aa03fb47972e4fa5578e6703
+  category: main
+  optional: false
+- name: geoana
+  version: 0.4.1
+  manager: pip
+  platform: linux-64
+  dependencies:
+    numpy: '>=1.8'
+    scipy: '>=0.13'
+    matplotlib: '*'
+    utm: '*'
+    empymod: '*'
+  url: https://files.pythonhosted.org/packages/c4/ee/5cf65aa2bd2126223051492264446fad4a72d56bfdd071925d23fb7288ff/geoana-0.4.1.tar.gz
+  hash:
+    sha256: bd94df5be307f3e7b6ca4b2abc8475576c9835102245e577dfdaebca0a04260b
+  category: main
+  optional: false
+- name: geoana
+  version: 0.4.1
+  manager: pip
+  platform: win-64
+  dependencies:
+    numpy: '>=1.8'
+    scipy: '>=0.13'
+    matplotlib: '*'
+    utm: '*'
+    empymod: '*'
+  url: https://files.pythonhosted.org/packages/c4/ee/5cf65aa2bd2126223051492264446fad4a72d56bfdd071925d23fb7288ff/geoana-0.4.1.tar.gz
+  hash:
+    sha256: bd94df5be307f3e7b6ca4b2abc8475576c9835102245e577dfdaebca0a04260b
+  category: main
+  optional: false
 - name: geoapps-utils
   version: 0.3.0a1
   manager: pip
@@ -2669,6 +2875,292 @@ package:
     sha256: ddf340cc1b966ee8ac4f0bf6e0206e56e2de77f9cdbae20d07ce93fd4793bfa5
   category: main
   optional: false
+- name: intel-openmp
+  version: 2022.2.1
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/ae/56/e23cd9e2611ce3ef4395fa9af1da28ee91df43395456df8dba078d5a1630/intel_openmp-2022.2.1-py2.py3-none-manylinux1_x86_64.whl
+  hash:
+    sha256: 342c9e2b6e1500a9fb8d39828293ab5f9bb310b81fad7eba5c9d865001b95a7e
+  category: main
+  optional: false
+- name: intel-openmp
+  version: 2022.2.1
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/a0/39/9be1803f45c779ef2df43920fe24140915b992a1e42bf9a37e3beec1ee48/intel_openmp-2022.2.1-py2.py3-none-win_amd64.whl
+  hash:
+    sha256: 77414289c14cb48d7f99926da69c9ced9e70c27feb825b0608f304f9d49844ae
+  category: main
+  optional: false
+- name: jinja2
+  version: 3.1.3
+  manager: pip
+  platform: linux-64
+  dependencies:
+    markupsafe: '>=2.0'
+  url: https://files.pythonhosted.org/packages/30/6d/6de6be2d02603ab56e72997708809e8a5b0fbfee080735109b40a3564843/Jinja2-3.1.3-py3-none-any.whl
+  hash:
+    sha256: 7d6d50dd97d52cbc355597bd845fabfbac3f551e1f99619e39a35ce8c370b5fa
+  category: main
+  optional: false
+- name: jinja2
+  version: 3.1.3
+  manager: pip
+  platform: win-64
+  dependencies:
+    markupsafe: '>=2.0'
+  url: https://files.pythonhosted.org/packages/30/6d/6de6be2d02603ab56e72997708809e8a5b0fbfee080735109b40a3564843/Jinja2-3.1.3-py3-none-any.whl
+  hash:
+    sha256: 7d6d50dd97d52cbc355597bd845fabfbac3f551e1f99619e39a35ce8c370b5fa
+  category: main
+  optional: false
+- name: joblib
+  version: 1.3.2
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/10/40/d551139c85db202f1f384ba8bcf96aca2f329440a844f924c8a0040b6d02/joblib-1.3.2-py3-none-any.whl
+  hash:
+    sha256: ef4331c65f239985f3f2220ecc87db222f08fd22097a3dd5698f693875f8cbb9
+  category: main
+  optional: false
+- name: joblib
+  version: 1.3.2
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/10/40/d551139c85db202f1f384ba8bcf96aca2f329440a844f924c8a0040b6d02/joblib-1.3.2-py3-none-any.whl
+  hash:
+    sha256: ef4331c65f239985f3f2220ecc87db222f08fd22097a3dd5698f693875f8cbb9
+  category: main
+  optional: false
+- name: kiwisolver
+  version: 1.4.5
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/6f/40/4ab1fdb57fced80ce5903f04ae1aed7c1d5939dda4fd0c0aa526c12fe28a/kiwisolver-1.4.5-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl
+  hash:
+    sha256: ec20916e7b4cbfb1f12380e46486ec4bcbaa91a9c448b97023fde0d5bbf9e4ff
+  category: main
+  optional: false
+- name: kiwisolver
+  version: 1.4.5
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/4a/a1/8a9c9be45c642fa12954855d8b3a02d9fd8551165a558835a19508fec2e6/kiwisolver-1.4.5-cp310-cp310-win_amd64.whl
+  hash:
+    sha256: d0ef46024e6a3d79c01ff13801cb19d0cad7fd859b15037aec74315540acc276
+  category: main
+  optional: false
+- name: llvmlite
+  version: 0.42.0
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/2b/01/764489e364948f52aa7cb958a91a8dafd489357d2401f66946542bbc1764/llvmlite-0.42.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+  hash:
+    sha256: 763f8d8717a9073b9e0246998de89929071d15b47f254c10eef2310b9aac033d
+  category: main
+  optional: false
+- name: llvmlite
+  version: 0.42.0
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/e0/a2/70e18cab31b707ff62c5dd4f5ed6ea88f553ba3a8e40ce99aefb8e056af1/llvmlite-0.42.0-cp310-cp310-win_amd64.whl
+  hash:
+    sha256: 8d90edf400b4ceb3a0e776b6c6e4656d05c7187c439587e06f86afceb66d2be5
+  category: main
+  optional: false
+- name: markupsafe
+  version: 2.1.5
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/7c/52/2b1b570f6b8b803cef5ac28fdf78c0da318916c7d2fe9402a84d591b394c/MarkupSafe-2.1.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+  hash:
+    sha256: 2174c595a0d73a3080ca3257b40096db99799265e1c27cc5a610743acd86d62f
+  category: main
+  optional: false
+- name: markupsafe
+  version: 2.1.5
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/69/48/acbf292615c65f0604a0c6fc402ce6d8c991276e16c80c46a8f758fbd30c/MarkupSafe-2.1.5-cp310-cp310-win_amd64.whl
+  hash:
+    sha256: bf50cd79a75d181c9181df03572cdce0fbb75cc353bc350712073108cba98de5
+  category: main
+  optional: false
+- name: matplotlib
+  version: 3.8.2
+  manager: pip
+  platform: linux-64
+  dependencies:
+    contourpy: '>=1.0.1'
+    cycler: '>=0.10'
+    fonttools: '>=4.22.0'
+    kiwisolver: '>=1.3.1'
+    numpy: '>=1.21,<2'
+    packaging: '>=20.0'
+    pillow: '>=8'
+    pyparsing: '>=2.3.1'
+    python-dateutil: '>=2.7'
+  url: https://files.pythonhosted.org/packages/19/e5/a4ea514515f270224435c69359abb7a3d152ed31b9ee3ba5e63017461945/matplotlib-3.8.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+  hash:
+    sha256: 4e208f46cf6576a7624195aa047cb344a7f802e113bb1a06cfd4bee431de5e31
+  category: main
+  optional: false
+- name: matplotlib
+  version: 3.8.2
+  manager: pip
+  platform: win-64
+  dependencies:
+    contourpy: '>=1.0.1'
+    cycler: '>=0.10'
+    fonttools: '>=4.22.0'
+    kiwisolver: '>=1.3.1'
+    numpy: '>=1.21,<2'
+    packaging: '>=20.0'
+    pillow: '>=8'
+    pyparsing: '>=2.3.1'
+    python-dateutil: '>=2.7'
+  url: https://files.pythonhosted.org/packages/46/37/b5e27ab30ecc0a3694c8a78287b5ef35dad0c3095c144fcc43081170bfd6/matplotlib-3.8.2-cp310-cp310-win_amd64.whl
+  hash:
+    sha256: 830f00640c965c5b7f6bc32f0d4ce0c36dfe0379f7dd65b07a00c801713ec40a
+  category: main
+  optional: false
+- name: mira-simpeg
+  version: 0.19.0.dev7
+  manager: pip
+  platform: linux-64
+  dependencies:
+    discretize: '>=0.8.0'
+    empymod: '>=2.0.0'
+    geoh5py: '*'
+    numpy: '>=1.20'
+    pandas: '*'
+    pymatsolver: '>=0.2'
+    scikit-learn: '>=1.2'
+    scipy: '>=1.8.0'
+  url: https://files.pythonhosted.org/packages/a6/a1/fed04083345fde74d6f7012dd21c7e8f91bd98fedc17b1e5e182623844fc/mira_simpeg-0.19.0.dev7-py2.py3-none-any.whl
+  hash:
+    sha256: d3ec1138f09611404ae302510b8298ca72e35d70dc623bcd5f499333d8adce01
+  category: main
+  optional: false
+- name: mira-simpeg
+  version: 0.19.0.dev7
+  manager: pip
+  platform: win-64
+  dependencies:
+    discretize: '>=0.8.0'
+    empymod: '>=2.0.0'
+    geoh5py: '*'
+    numpy: '>=1.20'
+    pandas: '*'
+    pymatsolver: '>=0.2'
+    scikit-learn: '>=1.2'
+    scipy: '>=1.8.0'
+  url: https://files.pythonhosted.org/packages/a6/a1/fed04083345fde74d6f7012dd21c7e8f91bd98fedc17b1e5e182623844fc/mira_simpeg-0.19.0.dev7-py2.py3-none-any.whl
+  hash:
+    sha256: d3ec1138f09611404ae302510b8298ca72e35d70dc623bcd5f499333d8adce01
+  category: main
+  optional: false
+- name: mkl
+  version: 2022.2.1
+  manager: pip
+  platform: linux-64
+  dependencies:
+    intel-openmp: '>=2022.0.0,<2023.0.0'
+    tbb: '>=2021.0.0,<2022.0.0'
+  url: https://files.pythonhosted.org/packages/3c/13/8445ec0b958830f2342280193fd9271c261db9bbdb2f07e418dfe649ca1e/mkl-2022.2.1-py2.py3-none-manylinux1_x86_64.whl
+  hash:
+    sha256: 0cf6cbb639bc4ecf3b77e5337d4ceb2e24ef025043f764e2abcc32f6797a7138
+  category: main
+  optional: false
+- name: mkl
+  version: 2022.2.1
+  manager: pip
+  platform: win-64
+  dependencies:
+    intel-openmp: '>=2022.0.0,<2023.0.0'
+    tbb: '>=2021.0.0,<2022.0.0'
+  url: https://files.pythonhosted.org/packages/8e/80/ad5fb0f2c9880c3d2b8df3ac508021cf5eb3a6909b250250430e66557bbd/mkl-2022.2.1-py2.py3-none-win_amd64.whl
+  hash:
+    sha256: 67f6ed435c2fd6b526d0d360259fa2be9453365ecde75f589db61c3624ef1cd8
+  category: main
+  optional: false
+- name: msgpack
+  version: 1.0.7
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/46/95/d0440400485eab1bf50f1efe5118967b539f3191d994c3dfc220657594cd/msgpack-1.0.7-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+  hash:
+    sha256: 28efb066cde83c479dfe5a48141a53bc7e5f13f785b92ddde336c716663039ee
+  category: main
+  optional: false
+- name: msgpack
+  version: 1.0.7
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/4b/14/c62fbc8dff118f1558e43b9469d56a1f37bbb35febadc3163efaedd01500/msgpack-1.0.7-cp310-cp310-win_amd64.whl
+  hash:
+    sha256: a40821a89dc373d6427e2b44b572efc36a2778d3f543299e2f24eb1a5de65415
+  category: main
+  optional: false
+- name: numba
+  version: 0.59.0
+  manager: pip
+  platform: linux-64
+  dependencies:
+    llvmlite: '>=0.42.0dev0,<0.43'
+    numpy: '>=1.22,<1.27'
+  url: https://files.pythonhosted.org/packages/73/d5/d359cece32302442c8ea9742b1324c4eda689fd54281eb3144f520c81f6d/numba-0.59.0-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+  hash:
+    sha256: e86e6786aec31d2002122199486e10bbc0dc40f78d76364cded375912b13614c
+  category: main
+  optional: false
+- name: numba
+  version: 0.59.0
+  manager: pip
+  platform: win-64
+  dependencies:
+    llvmlite: '>=0.42.0dev0,<0.43'
+    numpy: '>=1.22,<1.27'
+  url: https://files.pythonhosted.org/packages/a2/5c/8bf0c2cbd9d0d3b519213031a8b6fb71f7403b9e6ee4b4d16b74b9659bdf/numba-0.59.0-cp310-cp310-win_amd64.whl
+  hash:
+    sha256: 0307ee91b24500bb7e64d8a109848baf3a3905df48ce142b8ac60aaa406a0400
+  category: main
+  optional: false
+- name: numcodecs
+  version: 0.12.1
+  manager: pip
+  platform: linux-64
+  dependencies:
+    numpy: '>=1.7'
+  url: https://files.pythonhosted.org/packages/1e/b8/1040f299803eacc9c522fdc69a4dafc42ad0e8722bb48aa43d2310cf195b/numcodecs-0.12.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+  hash:
+    sha256: 0e79bf9d1d37199ac00a60ff3adb64757523291d19d03116832e600cac391c51
+  category: main
+  optional: false
+- name: numcodecs
+  version: 0.12.1
+  manager: pip
+  platform: win-64
+  dependencies:
+    numpy: '>=1.7'
+  url: https://files.pythonhosted.org/packages/8c/fa/da0637e1a6db74361a2875425021957859749166c0174ddedbb629518970/numcodecs-0.12.1-cp310-cp310-win_amd64.whl
+  hash:
+    sha256: 82d7107f80f9307235cb7e74719292d101c7ea1e393fe628817f0d635b7384f5
+  category: main
+  optional: false
 - name: octree-creation-app
   version: 0.1.0a2
   manager: pip
@@ -2701,6 +3193,104 @@ package:
   url: https://files.pythonhosted.org/packages/7c/6a/d4d11f7e1ec689ac1e146fe49138d589e6b0010a9d78e611004f0a3e46bc/octree_creation_app-0.1.0a2-py3-none-any.whl
   hash:
     sha256: 2d05aa7436833888cb1d68fda95eab89858ddb74987a7f350163a346d1ebebcf
+  category: main
+  optional: false
+- name: pandas
+  version: 2.2.0
+  manager: pip
+  platform: linux-64
+  dependencies:
+    numpy: '>=1.22.4,<2'
+    python-dateutil: '>=2.8.2'
+    pytz: '>=2020.1'
+    tzdata: '>=2022.7'
+  url: https://files.pythonhosted.org/packages/b3/b3/3102c3a4abca1093e50cfec2213102a1c65c0b318a4431395d0121e6e690/pandas-2.2.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+  hash:
+    sha256: 20404d2adefe92aed3b38da41d0847a143a09be982a31b85bc7dd565bdba0f4e
+  category: main
+  optional: false
+- name: pandas
+  version: 2.2.0
+  manager: pip
+  platform: win-64
+  dependencies:
+    numpy: '>=1.22.4,<2'
+    python-dateutil: '>=2.8.2'
+    pytz: '>=2020.1'
+    tzdata: '>=2022.7'
+  url: https://files.pythonhosted.org/packages/5a/f2/d079f4785d326e3868f4232108e622a307c2676023a274d9be2754dafc2a/pandas-2.2.0-cp310-cp310-win_amd64.whl
+  hash:
+    sha256: 5a946f210383c7e6d16312d30b238fd508d80d927014f3b33fb5b15c2f895430
+  category: main
+  optional: false
+- name: param-sweeps
+  version: 0.1.7a1
+  manager: pip
+  platform: linux-64
+  dependencies:
+    geoh5py: '>=0.9.0a1,<0.10.0'
+    numpy: '>=1.23.5,<1.24.0'
+  url: https://files.pythonhosted.org/packages/92/4d/dd1cc1f36dedf2a7e606840f9b2a2f601c26fb5ae408a9f09edccb0536ca/param_sweeps-0.1.7a1-py3-none-any.whl
+  hash:
+    sha256: 2a82acf94d50507f9a2922ff96b90e22326d9e0deb632a03fc4ae7008defca05
+  category: main
+  optional: false
+- name: param-sweeps
+  version: 0.1.7a1
+  manager: pip
+  platform: win-64
+  dependencies:
+    geoh5py: '>=0.9.0a1,<0.10.0'
+    numpy: '>=1.23.5,<1.24.0'
+  url: https://files.pythonhosted.org/packages/92/4d/dd1cc1f36dedf2a7e606840f9b2a2f601c26fb5ae408a9f09edccb0536ca/param_sweeps-0.1.7a1-py3-none-any.whl
+  hash:
+    sha256: 2a82acf94d50507f9a2922ff96b90e22326d9e0deb632a03fc4ae7008defca05
+  category: main
+  optional: false
+- name: properties
+  version: 0.6.1
+  manager: pip
+  platform: linux-64
+  dependencies:
+    six: '>=1.7.3'
+    numpy: '>=1.7'
+    vectormath: '>=0.1.4'
+  url: https://files.pythonhosted.org/packages/c0/9a/cd2def3421cd077d80d4973c802d29dcb3fba625190b3678480f228a85bf/properties-0.6.1.tar.gz
+  hash:
+    sha256: b119ce4c53f4717fa29371c1bb929f422dda7ed90a4559b3583ea77389177263
+  category: main
+  optional: false
+- name: properties
+  version: 0.6.1
+  manager: pip
+  platform: win-64
+  dependencies:
+    six: '>=1.7.3'
+    numpy: '>=1.7'
+    vectormath: '>=0.1.4'
+  url: https://files.pythonhosted.org/packages/c0/9a/cd2def3421cd077d80d4973c802d29dcb3fba625190b3678480f228a85bf/properties-0.6.1.tar.gz
+  hash:
+    sha256: b119ce4c53f4717fa29371c1bb929f422dda7ed90a4559b3583ea77389177263
+  category: main
+  optional: false
+- name: psutil
+  version: 5.9.8
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/c5/4f/0e22aaa246f96d6ac87fe5ebb9c5a693fbe8877f537a1022527c47ca43c5/psutil-5.9.8-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+  hash:
+    sha256: d06016f7f8625a1825ba3732081d77c94589dca78b7a3fc072194851e88461a4
+  category: main
+  optional: false
+- name: psutil
+  version: 5.9.8
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/93/52/3e39d26feae7df0aa0fd510b14012c3678b36ed068f7d78b8d8784d61f0e/psutil-5.9.8-cp37-abi3-win_amd64.whl
+  hash:
+    sha256: 8db4c1b57507eef143a15a6884ca10f7c73876cdf5d51e713151c1236a0e68cf
   category: main
   optional: false
 - name: pydantic
@@ -2751,6 +3341,144 @@ package:
     sha256: 36fa402dcdc8ea7f1b0ddcf0df4254cc6b2e08f8cd80e7010d4c4ae6e86b2a87
   category: main
   optional: false
+- name: pydiso
+  version: 0.0.3
+  manager: pip
+  platform: linux-64
+  dependencies:
+    numpy: '>=1.8'
+    scipy: '>=0.13'
+  url: https://files.pythonhosted.org/packages/28/74/9188dc916f9dcb57667160e4461230df119d36654cf7c018f56e6c5033e9/pydiso-0.0.3.tar.gz
+  hash:
+    sha256: 883e1c4bda04afebd4ac364f1a2992e26123be0f8965c5ac59571549c6cec608
+  category: main
+  optional: false
+- name: pydiso
+  version: 0.0.3
+  manager: pip
+  platform: win-64
+  dependencies:
+    numpy: '>=1.8'
+    scipy: '>=0.13'
+  url: https://files.pythonhosted.org/packages/28/74/9188dc916f9dcb57667160e4461230df119d36654cf7c018f56e6c5033e9/pydiso-0.0.3.tar.gz
+  hash:
+    sha256: 883e1c4bda04afebd4ac364f1a2992e26123be0f8965c5ac59571549c6cec608
+  category: main
+  optional: false
+- name: pymatsolver
+  version: 0.2.0
+  manager: pip
+  platform: linux-64
+  dependencies:
+    numpy: '>=1.7'
+    scipy: '>=0.13'
+  url: https://files.pythonhosted.org/packages/c8/2f/31206d73ec4ce85746532bd96a6a369ecab4d5f8efcebc301ebc3364ebfb/pymatsolver-0.2.0.tar.gz
+  hash:
+    sha256: df9e0444f3c7fadf57b226d7d90b7be1dea9e24718575b458ba50429736d6c45
+  category: main
+  optional: false
+- name: pymatsolver
+  version: 0.2.0
+  manager: pip
+  platform: win-64
+  dependencies:
+    numpy: '>=1.7'
+    scipy: '>=0.13'
+  url: https://files.pythonhosted.org/packages/c8/2f/31206d73ec4ce85746532bd96a6a369ecab4d5f8efcebc301ebc3364ebfb/pymatsolver-0.2.0.tar.gz
+  hash:
+    sha256: df9e0444f3c7fadf57b226d7d90b7be1dea9e24718575b458ba50429736d6c45
+  category: main
+  optional: false
+- name: pyparsing
+  version: 3.1.1
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/39/92/8486ede85fcc088f1b3dba4ce92dd29d126fd96b0008ea213167940a2475/pyparsing-3.1.1-py3-none-any.whl
+  hash:
+    sha256: 32c7c0b711493c72ff18a981d24f28aaf9c1fb7ed5e9667c9e84e3db623bdbfb
+  category: main
+  optional: false
+- name: pyparsing
+  version: 3.1.1
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/39/92/8486ede85fcc088f1b3dba4ce92dd29d126fd96b0008ea213167940a2475/pyparsing-3.1.1-py3-none-any.whl
+  hash:
+    sha256: 32c7c0b711493c72ff18a981d24f28aaf9c1fb7ed5e9667c9e84e3db623bdbfb
+  category: main
+  optional: false
+- name: python-dateutil
+  version: 2.8.2
+  manager: pip
+  platform: linux-64
+  dependencies:
+    six: '>=1.5'
+  url: https://files.pythonhosted.org/packages/36/7a/87837f39d0296e723bb9b62bbb257d0355c7f6128853c78955f57342a56d/python_dateutil-2.8.2-py2.py3-none-any.whl
+  hash:
+    sha256: 961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9
+  category: main
+  optional: false
+- name: python-dateutil
+  version: 2.8.2
+  manager: pip
+  platform: win-64
+  dependencies:
+    six: '>=1.5'
+  url: https://files.pythonhosted.org/packages/36/7a/87837f39d0296e723bb9b62bbb257d0355c7f6128853c78955f57342a56d/python_dateutil-2.8.2-py2.py3-none-any.whl
+  hash:
+    sha256: 961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9
+  category: main
+  optional: false
+- name: pytz
+  version: '2024.1'
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/9c/3d/a121f284241f08268b21359bd425f7d4825cffc5ac5cd0e1b3d82ffd2b10/pytz-2024.1-py2.py3-none-any.whl
+  hash:
+    sha256: 328171f4e3623139da4983451950b28e95ac706e13f3f2630a879749e7a8b319
+  category: main
+  optional: false
+- name: pytz
+  version: '2024.1'
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/9c/3d/a121f284241f08268b21359bd425f7d4825cffc5ac5cd0e1b3d82ffd2b10/pytz-2024.1-py2.py3-none-any.whl
+  hash:
+    sha256: 328171f4e3623139da4983451950b28e95ac706e13f3f2630a879749e7a8b319
+  category: main
+  optional: false
+- name: scikit-learn
+  version: 1.4.0
+  manager: pip
+  platform: linux-64
+  dependencies:
+    numpy: '>=1.19.5'
+    scipy: '>=1.6.0'
+    joblib: '>=1.2.0'
+    threadpoolctl: '>=2.0.0'
+  url: https://files.pythonhosted.org/packages/3f/61/047b353f0ad550226ef962da182b4a09b689eb6df6bd84a03e44f9ee95bb/scikit_learn-1.4.0-1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+  hash:
+    sha256: e98632da8f6410e6fb6bf66937712c949b4010600ccd3f22a5388a83e610cc3c
+  category: main
+  optional: false
+- name: scikit-learn
+  version: 1.4.0
+  manager: pip
+  platform: win-64
+  dependencies:
+    numpy: '>=1.19.5'
+    scipy: '>=1.6.0'
+    joblib: '>=1.2.0'
+    threadpoolctl: '>=2.0.0'
+  url: https://files.pythonhosted.org/packages/bd/7e/52676c85bab788e0cb87b58e11ab53ba08e590c0db30642dd3222b702c73/scikit_learn-1.4.0-1-cp310-cp310-win_amd64.whl
+  hash:
+    sha256: 11b3b140f70fbc9f6a08884631ae8dd60a4bb2d7d6d1de92738ea42b740d8992
+  category: main
+  optional: false
 - name: scipy
   version: 1.10.1
   manager: pip
@@ -2771,5 +3499,360 @@ package:
   url: https://files.pythonhosted.org/packages/ec/e3/b06ac3738bf365e89710205a471abe7dceec672a51c244b469bc5d1291c7/scipy-1.10.1-cp310-cp310-win_amd64.whl
   hash:
     sha256: fae8a7b898c42dffe3f7361c40d5952b6bf32d10c4569098d276b4c547905ee1
+  category: main
+  optional: false
+- name: simpeg-archive
+  version: 0.11.0.dev6
+  manager: pip
+  platform: linux-64
+  dependencies:
+    discretize: '*'
+    numpy: '>=1.7'
+    properties: '>=0.3.1b2'
+    pymatsolver: '>=0.1.1'
+    scipy: '>=0.13'
+  url: https://files.pythonhosted.org/packages/ce/bf/835bfe4f5b90a9484b5ab434d6b0295bc9c8cc44d4c30c8a70cad61855a3/simpeg_archive-0.11.0.dev6-py2.py3-none-any.whl
+  hash:
+    sha256: ddb2487b640846a6859afb6f9f33ec5a04e4e0d5572c690d4c1a88579a47adcb
+  category: main
+  optional: false
+- name: simpeg-archive
+  version: 0.11.0.dev6
+  manager: pip
+  platform: win-64
+  dependencies:
+    discretize: '*'
+    numpy: '>=1.7'
+    properties: '>=0.3.1b2'
+    pymatsolver: '>=0.1.1'
+    scipy: '>=0.13'
+  url: https://files.pythonhosted.org/packages/ce/bf/835bfe4f5b90a9484b5ab434d6b0295bc9c8cc44d4c30c8a70cad61855a3/simpeg_archive-0.11.0.dev6-py2.py3-none-any.whl
+  hash:
+    sha256: ddb2487b640846a6859afb6f9f33ec5a04e4e0d5572c690d4c1a88579a47adcb
+  category: main
+  optional: false
+- name: simpeg-drivers
+  version: 0.1.0-alpha.1
+  manager: pip
+  platform: linux-64
+  dependencies:
+    pydiso: '>=0.0.3,<0.1.0'
+    mira-simpeg: '>=0.19.0.dev4,<0.20.0'
+    param-sweeps: '>=0.1.7a1,<0.2.0'
+    pymatsolver: '>=0.2.0,<0.3.0'
+    mkl: '>=2022.0.0,<2023.0.0'
+    numpy: '>=1.23.5,<1.24.0'
+    scipy: '>=1.10.1,<1.11.0'
+    geoh5py: '>=0.9.0a1,<0.10.0'
+    geoapps-utils: '>=0.3.0a1,<0.4.0'
+    octree-creation-app: '>=0.1.0a2,<0.2.0'
+    zarr: '>=2.14.2,<2.15.0'
+    distributed: '>=2022.10.0,<2022.11.0'
+    geoana: '>=0.4.0,<0.5.0'
+    pillow: '*'
+    tqdm: '>=4.64.0,<5.0.0'
+    h5py: '*'
+    simpeg-archive: '>=0.11.0.dev6,<0.12.0'
+    dask: '>=2022.10.0,<2022.11.0'
+    discretize: '>=0.10.0,<0.11.0'
+  url: https://github.com/MiraGeoscience/simpeg-drivers/archive/refs/heads/develop.zip
+  hash:
+    sha256: ''
+  category: main
+  source:
+    type: url
+    url: https://github.com/MiraGeoscience/simpeg-drivers/archive/refs/heads/develop.zip#sha256=
+  optional: false
+- name: simpeg-drivers
+  version: 0.1.0-alpha.1
+  manager: pip
+  platform: win-64
+  dependencies:
+    pydiso: '>=0.0.3,<0.1.0'
+    mira-simpeg: '>=0.19.0.dev4,<0.20.0'
+    param-sweeps: '>=0.1.7a1,<0.2.0'
+    pymatsolver: '>=0.2.0,<0.3.0'
+    mkl: '>=2022.0.0,<2023.0.0'
+    numpy: '>=1.23.5,<1.24.0'
+    scipy: '>=1.10.1,<1.11.0'
+    geoh5py: '>=0.9.0a1,<0.10.0'
+    geoapps-utils: '>=0.3.0a1,<0.4.0'
+    octree-creation-app: '>=0.1.0a2,<0.2.0'
+    zarr: '>=2.14.2,<2.15.0'
+    distributed: '>=2022.10.0,<2022.11.0'
+    geoana: '>=0.4.0,<0.5.0'
+    pillow: '*'
+    tqdm: '>=4.64.0,<5.0.0'
+    h5py: '*'
+    simpeg-archive: '>=0.11.0.dev6,<0.12.0'
+    dask: '>=2022.10.0,<2022.11.0'
+    discretize: '>=0.10.0,<0.11.0'
+  url: https://github.com/MiraGeoscience/simpeg-drivers/archive/refs/heads/develop.zip
+  hash:
+    sha256: ''
+  category: main
+  source:
+    type: url
+    url: https://github.com/MiraGeoscience/simpeg-drivers/archive/refs/heads/develop.zip#sha256=
+  optional: false
+- name: six
+  version: 1.16.0
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/d9/5a/e7c31adbe875f2abbb91bd84cf2dc52d792b5a01506781dbcf25c91daf11/six-1.16.0-py2.py3-none-any.whl
+  hash:
+    sha256: 8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254
+  category: main
+  optional: false
+- name: six
+  version: 1.16.0
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/d9/5a/e7c31adbe875f2abbb91bd84cf2dc52d792b5a01506781dbcf25c91daf11/six-1.16.0-py2.py3-none-any.whl
+  hash:
+    sha256: 8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254
+  category: main
+  optional: false
+- name: sortedcontainers
+  version: 2.4.0
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/32/46/9cb0e58b2deb7f82b84065f37f3bffeb12413f947f9388e4cac22c4621ce/sortedcontainers-2.4.0-py2.py3-none-any.whl
+  hash:
+    sha256: a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0
+  category: main
+  optional: false
+- name: sortedcontainers
+  version: 2.4.0
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/32/46/9cb0e58b2deb7f82b84065f37f3bffeb12413f947f9388e4cac22c4621ce/sortedcontainers-2.4.0-py2.py3-none-any.whl
+  hash:
+    sha256: a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0
+  category: main
+  optional: false
+- name: tbb
+  version: 2021.11.0
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/31/fc/eeb2ab19f26e608bda910350b6f0a06e8dd1b472049b175ca36df93c81ff/tbb-2021.11.0-py2.py3-none-manylinux1_x86_64.whl
+  hash:
+    sha256: 28a95e924a84dd201d9ea1b51cd89de259a866bafa0a29618f0e61339dd8f71c
+  category: main
+  optional: false
+- name: tblib
+  version: 3.0.0
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/9b/87/ce70db7cae60e67851eb94e1a2127d4abb573d3866d2efd302ceb0d4d2a5/tblib-3.0.0-py3-none-any.whl
+  hash:
+    sha256: 80a6c77e59b55e83911e1e607c649836a69c103963c5f28a46cbeef44acf8129
+  category: main
+  optional: false
+- name: tblib
+  version: 3.0.0
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/9b/87/ce70db7cae60e67851eb94e1a2127d4abb573d3866d2efd302ceb0d4d2a5/tblib-3.0.0-py3-none-any.whl
+  hash:
+    sha256: 80a6c77e59b55e83911e1e607c649836a69c103963c5f28a46cbeef44acf8129
+  category: main
+  optional: false
+- name: threadpoolctl
+  version: 3.2.0
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/81/12/fd4dea011af9d69e1cad05c75f3f7202cdcbeac9b712eea58ca779a72865/threadpoolctl-3.2.0-py3-none-any.whl
+  hash:
+    sha256: 2b7818516e423bdaebb97c723f86a7c6b0a83d3f3b0970328d66f4d9104dc032
+  category: main
+  optional: false
+- name: threadpoolctl
+  version: 3.2.0
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/81/12/fd4dea011af9d69e1cad05c75f3f7202cdcbeac9b712eea58ca779a72865/threadpoolctl-3.2.0-py3-none-any.whl
+  hash:
+    sha256: 2b7818516e423bdaebb97c723f86a7c6b0a83d3f3b0970328d66f4d9104dc032
+  category: main
+  optional: false
+- name: tornado
+  version: '6.1'
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/cf/44/cc9590db23758ee7906d40cacff06c02a21c2a6166602e095a56cbf2f6f6/tornado-6.1.tar.gz
+  hash:
+    sha256: 33c6e81d7bd55b468d2e793517c909b139960b6c790a60b7991b9b6b76fb9791
+  category: main
+  optional: false
+- name: tornado
+  version: '6.1'
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/cf/44/cc9590db23758ee7906d40cacff06c02a21c2a6166602e095a56cbf2f6f6/tornado-6.1.tar.gz
+  hash:
+    sha256: 33c6e81d7bd55b468d2e793517c909b139960b6c790a60b7991b9b6b76fb9791
+  category: main
+  optional: false
+- name: tqdm
+  version: 4.66.1
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/00/e5/f12a80907d0884e6dff9c16d0c0114d81b8cd07dc3ae54c5e962cc83037e/tqdm-4.66.1-py3-none-any.whl
+  hash:
+    sha256: d302b3c5b53d47bce91fea46679d9c3c6508cf6332229aa1e7d8653723793386
+  category: main
+  optional: false
+- name: tqdm
+  version: 4.66.1
+  manager: pip
+  platform: win-64
+  dependencies:
+    colorama: '*'
+  url: https://files.pythonhosted.org/packages/00/e5/f12a80907d0884e6dff9c16d0c0114d81b8cd07dc3ae54c5e962cc83037e/tqdm-4.66.1-py3-none-any.whl
+  hash:
+    sha256: d302b3c5b53d47bce91fea46679d9c3c6508cf6332229aa1e7d8653723793386
+  category: main
+  optional: false
+- name: tzdata
+  version: '2023.4'
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/a3/fb/52b62131e21b24ee297e4e95ed41eba29647dad0e0051a92bb66b43c70ff/tzdata-2023.4-py2.py3-none-any.whl
+  hash:
+    sha256: aa3ace4329eeacda5b7beb7ea08ece826c28d761cda36e747cfbf97996d39bf3
+  category: main
+  optional: false
+- name: tzdata
+  version: '2023.4'
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/a3/fb/52b62131e21b24ee297e4e95ed41eba29647dad0e0051a92bb66b43c70ff/tzdata-2023.4-py2.py3-none-any.whl
+  hash:
+    sha256: aa3ace4329eeacda5b7beb7ea08ece826c28d761cda36e747cfbf97996d39bf3
+  category: main
+  optional: false
+- name: urllib3
+  version: 2.2.0
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/88/75/311454fd3317aefe18415f04568edc20218453b709c63c58b9292c71be17/urllib3-2.2.0-py3-none-any.whl
+  hash:
+    sha256: ce3711610ddce217e6d113a2732fafad960a03fd0318c91faa79481e35c11224
+  category: main
+  optional: false
+- name: urllib3
+  version: 2.2.0
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/88/75/311454fd3317aefe18415f04568edc20218453b709c63c58b9292c71be17/urllib3-2.2.0-py3-none-any.whl
+  hash:
+    sha256: ce3711610ddce217e6d113a2732fafad960a03fd0318c91faa79481e35c11224
+  category: main
+  optional: false
+- name: utm
+  version: 0.7.0
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/f7/7e/629ddbe63164f71bf2b03e151a69bfbf439692652432af4b2a78f21b0a18/utm-0.7.0.tar.gz
+  hash:
+    sha256: 3c9a3650e98bb6eecec535418d0dfd4db8f88c8ceaca112a0ff0787e116566e2
+  category: main
+  optional: false
+- name: utm
+  version: 0.7.0
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/f7/7e/629ddbe63164f71bf2b03e151a69bfbf439692652432af4b2a78f21b0a18/utm-0.7.0.tar.gz
+  hash:
+    sha256: 3c9a3650e98bb6eecec535418d0dfd4db8f88c8ceaca112a0ff0787e116566e2
+  category: main
+  optional: false
+- name: vectormath
+  version: 0.2.2
+  manager: pip
+  platform: linux-64
+  dependencies:
+    numpy: '>=1.7'
+  url: https://files.pythonhosted.org/packages/be/d3/5d49b6e961d87ba4845205509fbd0f2fa39875859ccb5e4778035518b89f/vectormath-0.2.2.tar.gz
+  hash:
+    sha256: f9f9209d350ec89dc11e2548e0e6397c1b9489c8468eb50ce33788ee4322a7b8
+  category: main
+  optional: false
+- name: vectormath
+  version: 0.2.2
+  manager: pip
+  platform: win-64
+  dependencies:
+    numpy: '>=1.7'
+  url: https://files.pythonhosted.org/packages/be/d3/5d49b6e961d87ba4845205509fbd0f2fa39875859ccb5e4778035518b89f/vectormath-0.2.2.tar.gz
+  hash:
+    sha256: f9f9209d350ec89dc11e2548e0e6397c1b9489c8468eb50ce33788ee4322a7b8
+  category: main
+  optional: false
+- name: zarr
+  version: 2.14.2
+  manager: pip
+  platform: linux-64
+  dependencies:
+    asciitree: '*'
+    numpy: '>=1.20'
+    fasteners: '*'
+    numcodecs: '>=0.10.0'
+  url: https://files.pythonhosted.org/packages/7f/32/fd3560c7a721c4ff64ad482f75f759fd506431fb20e8f25a481175d908f9/zarr-2.14.2-py3-none-any.whl
+  hash:
+    sha256: feb72d6ccc43c447661861020dbf2e685a8367e80d890b6f5905954400394ed2
+  category: main
+  optional: false
+- name: zarr
+  version: 2.14.2
+  manager: pip
+  platform: win-64
+  dependencies:
+    asciitree: '*'
+    numpy: '>=1.20'
+    fasteners: '*'
+    numcodecs: '>=0.10.0'
+  url: https://files.pythonhosted.org/packages/7f/32/fd3560c7a721c4ff64ad482f75f759fd506431fb20e8f25a481175d908f9/zarr-2.14.2-py3-none-any.whl
+  hash:
+    sha256: feb72d6ccc43c447661861020dbf2e685a8367e80d890b6f5905954400394ed2
+  category: main
+  optional: false
+- name: zict
+  version: 3.0.0
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/80/ab/11a76c1e2126084fde2639514f24e6111b789b0bfa4fc6264a8975c7e1f1/zict-3.0.0-py2.py3-none-any.whl
+  hash:
+    sha256: 5796e36bd0e0cc8cf0fbc1ace6a68912611c1dbd74750a3f3026b9b9d6a327ae
+  category: main
+  optional: false
+- name: zict
+  version: 3.0.0
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/80/ab/11a76c1e2126084fde2639514f24e6111b789b0bfa4fc6264a8975c7e1f1/zict-3.0.0-py2.py3-none-any.whl
+  hash:
+    sha256: 5796e36bd0e0cc8cf0fbc1ace6a68912611c1dbd74750a3f3026b9b9d6a327ae
   category: main
   optional: false

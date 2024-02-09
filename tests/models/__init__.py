@@ -7,6 +7,8 @@
 
 import numpy as np
 from geoh5py.objects import Surface
+from geoh5py.ui_json import InputFile
+from octree_creation_app.constants import default_ui_json
 from octree_creation_app.driver import OctreeDriver
 from octree_creation_app.params import OctreeParams
 
@@ -39,6 +41,12 @@ def get_topo_mesh(workspace):
         "Refinement A levels": [4, 2, 1],
         "Refinement A type": "surface",
     }
-    driver = OctreeDriver(OctreeParams(**kwargs))
+
+    # TODO - remove this when we fix octree-creation-app/driver.run method.
+    #   Prefer to just dump kwargs into params class
+    ifile = InputFile(ui_json=dict(default_ui_json, **kwargs), validate=False)
+    ifile.write_ui_json(name="octree.ui.json", path=workspace.h5file.parent)
+
+    driver = OctreeDriver(OctreeParams(ifile))
     octree = driver.run()
     return topography, octree

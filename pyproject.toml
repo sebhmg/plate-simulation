@@ -39,6 +39,7 @@ Rtree = "~1.2.0"
 geoh5py = {version = "~0.9.0a1", source = "pypi", allow-prereleases = true}
 #geoh5py = { url = "https://github.com/MiraGeoscience/geoh5py/archive/refs/heads/main.tar.gz#sha256=" }
 octree-creation-app = {version = "0.1.0a2", source = "pypi", allow-prereleases = true}
+#octree-creation-app = {url="https://github.com/MiraGeoscience/octree-creation-app/archive/refs/heads/develop.zip#sha256="}
 mira-simpeg = {version = "~0.19.0.dev4", source = "pypi", optional = true}
 #simpeg-drivers = {version = "~0.1.0-alpha.1", source = "pypi", allow-prereleases = true}
 simpeg-drivers = { url = "https://github.com/MiraGeoscience/simpeg-drivers/archive/refs/heads/develop.zip#sha256=" }

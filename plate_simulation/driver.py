@@ -5,6 +5,10 @@
 #  All rights reserved.
 #
 
+from __future__ import annotations
+
+import numpy as np
+from geoh5py.objects import Octree
 from geoh5py.ui_json import InputFile
 from octree_creation_app.constants import default_ui_json
 from octree_creation_app.driver import OctreeDriver
@@ -21,9 +25,9 @@ from .simulations.params import SimulationParams
 class PlateSimulationDriver:
     def __init__(self, params: PlateSimulationParams):
         self.params = params
-        self._plate = None
-        self._mesh = None
-        self._model = None
+        self._plate: Plate | None = None
+        self._mesh: Octree | None = None
+        self._model: np.ndarray | None = None
 
     def run(self):
         """Create octree mesh, fill model, and simulate."""
@@ -60,7 +64,8 @@ class PlateSimulationDriver:
     @property
     def plate(self):
         if self._plate is None:
-            self._plate = Plate.from_params(self.params.model.plate)
+            self._plate = Plate(self.params.model.plate)
+            # self._plate = Plate.from_params(self.params.model.plate)
 
         return self._plate
 

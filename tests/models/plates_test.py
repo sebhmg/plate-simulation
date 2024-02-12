@@ -9,14 +9,16 @@ import numpy as np
 from geoapps_utils.transformations import rotate_xyz
 from geoh5py import Workspace
 
+from plate_simulation.models.params import PlateParams
 from plate_simulation.models.plates import Plate
 
 
 def test_plate(tmp_path):
     workspace = Workspace(tmp_path / "test.geoh5")
-    plate = Plate(
+    params = PlateParams(
         name="my plate",
         workspace=workspace,
+        anomaly=1.0,
         center_x=0.0,
         center_y=0.0,
         center_z=0.0,
@@ -24,6 +26,7 @@ def test_plate(tmp_path):
         width=10.0,
         depth=500.0,
     )
+    plate = Plate(params)
     vertical_striking_north = plate.surface
     assert vertical_striking_north.vertices is not None
     assert vertical_striking_north.extent is not None
@@ -41,20 +44,20 @@ def test_plate(tmp_path):
     )
     assert (
         vertical_striking_north.vertices[:, 0].mean()
-        == plate.center_x  # pylint: disable=no-member
+        == plate.params.center_x  # pylint: disable=no-member
     )
     assert (
         vertical_striking_north.vertices[:, 1].mean()
-        == plate.center_y  # pylint: disable=no-member
+        == plate.params.center_y  # pylint: disable=no-member
     )
     assert (
         vertical_striking_north.vertices[:, 2].mean()
-        == plate.center_z  # pylint: disable=no-member
+        == plate.params.center_z  # pylint: disable=no-member
     )
-
-    plate = Plate(
+    params = PlateParams(
         name="my other plate",
         workspace=workspace,
+        anomaly=1.0,
         center_x=0.0,
         center_y=0.0,
         center_z=0.0,
@@ -65,15 +68,17 @@ def test_plate(tmp_path):
         azimuth=0.0,
         reference="center",
     )
+    plate = Plate(params)
     dipping_striking_north = plate.surface
     locs = rotate_xyz(dipping_striking_north.vertices, [0.0, 0.0, 0.0], -90.0, 0.0)
     locs = rotate_xyz(locs, [0.0, 0.0, 0.0], 0.0, 45.0)
     locs = rotate_xyz(locs, [0.0, 0.0, 0.0], 90.0, 0.0)
     assert np.allclose(locs, vertical_striking_north.vertices)
 
-    plate = Plate(
+    params = PlateParams(
         name="my third plate",
         workspace=workspace,
+        anomaly=1.0,
         center_x=0.0,
         center_y=0.0,
         center_z=0.0,
@@ -84,6 +89,7 @@ def test_plate(tmp_path):
         azimuth=45.0,
         reference="center",
     )
+    plate = Plate(params)
     vertical_striking_northeast = plate.surface
     locs = rotate_xyz(vertical_striking_northeast.vertices, [0.0, 0.0, 0.0], 45.0, 0.0)
     assert np.allclose(locs, vertical_striking_north.vertices)

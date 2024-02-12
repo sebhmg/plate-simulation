@@ -8,49 +8,24 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
-from typing import Optional
 
 import numpy as np
 from geoapps_utils.transformations import rotate_xyz
-from geoh5py import Workspace
 from geoh5py.objects import Surface
-from pydantic import BaseModel, ConfigDict
 
 from plate_simulation.models.params import PlateParams
 
 
-class Plate(BaseModel):
+class Plate:
     """
     Define a rotated rectangular block in 3D space
-    :param center_x: X-coordinate of the center of the block.
-    :param center_y: Y-coordinate of the center of the block.
-    :param center_z: Z-coordinate of the center of the block.
-    :param length: U-size of the block.
-    :param width:  V-size of the block.
-    :param depth:  W-size of the block.
-    :param dip: Orientation of the u-axis in degree from horizontal.
-    :param azimuth: Orientation of the u axis in degree from north.
-    :param reference: Point of rotation to be 'center' or 'top'.
+
+    :param params: Parameters describing the plate.
     """
 
-    model_config = ConfigDict(arbitrary_types_allowed=True)
-
-    name: str
-    workspace: Workspace
-    center_x: float
-    center_y: float
-    center_z: float
-    length: float
-    width: float
-    depth: float
-    dip: float = 0.0
-    azimuth: float = 0.0
-    reference: str = "center"
-    _surface: Optional[Surface] = None
-
-    @classmethod
-    def from_params(cls, params: PlateParams):
-        return cls(**params.__dict__)
+    def __init__(self, params: PlateParams):
+        self.params = params
+        self._surface: Surface | None = None
 
     @property
     def surface(self) -> Surface:
@@ -58,10 +33,10 @@ class Plate(BaseModel):
 
         if self._surface is None:
             self._surface = Surface.create(
-                self.workspace,
+                self.params.workspace,
                 vertices=self.vertices,
                 cells=self.triangles,
-                name=self.name,
+                name=self.params.name,
             )
         return self._surface
 
@@ -69,9 +44,9 @@ class Plate(BaseModel):
     def center(self) -> Sequence[float]:
         """Center of the block."""
         return [
-            self.center_x,  # pylint: disable=no-member
-            self.center_y,  # pylint: disable=no-member
-            self.center_z,  # pylint: disable=no-member
+            self.params.center_x,
+            self.params.center_y,
+            self.params.center_z,
         ]
 
     @property
@@ -98,12 +73,12 @@ class Plate(BaseModel):
     def vertices(self) -> np.ndarray:
         """Vertices for triangulation of a rectangular prism in 3D space."""
 
-        x_1 = self.center_x - (self.length / 2.0)  # pylint:disable=no-member
-        x_2 = self.center_x + (self.length / 2.0)  # pylint:disable=no-member
-        y_1 = self.center_y - (self.width / 2.0)  # pylint:disable=no-member
-        y_2 = self.center_y + (self.width / 2.0)  # pylint:disable=no-member
-        z_1 = self.center_z - (self.depth / 2.0)  # pylint:disable=no-member
-        z_2 = self.center_z + (self.depth / 2.0)  # pylint:disable=no-member
+        x_1 = self.params.center_x - (self.params.length / 2.0)
+        x_2 = self.params.center_x + (self.params.length / 2.0)
+        y_1 = self.params.center_y - (self.params.width / 2.0)
+        y_2 = self.params.center_y + (self.params.width / 2.0)
+        z_1 = self.params.center_z - (self.params.depth / 2.0)
+        z_2 = self.params.center_z + (self.params.depth / 2.0)
 
         vertices = np.array(
             [
@@ -123,15 +98,15 @@ class Plate(BaseModel):
     def _rotate(self, vertices: np.ndarray) -> np.ndarray:
         """Rotate vertices and adjust for reference point."""
 
-        theta = (450.0 - np.asarray(self.azimuth)) % 360.0
-        phi = -self.dip
+        theta = (450.0 - np.asarray(self.params.azimuth)) % 360.0
+        phi = -self.params.dip
         rotated_vertices = rotate_xyz(vertices, self.center, theta, phi)
 
-        if self.reference == "top":
+        if self.params.reference == "top":
             offset = np.mean(rotated_vertices[4:, :], axis=0) - self.center
-            self.center_x -= offset[0]  # pylint: disable=no-member
-            self.center_y -= offset[1]  # pylint: disable=no-member
-            self.center_z -= offset[2]  # pylint: disable=no-member
+            self.params.center_x -= offset[0]
+            self.params.center_y -= offset[1]
+            self.params.center_z -= offset[2]
             rotated_vertices -= offset
 
         return rotated_vertices

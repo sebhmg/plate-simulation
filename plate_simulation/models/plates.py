@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+from typing import Optional
 
 import numpy as np
 from geoapps_utils.transformations import rotate_xyz
@@ -45,7 +46,7 @@ class Plate(BaseModel):
     dip: float = 0.0
     azimuth: float = 0.0
     reference: str = "center"
-    _surface: Surface | None = None
+    _surface: Optional[Surface] = None
 
     @classmethod
     def from_params(cls, params: PlateParams):

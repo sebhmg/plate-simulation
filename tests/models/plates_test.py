@@ -40,14 +40,17 @@ def test_plate(tmp_path):
         500.0,
     )
     assert (
-        vertical_striking_north.vertices[:, 0].mean() == plate.center_x
-    )  # pylint: disable=no-member
+        vertical_striking_north.vertices[:, 0].mean()
+        == plate.center_x  # pylint: disable=no-member
+    )
     assert (
-        vertical_striking_north.vertices[:, 1].mean() == plate.center_y
-    )  # pylint: disable=no-member
+        vertical_striking_north.vertices[:, 1].mean()
+        == plate.center_y  # pylint: disable=no-member
+    )
     assert (
-        vertical_striking_north.vertices[:, 2].mean() == plate.center_z
-    )  # pylint: disable=no-member
+        vertical_striking_north.vertices[:, 2].mean()
+        == plate.center_z  # pylint: disable=no-member
+    )
 
     plate = Plate(
         name="my other plate",

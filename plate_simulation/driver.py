@@ -65,7 +65,6 @@ class PlateSimulationDriver:
     def plate(self):
         if self._plate is None:
             self._plate = Plate(self.params.model.plate)
-            # self._plate = Plate.from_params(self.params.model.plate)
 
         return self._plate
 

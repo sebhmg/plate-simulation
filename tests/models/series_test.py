@@ -87,6 +87,7 @@ def test_scenario(tmp_path):
             match="Overburden events must occur before the final erosion in the history.",
         ):
             Scenario(
+                workspace=ws,
                 mesh=octree,
                 background=0.0,
                 history=[lithology, erosion, overburden],
@@ -98,6 +99,7 @@ def test_scenario(tmp_path):
             match="The last event in a geological history must be an erosion.",
         ):
             Scenario(
+                workspace=ws,
                 mesh=octree,
                 background=0.0,
                 history=[overburden, lithology],
@@ -105,6 +107,7 @@ def test_scenario(tmp_path):
             )
 
         scenario = Scenario(
+            workspace=ws,
             mesh=octree,
             background=0.0,
             history=[lithology, overburden, erosion],

@@ -13,6 +13,7 @@ import numpy as np
 from geoapps_utils.transformations import rotate_xyz
 from geoh5py import Workspace
 from geoh5py.objects import Surface
+from geoh5py.shared.utils import fetch_active_workspace
 
 from plate_simulation.models.params import PlateParams
 
@@ -34,12 +35,13 @@ class Plate:
         """Surface of plate"""
 
         if self._surface is None:
-            self._surface = Surface.create(
-                self.workspace,
-                vertices=self.vertices,
-                cells=self.triangles,
-                name=self.params.name,
-            )
+            with fetch_active_workspace(self.workspace, mode="r+"):
+                self._surface = Surface.create(
+                    self.workspace,
+                    vertices=self.vertices,
+                    cells=self.triangles,
+                    name=self.params.name,
+                )
         return self._surface
 
     @property

@@ -19,7 +19,7 @@ class SimulationParams:
         if input_file.data["inversion_type"] == "gravity":
             from simpeg_drivers.potential_fields.gravity.params import GravityParams
 
-            return GravityParams(input_file=input_file)
+            return GravityParams(input_file=input_file, validate=False)
 
         raise NotImplementedError(
             f"Unknown inversion type: {input_file.data['inversion_type']}"

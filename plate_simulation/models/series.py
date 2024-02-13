@@ -11,7 +11,9 @@ from collections.abc import Sequence
 from typing import TYPE_CHECKING
 
 import numpy as np
+from geoh5py import Workspace
 from geoh5py.objects import Octree
+from geoh5py.shared.utils import fetch_active_workspace
 
 from .events import Erosion, Overburden
 
@@ -73,12 +75,14 @@ class Scenario(Series):
 
     def __init__(
         self,
+        workspace: Workspace,
         mesh: Octree,
         background: float,
         history: Sequence[Event | Series],
         name: str = "model",
     ):
         super().__init__(history)
+        self.workspace = workspace
         self.mesh = mesh
         self.background = background
         self.history = Geology(history)
@@ -96,8 +100,13 @@ class Scenario(Series):
 
     def geologize(self):
         """Realize the geological events in the scenario"""
-        model = super().realize(self.mesh, np.ones(self.mesh.n_cells) * self.background)
-        return self.mesh.add_data({self.name: {"values": model}})
+        with fetch_active_workspace(self.workspace, mode="r+"):
+            geology = super().realize(
+                self.mesh, np.ones(self.mesh.n_cells) * self.background
+            )
+            model = self.mesh.add_data({self.name: {"values": geology}})
+
+        return model
 
 
 class GeologyViolationError(Exception):

@@ -11,6 +11,7 @@ from pathlib import Path
 
 import numpy as np
 from geoh5py.objects import Octree
+from geoh5py.shared.utils import fetch_active_workspace
 from geoh5py.ui_json import InputFile
 from octree_creation_app.constants import default_ui_json
 from octree_creation_app.driver import OctreeDriver
@@ -39,18 +40,17 @@ class PlateSimulationDriver:
         params.mesh = self.mesh
         params.starting_model = self.model
         driver = InversionDriver(params)
-        driver.run()
+        with fetch_active_workspace(self.params.workspace, mode="r+"):
+            driver.run()
         return self.model
 
     @property
     def survey(self):
-        assert (
-            self.params.simulation.options is not None
-        ), "SimPEGGroup options must be set."
+        if self.params.simulation.options is None:
+            raise ValueError("Simulation options must be set.")
         survey = self.params.simulation.options["data_object"]["value"]
-        # TODO: why do I need to open here?
-        survey.workspace.open()
-        return survey
+        with fetch_active_workspace(survey.workspace, mode="r"):
+            return survey.copy(parent=self.params.workspace)
 
     @property
     def mesh(self):
@@ -124,6 +124,7 @@ class PlateSimulationDriver:
         )
 
         scenario = Scenario(
+            workspace=self.params.workspace,
             mesh=self.mesh,
             background=self.params.model.background,
             history=[anomaly, overburden, erosion],

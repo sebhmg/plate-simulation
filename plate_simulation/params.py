@@ -5,6 +5,7 @@
 #  All rights reserved.
 #
 
+from geoh5py import Workspace
 from geoh5py.groups import SimPEGGroup
 from geoh5py.objects import Surface
 from octree_creation_app.params import OctreeParams
@@ -18,6 +19,7 @@ class PlateSimulationParams(BaseModel):
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
+    workspace: Workspace
     topography: Surface
     octree: OctreeParams
     model: ModelParams

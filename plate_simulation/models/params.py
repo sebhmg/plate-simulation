@@ -5,7 +5,6 @@
 #  All rights reserved.
 #
 
-from geoh5py import Workspace
 from pydantic import BaseModel, ConfigDict
 
 
@@ -30,7 +29,6 @@ class PlateParams(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     name: str
-    workspace: Workspace
     anomaly: float
     center_x: float
     center_y: float

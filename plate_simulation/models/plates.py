@@ -11,6 +11,7 @@ from collections.abc import Sequence
 
 import numpy as np
 from geoapps_utils.transformations import rotate_xyz
+from geoh5py import Workspace
 from geoh5py.objects import Surface
 
 from plate_simulation.models.params import PlateParams
@@ -23,7 +24,8 @@ class Plate:
     :param params: Parameters describing the plate.
     """
 
-    def __init__(self, params: PlateParams):
+    def __init__(self, workspace: Workspace, params: PlateParams):
+        self.workspace = workspace
         self.params = params
         self._surface: Surface | None = None
 
@@ -33,7 +35,7 @@ class Plate:
 
         if self._surface is None:
             self._surface = Surface.create(
-                self.params.workspace,
+                self.workspace,
                 vertices=self.vertices,
                 cells=self.triangles,
                 name=self.params.name,

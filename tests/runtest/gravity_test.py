@@ -43,7 +43,6 @@ def test_gravity_plate_simulation(tmp_path):
 
         plate_params = PlateParams(
             name="plate",
-            workspace=ws,
             anomaly=0.75,
             center_x=0.0,
             center_y=0.0,
@@ -74,6 +73,7 @@ def test_gravity_plate_simulation(tmp_path):
         gravity_inversion.options = options
 
         params = PlateSimulationParams(
+            workspace=ws,
             topography=topography,
             octree=octree_params,
             model=model_params,

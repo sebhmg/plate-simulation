@@ -64,7 +64,6 @@ def test_anomaly(tmp_path):
         _, octree = get_topo_mesh(ws)
         params = PlateParams(
             name="my plate",
-            workspace=ws,
             anomaly=10.0,
             center_x=5.0,
             center_y=5.0,
@@ -73,7 +72,7 @@ def test_anomaly(tmp_path):
             width=10.0,
             depth=1.0,
         )
-        plate = Plate(params)
+        plate = Plate(ws, params)
         anomaly = Anomaly(surface=plate.surface, value=10.0)
         model = anomaly.realize(mesh=octree, model=np.ones(octree.n_cells))
         data = octree.add_data({"model": {"values": model}})

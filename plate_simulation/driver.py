@@ -7,6 +7,8 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import numpy as np
 from geoh5py.objects import Octree
 from geoh5py.ui_json import InputFile
@@ -41,10 +43,6 @@ class PlateSimulationDriver:
         return self.model
 
     @property
-    def workspace(self):
-        return self.params.model.plate.workspace
-
-    @property
     def survey(self):
         assert (
             self.params.simulation.options is not None
@@ -64,7 +62,7 @@ class PlateSimulationDriver:
     @property
     def plate(self):
         if self._plate is None:
-            self._plate = Plate(self.params.model.plate)
+            self._plate = Plate(self.params.workspace, self.params.model.plate)
 
         return self._plate
 
@@ -79,9 +77,16 @@ class PlateSimulationDriver:
         # TODO Prefer to dump params directly to OctreeParams.  Need to fix
         #   octree-creation-app/driver.run method.
         kwargs = {
-            "geoh5": self.workspace,
+            "geoh5": self.params.workspace,
             "objects": self.survey,
-            **dict(self.params.octree),
+            "u_cell_size": self.params.octree.u_cell_size,
+            "v_cell_size": self.params.octree.v_cell_size,
+            "w_cell_size": self.params.octree.w_cell_size,
+            "horizontal_padding": self.params.octree.horizontal_padding,
+            "vertical_padding": self.params.octree.vertical_padding,
+            "depth_core": self.params.octree.depth_core,
+            "minimum_level": self.params.octree.minimum_level,
+            "diagonal_balance": self.params.octree.diagonal_balance,
             "Refinement A object": self.params.topography,
             "Refinement A levels": [0, 2],
             "Refinement A type": "surface",
@@ -93,7 +98,11 @@ class PlateSimulationDriver:
             "Refinement C type": "surface",
         }
         ifile = InputFile(ui_json=dict(default_ui_json, **kwargs), validate=False)
-        ifile.write_ui_json(name="octree.ui.json", path=self.workspace.h5file.parent)
+        if not isinstance(self.params.workspace.h5file, Path):
+            raise ValueError("Workspace h5file must be a Path object.")
+        ifile.write_ui_json(
+            name="octree.ui.json", path=self.params.workspace.h5file.parent
+        )
         params = OctreeParams(ifile)
 
         octree_driver = OctreeDriver(params)

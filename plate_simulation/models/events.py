@@ -149,12 +149,21 @@ class Boundary:
 
 
 class Body:
-    """Represents a closed surface in the model."""
+    """
+    Represents a closed surface in the model.
+
+    :param surface: geoh5py Surface object representing a closed surface
+    """
 
     def __init__(self, surface: Surface):
         self.surface = surface
 
-    def mask(self, mesh: Octree):
+    def mask(self, mesh: Octree) -> np.ndarray:
+        """
+        True for cells that lie within the closed surface.
+
+        :param mesh: Octree mesh on which the mask is computed.
+        """
         triangulation = Trimesh(
             vertices=self.surface.vertices, faces=self.surface.cells
         )

@@ -9,8 +9,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import numpy as np
-from geoh5py.objects import Octree
+from geoh5py.data import FloatData
+from geoh5py.objects import Octree, Points
 from geoh5py.shared.utils import fetch_active_workspace
 from geoh5py.ui_json import InputFile
 from octree_creation_app.constants import default_ui_json
@@ -26,13 +26,24 @@ from .simulations.params import SimulationParams
 
 
 class PlateSimulationDriver:
+    """
+    Driver for simulating background + plate + overburden model.
+
+    :param params: Parameters for plate simulation (mesh, model and
+        simulations).
+    :param plate: Plate object used to add anomaly to the model.
+    :param mesh: Octree mesh in which model is built for the simulation.
+    :param model: Model to simulate.
+    :param survey: Survey object for the simulation
+    """
+
     def __init__(self, params: PlateSimulationParams):
         self.params = params
         self._plate: Plate | None = None
         self._mesh: Octree | None = None
-        self._model: np.ndarray | None = None
+        self._model: FloatData | None = None
 
-    def run(self):
+    def run(self) -> FloatData:
         """Create octree mesh, fill model, and simulate."""
 
         params = SimulationParams.from_simpeg_group(self.params.simulation)
@@ -42,10 +53,12 @@ class PlateSimulationDriver:
         driver = InversionDriver(params)
         with fetch_active_workspace(self.params.workspace, mode="r+"):
             driver.run()
+
         return self.model
 
     @property
-    def survey(self):
+    def survey(self) -> Points:
+        """Returns the survey object from the SimPEGGroup."""
         if self.params.simulation.options is None:
             raise ValueError("Simulation options must be set.")
         survey = self.params.simulation.options["data_object"]["value"]
@@ -53,27 +66,35 @@ class PlateSimulationDriver:
             return survey.copy(parent=self.params.workspace)
 
     @property
-    def mesh(self):
+    def mesh(self) -> Octree:
+        """Returns an octree mesh built from mesh parameters."""
         if self._mesh is None:
             self._mesh = self.make_mesh()
 
         return self._mesh
 
     @property
-    def plate(self):
+    def plate(self) -> Plate:
+        """Returns the plate object built from plate parameters."""
         if self._plate is None:
             self._plate = Plate(self.params.workspace, self.params.model.plate)
 
         return self._plate
 
     @property
-    def model(self):
+    def model(self) -> FloatData:
+        """Returns the model built from model parameters."""
         if self._model is None:
             self._model = self.make_model()
 
         return self._model
 
-    def make_mesh(self):
+    def make_mesh(self) -> Octree:
+        """
+        Build specialized mesh for plate simulation from parameters.
+
+        Mesh contains refinements for topography and any plates.
+        """
         # TODO Prefer to dump params directly to OctreeParams.  Need to fix
         #   octree-creation-app/driver.run method.
         kwargs = {
@@ -108,7 +129,9 @@ class PlateSimulationDriver:
         octree_driver = OctreeDriver(params)
         return octree_driver.run()
 
-    def make_model(self):
+    def make_model(self) -> FloatData:
+        """Create background + plate and overburden model from parameters."""
+
         overburden = Overburden(
             topography=self.params.topography,
             thickness=self.params.model.overburden.thickness,

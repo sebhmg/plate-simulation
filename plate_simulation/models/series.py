@@ -12,6 +12,7 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 from geoh5py import Workspace
+from geoh5py.data import FloatData
 from geoh5py.objects import Octree
 from geoh5py.shared.utils import fetch_active_workspace
 
@@ -34,8 +35,13 @@ class Series:
     def __init__(self, history: Sequence[Event | Series] | Geology):
         self.history = history
 
-    def realize(self, mesh: Octree, model: np.ndarray):
-        """Realize each event in the history."""
+    def realize(self, mesh: Octree, model: np.ndarray) -> np.ndarray:
+        """
+        Realize each event in the history.
+
+        :param mesh: Octree mesh on which the model is defined.
+        :param model: Model to be updated by the events in the history.
+        """
 
         for event in self.history:
             model = event.realize(mesh, model)
@@ -58,7 +64,12 @@ class Lithology(Series):
         super().__init__(history[::-1])
 
     def realize(self, mesh: Octree, model) -> np.ndarray:
-        """Fills the model with the sequence of layers in the history."""
+        """
+        Fills the model with the sequence of layers in the history.
+
+        :param mesh: Octree mesh on which the model is defined.
+        :param model: Model to be updated by the events in the history.
+        """
         return super().realize(mesh, model)
 
 
@@ -66,6 +77,7 @@ class Scenario(Series):
     """
     Model a sequence of geological events within an Octree mesh.
 
+    :param workspace: Workspace in which the model will be created.
     :param mesh: Octree mesh on which the model is defined.
     :param background: Initial value that will fill any areas of the model
         not covered by event realizations.
@@ -89,22 +101,27 @@ class Scenario(Series):
         self.name = name
 
     @property
-    def mesh(self):
+    def mesh(self) -> Octree:
+        """Octree mesh on which the model is defined."""
         return self._mesh
 
     @mesh.setter
-    def mesh(self, val):
+    def mesh(self, val: Octree):
         if val.n_cells is None:
             raise ValueError("Mesh must have n_cells.")
         self._mesh = val
 
-    def geologize(self):
+    def geologize(self) -> FloatData:
         """Realize the geological events in the scenario"""
         with fetch_active_workspace(self.workspace, mode="r+"):
+            if self.mesh.n_cells is None:
+                raise ValueError("Mesh must have n_cells.")
             geology = super().realize(
                 self.mesh, np.ones(self.mesh.n_cells) * self.background
             )
-            model = self.mesh.add_data({self.name: {"values": geology}})
+            model: FloatData = self.mesh.add_data(  # type: ignore
+                {self.name: {"values": geology}}
+            )
 
         return model
 
@@ -130,7 +147,8 @@ class Geology:
         return iter(self.history)
 
     @property
-    def history(self):
+    def history(self) -> Sequence[Event | Series]:
+        """Sequence of geological events."""
         return self._history
 
     @history.setter

@@ -22,7 +22,9 @@ class Plate:
     """
     Define a rotated rectangular block in 3D space
 
+    :param workspace: Workspace to create the plate surface in.
     :param params: Parameters describing the plate.
+    :param surface: Surface object representing the plate.
     """
 
     def __init__(self, workspace: Workspace, params: PlateParams):

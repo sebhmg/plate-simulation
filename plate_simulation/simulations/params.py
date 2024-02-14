@@ -7,18 +7,19 @@
 
 from geoh5py.groups import SimPEGGroup
 from geoh5py.ui_json import InputFile
+from simpeg_drivers.params import InversionBaseParams
+from simpeg_drivers.potential_fields.gravity.params import GravityParams
 
 # pylint: disable=import-outside-toplevel, too-few-public-methods
 
 
 class SimulationParams:
+    # TODO fill in params options
     @classmethod
-    def from_simpeg_group(cls, group: SimPEGGroup):
+    def from_simpeg_group(cls, group: SimPEGGroup) -> InversionBaseParams:
         input_file = InputFile(ui_json=group.options, validate=False)
         assert input_file.data is not None, "Input file data must be set."
         if input_file.data["inversion_type"] == "gravity":
-            from simpeg_drivers.potential_fields.gravity.params import GravityParams
-
             return GravityParams(input_file=input_file, validate=False)
 
         raise NotImplementedError(

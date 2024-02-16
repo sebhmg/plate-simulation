@@ -33,6 +33,7 @@ repos:
     hooks:
     -   id: pyupgrade
         args: [--py39-plus]
+#        exclude: plates
 -   repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.6.1
     hooks:
@@ -41,7 +42,7 @@ repos:
             numpy==1.23.*,
             types-toml,
             types-PyYAML,
-            tomli # to read config from pyproject.toml
+            tomli, # to read config from pyproject.toml
         ]
 -   repo: https://github.com/codingjoe/relint
     rev: 3.1.0

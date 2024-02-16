@@ -36,7 +36,8 @@
 
 plate-simulation: # TODO: SHORT DESCRIPTION
 =========================================================================
-The **plate-simulation** library # TODO: PACKAGE DESCRIPTION
+**plate-simulation** is a package for creating a specialized mesh, model and simulation for
+a particular parameterization of the halfspace + overburden and plate geological setting.
 
 .. contents:: Table of Contents
    :local:

@@ -1,0 +1,166 @@
+{
+  "title": "Plate simulation",
+  "simulation": {
+    "main": true,
+    "label": "TEM Survey",
+    "groupType": "{55ed3daf-c192-4d4b-a439-60fa987fe2b8}",
+    "value": "",
+    "enabled": true
+  },
+  "name": {
+    "main": true,
+    "label": "Label",
+    "value": "simulation",
+    "enabled": true
+  },
+  "export_model": {
+    "main": true,
+    "label": "Export mesh/model",
+    "value": true,
+    "enabled": true
+  },
+  "basement_resistivity": {
+    "main": true,
+    "group": "Basement",
+    "label": "Resistivity",
+    "value": 2000.0,
+    "enabled": true
+  },
+  "overburden_resistivity": {
+    "main": true,
+    "group": "Overburden",
+    "label": "Resistivity",
+    "value": 8000.0,
+    "enabled": true
+  },
+  "overburden_thickness": {
+    "main": true,
+    "group": "Overburden",
+    "label": "Thickness",
+    "value": 200.0,
+    "enabled": true
+  },
+  "n_plates": {
+    "main": true,
+    "group": "Plate Sequence",
+    "label": "Number of plates",
+    "value": 1,
+    "enabled": true
+  },
+  "plate_seperation": {
+    "main": true,
+    "group": "Plate Sequence",
+    "label": "Plate Seperation",
+    "value": 200.0,
+    "enabled": true
+  },
+  "plate_resistivity": {
+    "main": true,
+    "group": "Plate",
+    "label": "Resistivity",
+    "value": 20.0,
+    "enabled": true
+  },
+  "x": {
+    "label": "Easting",
+    "group": "Plate",
+    "main": true,
+    "value": 0.0,
+    "enabled": true
+  },
+  "y": {
+    "label": "Northing",
+    "main": true,
+    "group": "Plate",
+    "value": 0.0,
+    "enabled": true
+  },
+  "z": {
+    "label": "Elevation",
+    "main": true,
+    "group": "Plate",
+    "value": -200.0,
+    "enabled": true
+  },
+  "width": {
+    "label": "Thickness",
+    "group": "Plate",
+    "main": true,
+    "value": 90.0,
+    "enabled": true
+  },
+  "strike_length": {
+    "label": "Strike Length",
+    "group": "Plate",
+    "main": true,
+    "value": 800.0,
+    "enabled": true
+  },
+  "dip_length": {
+    "label": "Dip Length",
+    "group": "Plate",
+    "main": true,
+    "value": 800.0,
+    "enabled": true
+  },
+  "dip": {
+    "label": "Dip",
+    "group": "Plate",
+    "main": true,
+    "value": 60.0,
+    "enabled": true
+  },
+  "dip_direction": {
+    "label": "Dip Direction",
+    "group": "Plate",
+    "main": true,
+    "value": 90.0,
+    "enabled": true
+  },
+  "u_cell_size": {
+    "min": 0.0,
+    "group": "Mesh",
+    "label": "Easting core cell size (m)",
+    "value": 25.0,
+    "enabled": true
+  },
+  "v_cell_size": {
+    "min": 0.0,
+    "group": "Mesh",
+    "label": "Northing core cell size (m)",
+    "value": 25.0,
+    "enabled": true
+  },
+  "w_cell_size": {
+    "min": 0.0,
+    "group": "Mesh",
+    "label": "Vertical core cell size (m)",
+    "value": 25.0,
+    "enabled": true
+  },
+  "depth_core": {
+    "min": 0.0,
+    "group": "Mesh",
+    "label": "Depth of core refinement volume",
+    "value": 500.0,
+    "enabled": true
+  },
+  "max_distance": {
+    "min": 0.0,
+    "group": "Mesh",
+    "label": "Maximum padding distance",
+    "value": 200.0,
+    "enabled": true
+  },
+  "padding_distance": {
+    "min": 0.0,
+    "group": "Mesh",
+    "label": "Padding distance",
+    "value": 1000.0,
+    "enabled": true
+  },
+  "run_command": "orano.plate_simulation.driver",
+  "conda_environment": "orano_project",
+  "monitoring_directory": "",
+  "geoh5": "C:/Users/Benjamink/Projects/Orano/test_sweep/plate_modelling.ui.geoh5"
+}

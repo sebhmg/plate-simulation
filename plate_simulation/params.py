@@ -5,8 +5,8 @@
 #  All rights reserved.
 #
 
+from geoapps_utils.driver.params import BaseParams
 from geoh5py import Workspace
-from geoh5py.groups import SimPEGGroup
 from geoh5py.objects import Surface
 from octree_creation_app.params import OctreeParams
 from pydantic import BaseModel, ConfigDict
@@ -33,4 +33,4 @@ class PlateSimulationParams(BaseModel):
     topography: Surface
     octree: OctreeParams
     model: ModelParams
-    simulation: SimPEGGroup
+    simulation: BaseParams

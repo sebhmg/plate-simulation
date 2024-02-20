@@ -15,6 +15,7 @@ from simpeg_drivers.constants import default_ui_json
 from plate_simulation.driver import PlateSimulationDriver
 from plate_simulation.models.params import ModelParams, OverburdenParams, PlateParams
 from plate_simulation.params import PlateSimulationParams
+from plate_simulation.simulations.params import SimulationParams
 
 from . import get_survey, get_topography
 
@@ -71,13 +72,14 @@ def test_gravity_plate_simulation(tmp_path):
 
         gravity_inversion = SimPEGGroup.create(ws)
         gravity_inversion.options = options
+        simulation_params = SimulationParams.from_simpeg_group(gravity_inversion)
 
         params = PlateSimulationParams(
             workspace=ws,
             topography=topography,
             octree=octree_params,
             model=model_params,
-            simulation=gravity_inversion,
+            simulation=simulation_params,
         )
 
         driver = PlateSimulationDriver(params)

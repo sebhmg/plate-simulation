@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
 from geoh5py.data import FloatData
@@ -19,6 +20,7 @@ from octree_creation_app.params import OctreeParams
 from simpeg_drivers.driver import InversionDriver
 
 from .models.events import Anomaly, Erosion, Overburden
+from .models.params import ModelParams
 from .models.plates import Plate
 from .models.series import Scenario
 from .params import PlateSimulationParams
@@ -40,30 +42,30 @@ class PlateSimulationDriver:
     def __init__(self, params: PlateSimulationParams):
         self.params = params
         self._plate: Plate | None = None
+        self._survey: Points | None = None
         self._mesh: Octree | None = None
         self._model: FloatData | None = None
 
     def run(self) -> FloatData:
         """Create octree mesh, fill model, and simulate."""
-
-        params = SimulationParams.from_simpeg_group(self.params.simulation)
-        params.data_object = self.survey
-        params.mesh = self.mesh
-        params.starting_model = self.model
-        driver = InversionDriver(params)
+        self.params.simulation.mesh = self.mesh
+        self.params.simulation.starting_model = self.model
+        driver = InversionDriver(self.params.simulation)
         with fetch_active_workspace(self.params.workspace, mode="r+"):
             driver.run()
 
         return self.model
 
     @property
-    def survey(self) -> Points:
-        """Returns the survey object from the SimPEGGroup."""
-        if self.params.simulation.options is None:
-            raise ValueError("Simulation options must be set.")
-        survey = self.params.simulation.options["data_object"]["value"]
-        with fetch_active_workspace(survey.workspace, mode="r"):
-            return survey.copy(parent=self.params.workspace)
+    def survey(self):
+        if self._survey is None:
+            survey = self.params.simulation.data_object
+            with fetch_active_workspace(survey.workspace):
+                self._survey = self.params.simulation.data_object.copy(
+                    self.params.workspace
+                )
+
+        return self._survey
 
     @property
     def mesh(self) -> Octree:
@@ -127,7 +129,9 @@ class PlateSimulationDriver:
         params = OctreeParams(ifile)
 
         octree_driver = OctreeDriver(params)
-        return octree_driver.run()
+        mesh = octree_driver.run()
+
+        return mesh
 
     def make_model(self) -> FloatData:
         """Create background + plate and overburden model from parameters."""
@@ -155,3 +159,25 @@ class PlateSimulationDriver:
         )
 
         return scenario.geologize()
+
+    @staticmethod
+    def main(ifile: Path | InputFile):
+        """Run the plate simulation driver from an input file."""
+
+        if isinstance(ifile, Path):
+            ifile = InputFile.read_ui_json(ifile)
+
+        if ifile.data is None:
+            raise ValueError("Input file has no data loaded.")
+
+        params = PlateSimulationParams(
+            workspace=ifile.geoh5,
+            topography=ifile.data["topography"],
+            octree=OctreeParams(ifile.data),
+            model=ModelParams(ifile.data),
+            simulation=SimulationParams.from_simpeg_group(ifile.data["simulation"]),
+        )
+        _ = PlateSimulationDriver(params).run()
+
+    if __name__ == "__main__":
+        main(sys.argv[1])

@@ -2,7 +2,7 @@
   "title": "Plate simulation",
   "simulation": {
     "main": true,
-    "label": "TEM Survey",
+    "label": "TEM SimPEG Group",
     "groupType": "{55ed3daf-c192-4d4b-a439-60fa987fe2b8}",
     "value": "",
     "enabled": true
@@ -19,63 +19,49 @@
     "value": true,
     "enabled": true
   },
-  "basement_resistivity": {
+  "background": {
     "main": true,
     "group": "Basement",
-    "label": "Resistivity",
+    "label": "Basement",
     "value": 2000.0,
     "enabled": true
   },
-  "overburden_resistivity": {
+  "overburden": {
     "main": true,
     "group": "Overburden",
     "label": "Resistivity",
     "value": 8000.0,
     "enabled": true
   },
-  "overburden_thickness": {
+  "thickness": {
     "main": true,
     "group": "Overburden",
     "label": "Thickness",
     "value": 200.0,
     "enabled": true
   },
-  "n_plates": {
-    "main": true,
-    "group": "Plate Sequence",
-    "label": "Number of plates",
-    "value": 1,
-    "enabled": true
-  },
-  "plate_seperation": {
-    "main": true,
-    "group": "Plate Sequence",
-    "label": "Plate Seperation",
-    "value": 200.0,
-    "enabled": true
-  },
-  "plate_resistivity": {
+  "plate": {
     "main": true,
     "group": "Plate",
     "label": "Resistivity",
     "value": 20.0,
     "enabled": true
   },
-  "x": {
+  "center_x": {
     "label": "Easting",
     "group": "Plate",
     "main": true,
     "value": 0.0,
     "enabled": true
   },
-  "y": {
+  "center_y": {
     "label": "Northing",
     "main": true,
     "group": "Plate",
     "value": 0.0,
     "enabled": true
   },
-  "z": {
+  "center_z": {
     "label": "Elevation",
     "main": true,
     "group": "Plate",
@@ -159,8 +145,8 @@
     "value": 1000.0,
     "enabled": true
   },
-  "run_command": "orano.plate_simulation.driver",
-  "conda_environment": "orano_project",
+  "run_command": "plate_simulation.driver",
+  "conda_environment": "plate_simulation",
   "monitoring_directory": "",
-  "geoh5": "C:/Users/Benjamink/Projects/Orano/test_sweep/plate_modelling.ui.geoh5"
+  "geoh5": ""
 }

@@ -452,7 +452,7 @@ package:
   category: dev
   optional: true
 - name: coverage
-  version: 7.4.1
+  version: 7.4.2
   manager: conda
   platform: win-64
   dependencies:
@@ -462,10 +462,10 @@ package:
     ucrt: '>=10.0.20348.0'
     vc: '>=14.2,<15'
     vc14_runtime: '>=14.29.30139'
-  url: https://conda.anaconda.org/conda-forge/win-64/coverage-7.4.1-py39ha55989b_0.conda
+  url: https://conda.anaconda.org/conda-forge/win-64/coverage-7.4.2-py39ha55989b_0.conda
   hash:
-    md5: 6873406c3c78cd79dd60246a71934806
-    sha256: d3dc67f5e718f71ab8cb7d4eba90c765138b393358876dc6c6261fdadd7dfe1a
+    md5: 601b4a5fe991fedc24405a6e7109c800
+    sha256: 920547756f8d38c7a185e841435c7cd51fe77ef6fd1fc8fbe2b749863ef6ea87
   category: dev
   optional: true
 - name: cycler
@@ -4466,24 +4466,24 @@ package:
   manager: pip
   platform: linux-64
   dependencies:
-    tqdm: '>=4.64.0,<5.0.0'
-    discretize: '>=0.10.0,<0.11.0'
-    mkl: '>=2022.0.0,<2023.0.0'
-    mira-simpeg: '>=0.19.0.dev4,<0.20.0'
-    dask: '>=2022.10.0,<2022.11.0'
-    geoapps-utils: '>=0.3.0a1,<0.4.0'
-    zarr: '>=2.14.2,<2.15.0'
-    simpeg-archive: '>=0.11.0.dev6,<0.12.0'
-    numpy: '>=1.23.5,<1.24.0'
     param-sweeps: '>=0.1.7a1,<0.2.0'
-    scipy: '>=1.10.1,<1.11.0'
-    pymatsolver: '>=0.2.0,<0.3.0'
-    geoana: '>=0.4.0,<0.5.0'
-    octree-creation-app: '>=0.1.0a2,<0.2.0'
-    distributed: '>=2022.10.0,<2022.11.0'
-    geoh5py: '>=0.9.0a1,<0.10.0'
     pillow: '*'
+    mkl: '>=2022.0.0,<2023.0.0'
+    pymatsolver: '>=0.2.0,<0.3.0'
+    geoh5py: '>=0.9.0a1,<0.10.0'
+    scipy: '>=1.10.1,<1.11.0'
+    dask: '>=2022.10.0,<2022.11.0'
+    numpy: '>=1.23.5,<1.24.0'
     h5py: '*'
+    geoapps-utils: '>=0.3.0a1,<0.4.0'
+    octree-creation-app: '>=0.1.0a2,<0.2.0'
+    discretize: '>=0.10.0,<0.11.0'
+    distributed: '>=2022.10.0,<2022.11.0'
+    mira-simpeg: '>=0.19.0.dev4,<0.20.0'
+    simpeg-archive: '>=0.11.0.dev6,<0.12.0'
+    zarr: '>=2.14.2,<2.15.0'
+    tqdm: '>=4.64.0,<5.0.0'
+    geoana: '>=0.4.0,<0.5.0'
     pydiso: '>=0.0.3,<0.1.0'
   url: https://github.com/MiraGeoscience/simpeg-drivers/archive/refs/heads/develop.zip
   hash:
@@ -4498,24 +4498,24 @@ package:
   manager: pip
   platform: win-64
   dependencies:
-    tqdm: '>=4.64.0,<5.0.0'
-    discretize: '>=0.10.0,<0.11.0'
-    mkl: '>=2022.0.0,<2023.0.0'
-    mira-simpeg: '>=0.19.0.dev4,<0.20.0'
-    dask: '>=2022.10.0,<2022.11.0'
-    geoapps-utils: '>=0.3.0a1,<0.4.0'
-    zarr: '>=2.14.2,<2.15.0'
-    simpeg-archive: '>=0.11.0.dev6,<0.12.0'
-    numpy: '>=1.23.5,<1.24.0'
     param-sweeps: '>=0.1.7a1,<0.2.0'
-    scipy: '>=1.10.1,<1.11.0'
-    pymatsolver: '>=0.2.0,<0.3.0'
-    geoana: '>=0.4.0,<0.5.0'
-    octree-creation-app: '>=0.1.0a2,<0.2.0'
-    distributed: '>=2022.10.0,<2022.11.0'
-    geoh5py: '>=0.9.0a1,<0.10.0'
     pillow: '*'
+    mkl: '>=2022.0.0,<2023.0.0'
+    pymatsolver: '>=0.2.0,<0.3.0'
+    geoh5py: '>=0.9.0a1,<0.10.0'
+    scipy: '>=1.10.1,<1.11.0'
+    dask: '>=2022.10.0,<2022.11.0'
+    numpy: '>=1.23.5,<1.24.0'
     h5py: '*'
+    geoapps-utils: '>=0.3.0a1,<0.4.0'
+    octree-creation-app: '>=0.1.0a2,<0.2.0'
+    discretize: '>=0.10.0,<0.11.0'
+    distributed: '>=2022.10.0,<2022.11.0'
+    mira-simpeg: '>=0.19.0.dev4,<0.20.0'
+    simpeg-archive: '>=0.11.0.dev6,<0.12.0'
+    zarr: '>=2.14.2,<2.15.0'
+    tqdm: '>=4.64.0,<5.0.0'
+    geoana: '>=0.4.0,<0.5.0'
     pydiso: '>=0.0.3,<0.1.0'
   url: https://github.com/MiraGeoscience/simpeg-drivers/archive/refs/heads/develop.zip
   hash:

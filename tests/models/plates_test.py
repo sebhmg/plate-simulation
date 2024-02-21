@@ -21,9 +21,9 @@ def test_plate(tmp_path):
         center_x=0.0,
         center_y=0.0,
         center_z=0.0,
-        length=1000.0,
         width=10.0,
-        depth=500.0,
+        strike_length=1000.0,
+        dip_length=500.0,
     )
     plate = Plate(workspace, params)
     vertical_striking_north = plate.surface
@@ -59,11 +59,11 @@ def test_plate(tmp_path):
         center_x=0.0,
         center_y=0.0,
         center_z=0.0,
-        length=1000.0,
         width=10.0,
-        depth=500.0,
+        strike_length=1000.0,
+        dip_length=500.0,
         dip=45.0,
-        azimuth=0.0,
+        dip_direction=0.0,
         reference="center",
     )
     plate = Plate(workspace, params)
@@ -79,11 +79,11 @@ def test_plate(tmp_path):
         center_x=0.0,
         center_y=0.0,
         center_z=0.0,
-        length=1000.0,
         width=10.0,
-        depth=500.0,
+        strike_length=1000.0,
+        dip_length=500.0,
         dip=0.0,
-        azimuth=45.0,
+        dip_direction=45.0,
         reference="center",
     )
     plate = Plate(workspace, params)

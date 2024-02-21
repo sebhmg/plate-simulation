@@ -68,9 +68,9 @@ def test_anomaly(tmp_path):
             center_x=5.0,
             center_y=5.0,
             center_z=-1.5,
-            length=10.0,
             width=10.0,
-            depth=1.0,
+            strike_length=10.0,
+            dip_length=1.0,
         )
         plate = Plate(ws, params)
         anomaly = Anomaly(surface=plate.surface, value=10.0)

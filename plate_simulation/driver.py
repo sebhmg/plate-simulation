@@ -14,13 +14,12 @@ from geoh5py.data import FloatData
 from geoh5py.objects import Octree, Points
 from geoh5py.shared.utils import fetch_active_workspace
 from geoh5py.ui_json import InputFile
-from octree_creation_app.constants import default_ui_json
 from octree_creation_app.driver import OctreeDriver
-from octree_creation_app.params import OctreeParams
 from simpeg_drivers.driver import InversionDriver
 
+from .mesh.params import MeshParams
 from .models.events import Anomaly, Erosion, Overburden
-from .models.params import ModelParams
+from .models.params import ModelParams, OverburdenParams, PlateParams
 from .models.plates import Plate
 from .models.series import Scenario
 from .params import PlateSimulationParams
@@ -59,11 +58,7 @@ class PlateSimulationDriver:
     @property
     def survey(self):
         if self._survey is None:
-            survey = self.params.simulation.data_object
-            with fetch_active_workspace(survey.workspace):
-                self._survey = self.params.simulation.data_object.copy(
-                    self.params.workspace
-                )
+            self._survey = self.params.simulation.data_object
 
         return self._survey
 
@@ -97,39 +92,13 @@ class PlateSimulationDriver:
 
         Mesh contains refinements for topography and any plates.
         """
-        # TODO Prefer to dump params directly to OctreeParams.  Need to fix
-        #   octree-creation-app/driver.run method.
-        kwargs = {
-            "geoh5": self.params.workspace,
-            "objects": self.survey,
-            "u_cell_size": self.params.octree.u_cell_size,
-            "v_cell_size": self.params.octree.v_cell_size,
-            "w_cell_size": self.params.octree.w_cell_size,
-            "horizontal_padding": self.params.octree.horizontal_padding,
-            "vertical_padding": self.params.octree.vertical_padding,
-            "depth_core": self.params.octree.depth_core,
-            "minimum_level": self.params.octree.minimum_level,
-            "diagonal_balance": self.params.octree.diagonal_balance,
-            "Refinement A object": self.params.topography,
-            "Refinement A levels": [0, 2],
-            "Refinement A type": "surface",
-            "Refinement B object": self.survey,
-            "Refinement B levels": [4, 2],
-            "Refinement B type": "radial",
-            "Refinement C object": self.plate.surface,
-            "Refinement C levels": [4, 2],
-            "Refinement C type": "surface",
-        }
-        ifile = InputFile(ui_json=dict(default_ui_json, **kwargs), validate=False)
-        if not isinstance(self.params.workspace.h5file, Path):
-            raise ValueError("Workspace h5file must be a Path object.")
-        ifile.write_ui_json(
-            name="octree.ui.json", path=self.params.workspace.h5file.parent
-        )
-        params = OctreeParams(ifile)
 
-        octree_driver = OctreeDriver(params)
-        mesh = octree_driver.run()
+        octree_params = self.params.mesh.octree_params(
+            self.survey, self.params.simulation.topography_object, self.plate.surface
+        )
+        octree_driver = OctreeDriver(octree_params)
+        with self.survey.workspace.open():
+            mesh = octree_driver.run()
 
         return mesh
 
@@ -137,7 +106,7 @@ class PlateSimulationDriver:
         """Create background + plate and overburden model from parameters."""
 
         overburden = Overburden(
-            topography=self.params.topography,
+            topography=self.params.simulation.topography_object,
             thickness=self.params.model.overburden.thickness,
             value=self.params.model.overburden.value,
         )
@@ -147,7 +116,7 @@ class PlateSimulationDriver:
         )
 
         erosion = Erosion(
-            surface=self.params.topography,
+            surface=self.params.simulation.topography_object,
         )
 
         scenario = Scenario(
@@ -161,23 +130,68 @@ class PlateSimulationDriver:
         return scenario.geologize()
 
     @staticmethod
+    def params_from_input_file(ifile: InputFile) -> PlateSimulationParams:
+        """Parse a plate simulation input file into parameter object."""
+
+        if ifile.data is None:
+            raise ValueError("Input file has no data loaded.")
+        mesh_params = MeshParams(
+            u_cell_size=ifile.data["u_cell_size"],
+            v_cell_size=ifile.data["v_cell_size"],
+            w_cell_size=ifile.data["w_cell_size"],
+            padding_distance=ifile.data["padding_distance"],
+            depth_core=ifile.data["depth_core"],
+            max_distance=ifile.data["max_distance"],
+        )
+
+        overburden_params = OverburdenParams(
+            thickness=ifile.data["thickness"], value=ifile.data["overburden"]
+        )
+        plate_params = PlateParams(
+            name="plate",
+            anomaly=ifile.data["plate"],
+            center_x=ifile.data["center_x"],
+            center_y=ifile.data["center_y"],
+            center_z=ifile.data["center_z"],
+            width=ifile.data["width"],
+            strike_length=ifile.data["strike_length"],
+            dip_length=ifile.data["dip_length"],
+            dip=ifile.data["dip"],
+            dip_direction=ifile.data["dip_direction"],
+        )
+        simulation = ifile.data["simulation"]
+        with simulation.workspace.open():
+            simulation.options["geoh5"] = simulation.workspace
+            simulation_params = SimulationParams.from_simpeg_group(
+                ifile.data["simulation"]
+            )
+        params = PlateSimulationParams(
+            workspace=ifile.geoh5,
+            mesh=mesh_params,
+            model=ModelParams(
+                name=ifile.data["name"],
+                background=ifile.data["background"],
+                overburden=overburden_params,
+                plate=plate_params,
+            ),
+            simulation=simulation_params,
+        )
+
+        return params
+
+    @staticmethod
     def main(ifile: Path | InputFile):
         """Run the plate simulation driver from an input file."""
 
         if isinstance(ifile, Path):
             ifile = InputFile.read_ui_json(ifile)
 
-        if ifile.data is None:
+        if ifile.data is None:  # type: ignore
             raise ValueError("Input file has no data loaded.")
 
-        params = PlateSimulationParams(
-            workspace=ifile.geoh5,
-            topography=ifile.data["topography"],
-            octree=OctreeParams(ifile.data),
-            model=ModelParams(ifile.data),
-            simulation=SimulationParams.from_simpeg_group(ifile.data["simulation"]),
-        )
+        params = PlateSimulationDriver.params_from_input_file(ifile)  # type: ignore
         _ = PlateSimulationDriver(params).run()
 
-    if __name__ == "__main__":
-        main(sys.argv[1])
+
+if __name__ == "__main__":
+    PlateSimulationDriver.main(Path(sys.argv[1]))

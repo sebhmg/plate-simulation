@@ -18,11 +18,11 @@ class PlateParams(BaseModel):
     :param center_x: X-coordinate of the center of the plate.
     :param center_y: Y-coordinate of the center of the plate.
     :param center_z: Z-coordinate of the center of the plate.
-    :param length: U-size of the plate.
     :param width: V-size of the plate.
-    :param depth: W-size of the plate.
+    :param strike_length: U-size of the plate.
+    :param dip_length: W-size of the plate.
     :param dip: Orientation of the u-axis in degree from horizontal.
-    :param azimuth: Orientation of the u axis in degree from north.
+    :param dip_direction: Orientation of the u axis in degree from north.
     :param reference: Point of rotation to be 'center' or 'top'.
     """
 
@@ -33,11 +33,11 @@ class PlateParams(BaseModel):
     center_x: float
     center_y: float
     center_z: float
-    length: float
     width: float
-    depth: float
+    strike_length: float
+    dip_length: float
     dip: float = 0.0
-    azimuth: float = 0.0
+    dip_direction: float = 0.0
     reference: str = "center"
 
 

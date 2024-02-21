@@ -437,7 +437,7 @@ package:
   category: main
   optional: false
 - name: coverage
-  version: 7.4.1
+  version: 7.4.2
   manager: conda
   platform: linux-64
   dependencies:
@@ -445,14 +445,14 @@ package:
     python: '>=3.10,<3.11.0a0'
     python_abi: 3.10.*
     tomli: ''
-  url: https://conda.anaconda.org/conda-forge/linux-64/coverage-7.4.1-py310h2372a71_0.conda
+  url: https://conda.anaconda.org/conda-forge/linux-64/coverage-7.4.2-py310h2372a71_0.conda
   hash:
-    md5: b2de1af90e44849451c9808312f964ae
-    sha256: b7cc6b26080bc3fd47c577a0145cf4e5fbc2aa21c87e757d6e5a578625cca037
+    md5: 35d711f311edb8b438c162560abcb254
+    sha256: 6a9839006b05bb1f121850d279aced519b107420492c2168b94998540cd4cde5
   category: dev
   optional: true
 - name: coverage
-  version: 7.4.1
+  version: 7.4.2
   manager: conda
   platform: win-64
   dependencies:
@@ -462,10 +462,10 @@ package:
     ucrt: '>=10.0.20348.0'
     vc: '>=14.2,<15'
     vc14_runtime: '>=14.29.30139'
-  url: https://conda.anaconda.org/conda-forge/win-64/coverage-7.4.1-py310h8d17308_0.conda
+  url: https://conda.anaconda.org/conda-forge/win-64/coverage-7.4.2-py310h8d17308_0.conda
   hash:
-    md5: 2430a42e0df9314ce369cf6fecb73e84
-    sha256: 3041bc214c741cd2971edda4012d019754a1a7f9928ae0d1d2320bb3c8aa16f1
+    md5: 8ada3ed6a5be913ed0589ee86fb968e6
+    sha256: 101fc828e28a3533b1b9bd422fab27aa8985c1da5e3eb206ce4b63dae16d78b6
   category: dev
   optional: true
 - name: cycler
@@ -4388,25 +4388,25 @@ package:
   manager: pip
   platform: linux-64
   dependencies:
-    geoana: '>=0.4.0,<0.5.0'
-    mkl: '>=2022.0.0,<2023.0.0'
-    simpeg-archive: '>=0.11.0.dev6,<0.12.0'
-    discretize: '>=0.10.0,<0.11.0'
-    zarr: '>=2.14.2,<2.15.0'
-    distributed: '>=2022.10.0,<2022.11.0'
-    pydiso: '>=0.0.3,<0.1.0'
-    geoapps-utils: '>=0.3.0a1,<0.4.0'
-    param-sweeps: '>=0.1.7a1,<0.2.0'
-    mira-simpeg: '>=0.19.0.dev4,<0.20.0'
-    scipy: '>=1.10.1,<1.11.0'
-    h5py: '*'
-    octree-creation-app: '>=0.1.0a2,<0.2.0'
-    numpy: '>=1.23.5,<1.24.0'
-    geoh5py: '>=0.9.0a1,<0.10.0'
-    pymatsolver: '>=0.2.0,<0.3.0'
-    dask: '>=2022.10.0,<2022.11.0'
     tqdm: '>=4.64.0,<5.0.0'
+    octree-creation-app: '>=0.1.0a2,<0.2.0'
     pillow: '*'
+    dask: '>=2022.10.0,<2022.11.0'
+    h5py: '*'
+    mira-simpeg: '>=0.19.0.dev4,<0.20.0'
+    geoapps-utils: '>=0.3.0a1,<0.4.0'
+    mkl: '>=2022.0.0,<2023.0.0'
+    geoana: '>=0.4.0,<0.5.0'
+    geoh5py: '>=0.9.0a1,<0.10.0'
+    simpeg-archive: '>=0.11.0.dev6,<0.12.0'
+    pymatsolver: '>=0.2.0,<0.3.0'
+    distributed: '>=2022.10.0,<2022.11.0'
+    discretize: '>=0.10.0,<0.11.0'
+    numpy: '>=1.23.5,<1.24.0'
+    zarr: '>=2.14.2,<2.15.0'
+    scipy: '>=1.10.1,<1.11.0'
+    param-sweeps: '>=0.1.7a1,<0.2.0'
+    pydiso: '>=0.0.3,<0.1.0'
   url: https://github.com/MiraGeoscience/simpeg-drivers/archive/refs/heads/develop.zip
   hash:
     sha256: ''
@@ -4420,25 +4420,25 @@ package:
   manager: pip
   platform: win-64
   dependencies:
-    geoana: '>=0.4.0,<0.5.0'
-    mkl: '>=2022.0.0,<2023.0.0'
-    simpeg-archive: '>=0.11.0.dev6,<0.12.0'
-    discretize: '>=0.10.0,<0.11.0'
-    zarr: '>=2.14.2,<2.15.0'
-    distributed: '>=2022.10.0,<2022.11.0'
-    pydiso: '>=0.0.3,<0.1.0'
-    geoapps-utils: '>=0.3.0a1,<0.4.0'
-    param-sweeps: '>=0.1.7a1,<0.2.0'
-    mira-simpeg: '>=0.19.0.dev4,<0.20.0'
-    scipy: '>=1.10.1,<1.11.0'
-    h5py: '*'
-    octree-creation-app: '>=0.1.0a2,<0.2.0'
-    numpy: '>=1.23.5,<1.24.0'
-    geoh5py: '>=0.9.0a1,<0.10.0'
-    pymatsolver: '>=0.2.0,<0.3.0'
-    dask: '>=2022.10.0,<2022.11.0'
     tqdm: '>=4.64.0,<5.0.0'
+    octree-creation-app: '>=0.1.0a2,<0.2.0'
     pillow: '*'
+    dask: '>=2022.10.0,<2022.11.0'
+    h5py: '*'
+    mira-simpeg: '>=0.19.0.dev4,<0.20.0'
+    geoapps-utils: '>=0.3.0a1,<0.4.0'
+    mkl: '>=2022.0.0,<2023.0.0'
+    geoana: '>=0.4.0,<0.5.0'
+    geoh5py: '>=0.9.0a1,<0.10.0'
+    simpeg-archive: '>=0.11.0.dev6,<0.12.0'
+    pymatsolver: '>=0.2.0,<0.3.0'
+    distributed: '>=2022.10.0,<2022.11.0'
+    discretize: '>=0.10.0,<0.11.0'
+    numpy: '>=1.23.5,<1.24.0'
+    zarr: '>=2.14.2,<2.15.0'
+    scipy: '>=1.10.1,<1.11.0'
+    param-sweeps: '>=0.1.7a1,<0.2.0'
+    pydiso: '>=0.0.3,<0.1.0'
   url: https://github.com/MiraGeoscience/simpeg-drivers/archive/refs/heads/develop.zip
   hash:
     sha256: ''

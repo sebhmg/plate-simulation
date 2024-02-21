@@ -19,7 +19,7 @@ dependencies:
   - cloudpickle=3.0.0=pyhd8ed1ab_0
   - colorama=0.4.6=pyhd8ed1ab_0
   - contourpy=1.2.0=py310h232114e_0
-  - coverage=7.4.1=py310h8d17308_0
+  - coverage=7.4.2=py310h8d17308_0
   - cycler=0.12.1=pyhd8ed1ab_0
   - cytoolz=0.12.3=py310h8d17308_0
   - dask-core=2022.10.2=pyhd8ed1ab_0

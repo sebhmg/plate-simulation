@@ -79,12 +79,12 @@ class Plate:
     def vertices(self) -> np.ndarray:
         """Vertices for triangulation of a rectangular prism in 3D space."""
 
-        x_1 = self.params.center_x - (self.params.length / 2.0)
-        x_2 = self.params.center_x + (self.params.length / 2.0)
+        x_1 = self.params.center_x - (self.params.strike_length / 2.0)
+        x_2 = self.params.center_x + (self.params.strike_length / 2.0)
         y_1 = self.params.center_y - (self.params.width / 2.0)
         y_2 = self.params.center_y + (self.params.width / 2.0)
-        z_1 = self.params.center_z - (self.params.depth / 2.0)
-        z_2 = self.params.center_z + (self.params.depth / 2.0)
+        z_1 = self.params.center_z - (self.params.dip_length / 2.0)
+        z_2 = self.params.center_z + (self.params.dip_length / 2.0)
 
         vertices = np.array(
             [
@@ -104,7 +104,7 @@ class Plate:
     def _rotate(self, vertices: np.ndarray) -> np.ndarray:
         """Rotate vertices and adjust for reference point."""
 
-        theta = (450.0 - np.asarray(self.params.azimuth)) % 360.0
+        theta = (450.0 - np.asarray(self.params.dip_direction)) % 360.0
         phi = -self.params.dip
         rotated_vertices = rotate_xyz(vertices, self.center, theta, phi)
 

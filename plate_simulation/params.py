@@ -7,10 +7,9 @@
 
 from geoapps_utils.driver.params import BaseParams
 from geoh5py import Workspace
-from geoh5py.objects import Surface
-from octree_creation_app.params import OctreeParams
 from pydantic import BaseModel, ConfigDict
 
+from .mesh.params import MeshParams
 from .models.params import ModelParams
 
 
@@ -30,7 +29,6 @@ class PlateSimulationParams(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     workspace: Workspace
-    topography: Surface
-    octree: OctreeParams
+    mesh: MeshParams
     model: ModelParams
     simulation: BaseParams

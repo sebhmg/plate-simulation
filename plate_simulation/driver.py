@@ -47,11 +47,13 @@ class PlateSimulationDriver:
 
     def run(self) -> FloatData:
         """Create octree mesh, fill model, and simulate."""
-        self.params.simulation.mesh = self.mesh
-        self.params.simulation.starting_model = self.model
-        driver = InversionDriver(self.params.simulation)
         with fetch_active_workspace(self.params.workspace, mode="r+"):
+            self.params.simulation.mesh = self.mesh
+            self.params.simulation.starting_model = self.model
+            driver = InversionDriver(self.params.simulation)
+            print("running the simulation...")
             driver.run()
+            print("done.")
 
         return self.model
 
@@ -93,6 +95,7 @@ class PlateSimulationDriver:
         Mesh contains refinements for topography and any plates.
         """
 
+        print("making the mesh...")
         octree_params = self.params.mesh.octree_params(
             self.survey, self.params.simulation.topography_object, self.plate.surface
         )
@@ -105,6 +108,7 @@ class PlateSimulationDriver:
     def make_model(self) -> FloatData:
         """Create background + plate and overburden model from parameters."""
 
+        print("building the model...")
         overburden = Overburden(
             topography=self.params.simulation.topography_object,
             thickness=self.params.model.overburden.thickness,
@@ -160,11 +164,10 @@ class PlateSimulationDriver:
             dip_direction=ifile.data["dip_direction"],
         )
         simulation = ifile.data["simulation"]
-        with simulation.workspace.open():
-            simulation.options["geoh5"] = simulation.workspace
-            simulation_params = SimulationParams.from_simpeg_group(
-                ifile.data["simulation"]
-            )
+        with fetch_active_workspace(simulation.workspace, mode="r+"):
+            simulation.options["geoh5"] = str(simulation.workspace.h5file)
+            simulation_params = SimulationParams.from_simpeg_group(simulation)
+
         params = PlateSimulationParams(
             workspace=ifile.geoh5,
             mesh=mesh_params,

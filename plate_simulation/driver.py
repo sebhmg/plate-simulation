@@ -50,11 +50,12 @@ class PlateSimulationDriver:
         with fetch_active_workspace(self.params.workspace, mode="r+"):
             self.params.simulation.mesh = self.mesh
             self.params.simulation.starting_model = self.model
-            driver = InversionDriver(self.params.simulation)
-            print("running the simulation...")
 
-            driver.run()
-            print("done.")
+        driver = InversionDriver(self.params.simulation)
+        print("running the simulation...")
+
+        driver.run()
+        print("done.")
 
         return self.model
 
@@ -186,9 +187,9 @@ class PlateSimulationDriver:
         """Parse a plate simulation input file into simulation parameter object."""
 
         simulation = ifile.data["simulation"]  # type: ignore
-        with fetch_active_workspace(simulation.workspace, mode="r+"):
-            simulation.options["geoh5"] = str(simulation.workspace.h5file)
-            simulation_params = SimulationParams.from_simpeg_group(simulation)
+        with fetch_active_workspace(ifile.geoh5, mode="r+"):
+            simulation.options["geoh5"] = str(ifile.geoh5.h5file)
+            simulation_params = SimulationParams.from_simpeg_group(simulation, ifile.geoh5)
 
         return simulation_params
 

@@ -52,6 +52,7 @@ class PlateSimulationDriver:
             self.params.simulation.starting_model = self.model
             driver = InversionDriver(self.params.simulation)
             print("running the simulation...")
+
             driver.run()
             print("done.")
 
@@ -134,49 +135,100 @@ class PlateSimulationDriver:
         return scenario.geologize()
 
     @staticmethod
+    def _mesh_params_from_input_file(ifile: InputFile) -> MeshParams:
+        """Parse a plate simulation input file into mesh parameter object."""
+
+        return MeshParams(
+            u_cell_size=ifile.data["u_cell_size"],  # type: ignore
+            v_cell_size=ifile.data["v_cell_size"],  # type: ignore
+            w_cell_size=ifile.data["w_cell_size"],  # type: ignore
+            padding_distance=ifile.data["padding_distance"],  # type: ignore
+            depth_core=ifile.data["depth_core"],  # type: ignore
+            max_distance=ifile.data["max_distance"],  # type: ignore
+        )
+
+    @staticmethod
+    def _overburden_params_from_input_file(ifile: InputFile) -> OverburdenParams:
+        """
+        Parse a plate simulation input file into overburden parameter object.
+
+        Converts ui.json resistivity to conductivity.
+        """
+
+        return OverburdenParams(
+            thickness=ifile.data["thickness"],  # type: ignore
+            value=1.0 / ifile.data["overburden"],  # type: ignore
+        )
+
+    @staticmethod
+    def _plate_params_from_input_file(ifile: InputFile) -> PlateParams:
+        """
+        Parse a plate simulation input file into plate parameter object.
+
+        Converts ui.json resistivity to conductivity.
+        """
+
+        return PlateParams(
+            name="plate",
+            anomaly=1.0 / ifile.data["plate"],  # type: ignore
+            center_x=ifile.data["center_x"],  # type: ignore
+            center_y=ifile.data["center_y"],  # type: ignore
+            center_z=ifile.data["center_z"],  # type: ignore
+            width=ifile.data["width"],  # type: ignore
+            strike_length=ifile.data["strike_length"],  # type: ignore
+            dip_length=ifile.data["dip_length"],  # type: ignore
+            dip=ifile.data["dip"],  # type: ignore
+            dip_direction=ifile.data["dip_direction"],  # type: ignore
+        )
+
+    @staticmethod
+    def _simulation_params_from_input_file(ifile: InputFile) -> SimulationParams:
+        """Parse a plate simulation input file into simulation parameter object."""
+
+        simulation = ifile.data["simulation"]  # type: ignore
+        with fetch_active_workspace(simulation.workspace, mode="r+"):
+            simulation.options["geoh5"] = str(simulation.workspace.h5file)
+            simulation_params = SimulationParams.from_simpeg_group(simulation)
+
+        return simulation_params
+
+    @staticmethod
+    def _model_params_from_input_file(ifile: InputFile) -> ModelParams:
+        """
+        Parse a plate simulation input file into model parameter object.
+
+        Converts ui.json resistivity to conductivity.
+        """
+
+        overburden_params = PlateSimulationDriver._overburden_params_from_input_file(
+            ifile
+        )
+        plate_params = PlateSimulationDriver._plate_params_from_input_file(ifile)
+
+        return ModelParams(
+            name=ifile.data["name"],  # type: ignore
+            background=1.0 / ifile.data["background"],  # type: ignore
+            overburden=overburden_params,
+            plate=plate_params,
+        )
+
+    @staticmethod
     def params_from_input_file(ifile: InputFile) -> PlateSimulationParams:
         """Parse a plate simulation input file into parameter object."""
 
         if ifile.data is None:
             raise ValueError("Input file has no data loaded.")
-        mesh_params = MeshParams(
-            u_cell_size=ifile.data["u_cell_size"],
-            v_cell_size=ifile.data["v_cell_size"],
-            w_cell_size=ifile.data["w_cell_size"],
-            padding_distance=ifile.data["padding_distance"],
-            depth_core=ifile.data["depth_core"],
-            max_distance=ifile.data["max_distance"],
-        )
 
-        overburden_params = OverburdenParams(
-            thickness=ifile.data["thickness"], value=ifile.data["overburden"]
+        mesh_params = PlateSimulationDriver._mesh_params_from_input_file(ifile)
+        model_params = PlateSimulationDriver._model_params_from_input_file(ifile)
+        simulation_params = PlateSimulationDriver._simulation_params_from_input_file(
+            ifile
         )
-        plate_params = PlateParams(
-            name="plate",
-            anomaly=ifile.data["plate"],
-            center_x=ifile.data["center_x"],
-            center_y=ifile.data["center_y"],
-            center_z=ifile.data["center_z"],
-            width=ifile.data["width"],
-            strike_length=ifile.data["strike_length"],
-            dip_length=ifile.data["dip_length"],
-            dip=ifile.data["dip"],
-            dip_direction=ifile.data["dip_direction"],
-        )
-        simulation = ifile.data["simulation"]
-        with fetch_active_workspace(simulation.workspace, mode="r+"):
-            simulation.options["geoh5"] = str(simulation.workspace.h5file)
-            simulation_params = SimulationParams.from_simpeg_group(simulation)
 
         params = PlateSimulationParams(
             workspace=ifile.geoh5,
             mesh=mesh_params,
-            model=ModelParams(
-                name=ifile.data["name"],
-                background=ifile.data["background"],
-                overburden=overburden_params,
-                plate=plate_params,
-            ),
+            model=model_params,
             simulation=simulation_params,
         )
 

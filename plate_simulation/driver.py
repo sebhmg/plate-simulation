@@ -17,6 +17,7 @@ from geoh5py.ui_json import InputFile
 from octree_creation_app.driver import OctreeDriver
 from simpeg_drivers.driver import InversionDriver
 
+from .logger import get_logger
 from .mesh.params import MeshParams
 from .models.events import Anomaly, Erosion, Overburden
 from .models.params import ModelParams, OverburdenParams, PlateParams
@@ -44,6 +45,7 @@ class PlateSimulationDriver:
         self._survey: Points | None = None
         self._mesh: Octree | None = None
         self._model: FloatData | None = None
+        self._logger = get_logger("Plate Simulation")
 
     def run(self) -> FloatData:
         """Create octree mesh, fill model, and simulate."""
@@ -52,10 +54,10 @@ class PlateSimulationDriver:
             self.params.simulation.starting_model = self.model
 
         driver = InversionDriver(self.params.simulation)
-        print("running the simulation...")
+        self._logger.info("running the simulation...")
 
         driver.run()
-        print("done.")
+        self._logger.info("done.")
 
         return self.model
 
@@ -97,7 +99,7 @@ class PlateSimulationDriver:
         Mesh contains refinements for topography and any plates.
         """
 
-        print("making the mesh...")
+        self._logger.info("making the mesh...")
         octree_params = self.params.mesh.octree_params(
             self.survey, self.params.simulation.topography_object, self.plate.surface
         )
@@ -110,7 +112,7 @@ class PlateSimulationDriver:
     def make_model(self) -> FloatData:
         """Create background + plate and overburden model from parameters."""
 
-        print("building the model...")
+        self._logger.info("building the model...")
         overburden = Overburden(
             topography=self.params.simulation.topography_object,
             thickness=self.params.model.overburden.thickness,
@@ -189,7 +191,9 @@ class PlateSimulationDriver:
         simulation = ifile.data["simulation"]  # type: ignore
         with fetch_active_workspace(ifile.geoh5, mode="r+"):
             simulation.options["geoh5"] = str(ifile.geoh5.h5file)
-            simulation_params = SimulationParams.from_simpeg_group(simulation, ifile.geoh5)
+            simulation_params = SimulationParams.from_simpeg_group(
+                simulation, ifile.geoh5
+            )
 
         return simulation_params
 

@@ -34,11 +34,11 @@ def test_gravity_plate_simulation(tmp_path):
             max_distance=200.0,
         )
 
-        overburden_params = OverburdenParams(thickness=50.0, value=0.2)
+        overburden_params = OverburdenParams(thickness=50.0, value=5.0)
 
         plate_params = PlateParams(
             name="plate",
-            anomaly=0.75,
+            value=2.0,
             center_x=0.0,
             center_y=0.0,
             center_z=-250.0,
@@ -52,7 +52,7 @@ def test_gravity_plate_simulation(tmp_path):
 
         model_params = ModelParams(
             name="density",
-            background=0.0,
+            background=1000.0,
             overburden=overburden_params,
             plate=plate_params,
         )
@@ -66,7 +66,7 @@ def test_gravity_plate_simulation(tmp_path):
 
         gravity_inversion = SimPEGGroup.create(ws)
         gravity_inversion.options = options
-        simulation_params = SimulationParams.from_simpeg_group(gravity_inversion)
+        simulation_params = SimulationParams.from_simpeg_group(gravity_inversion, ws)
 
         params = PlateSimulationParams(
             workspace=ws,

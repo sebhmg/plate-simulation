@@ -104,8 +104,7 @@ class PlateSimulationDriver:
             self.survey, self.params.simulation.topography_object, self.plate.surface
         )
         octree_driver = OctreeDriver(octree_params)
-        with self.survey.workspace.open():
-            mesh = octree_driver.run()
+        mesh = octree_driver.run()
 
         return mesh
 
@@ -120,7 +119,7 @@ class PlateSimulationDriver:
         )
 
         anomaly = Anomaly(
-            surface=self.plate.surface, value=self.params.model.plate.anomaly
+            surface=self.plate.surface, value=self.params.model.plate.value
         )
 
         erosion = Erosion(
@@ -173,7 +172,7 @@ class PlateSimulationDriver:
 
         return PlateParams(
             name="plate",
-            anomaly=1.0 / ifile.data["plate"],  # type: ignore
+            value=1.0 / ifile.data["plate"],  # type: ignore
             center_x=ifile.data["center_x"],  # type: ignore
             center_y=ifile.data["center_y"],  # type: ignore
             center_z=ifile.data["center_z"],  # type: ignore

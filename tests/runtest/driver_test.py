@@ -27,10 +27,11 @@ def test_gravity_plate_simulation_params_from_input_file(tmp_path):
         topography = get_topography(ws)
         survey = get_survey(ws, 10, 10)
 
-        filepath = assets_path() / "uijson" / "plate_simulation.ui.json"
-        ifile = InputFile.read_ui_json(filepath, validate=False)
+        ifile = InputFile.read_ui_json(
+            assets_path() / "uijson" / "plate_simulation.ui.json", validate=False
+        )
         ifile.data["name"] = "test_gravity_plate_simulation"
-        ifile.geoh5 = ws
+        ifile.data["geoh5"] = ws
 
         # Add simulation parameter
         gravity_inversion = SimPEGGroup.create(ws)
@@ -52,10 +53,10 @@ def test_gravity_plate_simulation_params_from_input_file(tmp_path):
         ifile.data["padding_distance"] = 1500.0
 
         # Add model parameters
-        ifile.data["background"] = 0.0
-        ifile.data["overburden"] = 0.2
+        ifile.data["background"] = 1000.0
+        ifile.data["overburden"] = 5.0
         ifile.data["thickness"] = 50.0
-        ifile.data["plate"] = 0.75
+        ifile.data["plate"] = 2.0
         ifile.data["center_x"] = 0.0
         ifile.data["center_y"] = 0.0
         ifile.data["center_z"] = -250.0
@@ -80,15 +81,15 @@ def test_gravity_plate_simulation_params_from_input_file(tmp_path):
         assert params.mesh.depth_core == 400.0
         assert params.mesh.max_distance == 200.0
         assert params.mesh.padding_distance == 1500.0
-        assert params.mesh.minimum_level == 4
+        assert params.mesh.minimum_level == 8
         assert not params.mesh.diagonal_balance
 
         assert isinstance(params.model, ModelParams)
         assert params.model.name == "test_gravity_plate_simulation"
-        assert params.model.background == 0.0
+        assert params.model.background == 0.001
         assert params.model.overburden.thickness == 50.0
         assert params.model.overburden.value == 0.2
-        assert params.model.plate.anomaly == 0.75
+        assert params.model.plate.value == 0.5
         assert params.model.plate.center_x == 0.0
         assert params.model.plate.center_y == 0.0
         assert params.model.plate.center_z == -250.0

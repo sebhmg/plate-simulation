@@ -17,7 +17,7 @@ def test_plate(tmp_path):
     workspace = Workspace(tmp_path / "test.geoh5")
     params = PlateParams(
         name="my plate",
-        anomaly=1.0,
+        value=1.0,
         center_x=0.0,
         center_y=0.0,
         center_z=0.0,
@@ -55,7 +55,7 @@ def test_plate(tmp_path):
     )
     params = PlateParams(
         name="my other plate",
-        anomaly=1.0,
+        value=1.0,
         center_x=0.0,
         center_y=0.0,
         center_z=0.0,
@@ -75,7 +75,7 @@ def test_plate(tmp_path):
 
     params = PlateParams(
         name="my third plate",
-        anomaly=1.0,
+        value=1.0,
         center_x=0.0,
         center_y=0.0,
         center_z=0.0,

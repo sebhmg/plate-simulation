@@ -21,6 +21,8 @@ from plate_simulation.models.params import ModelParams
 
 from . import get_survey, get_topography
 
+# pylint: disable=duplicate-code
+
 
 def test_gravity_plate_simulation_params_from_input_file(tmp_path):
     with Workspace(tmp_path / "test.geoh5") as ws:

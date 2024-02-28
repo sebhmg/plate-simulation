@@ -229,6 +229,7 @@ class PlateSimulationDriver:
             ifile
         )
 
+        # TODO: Once BaseData.build is updated to handle n levels of nesting, call here.
         params = PlateSimulationParams(
             workspace=ifile.geoh5,
             mesh=mesh_params,

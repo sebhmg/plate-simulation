@@ -54,7 +54,9 @@ class PlateSimulationDriver:
             self.params.simulation.starting_model = self.model
 
             if not isinstance(self.params.simulation.topography_object, Surface):
-                raise ValueError("The topography object of the forward simulation must be a 'Surface'.")
+                raise ValueError(
+                    "The topography object of the forward simulation must be a 'Surface'."
+                )
 
         driver = InversionDriver(self.params.simulation)
         self._logger.info("running the simulation...")

@@ -8,7 +8,9 @@
 
 from copy import deepcopy
 from pathlib import Path
+from uuid import UUID
 
+import numpy as np
 from geoh5py import Workspace
 from geoh5py.groups import SimPEGGroup
 from geoh5py.ui_json import InputFile
@@ -81,7 +83,20 @@ def get_input_file(filepath: Path) -> InputFile:
 def test_plate_simulation(tmp_path):
     ifile = get_input_file(tmp_path)
     ifile.write_ui_json("test_plate_simulation.ui.json", path=tmp_path)
-    PlateSimulationDriver.main(Path(tmp_path / "test_plate_simulation.ui.json"))
+    result = PlateSimulationDriver.main(
+        Path(tmp_path / "test_plate_simulation.ui.json")
+    )
+    with Workspace(result.options["geoh5"]) as ws:
+        data = ws.get_entity(UUID(result.options["data_object"]["value"]))[0]
+        mesh = ws.get_entity(UUID(result.options["mesh"]["value"]))[0]
+        model = [k for k in mesh.children if k.name == "starting_model"][0]
+
+        assert data.property_groups[0].name == "Iteration_0_z"
+        assert len(data.property_groups[0].properties) == 3
+        assert mesh.n_cells == 33230
+        assert len(np.unique(model.values)) == 4
+        assert all(k in np.unique(model.values) for k in [0.001, 0.2, 0.5])
+        assert any(np.isnan(np.unique(model.values)))
 
 
 def test_plate_simulation_params_from_input_file(tmp_path):

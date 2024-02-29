@@ -27,13 +27,13 @@ class MeshParams(BaseModel):
     def octree_params(self, survey: ObjectBase, topography: Surface, plate: Surface):
         refinements = {
             "Refinement A object": topography,
-            "Refinement A levels": [0, 0, 2],
+            "Refinement A levels": [0, 2],
             "Refinement A type": "surface",
             "Refinement B object": survey,
-            "Refinement B levels": [0, 2],
+            "Refinement B levels": [4, 2],
             "Refinement B type": "radial",
             "Refinement C object": plate,
-            "Refinement C levels": [0, 2],
+            "Refinement C levels": [2, 1],
             "Refinement C type": "surface",
         }
         octree_params = OctreeParams(

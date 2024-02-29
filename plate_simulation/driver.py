@@ -12,20 +12,20 @@ from pathlib import Path
 
 from geoh5py.data import FloatData
 from geoh5py.groups import SimPEGGroup
-from geoh5py.objects import Octree, Points
+from geoh5py.objects import Octree, Points, Surface
 from geoh5py.shared.utils import fetch_active_workspace
 from geoh5py.ui_json import InputFile
 from octree_creation_app.driver import OctreeDriver
 from simpeg_drivers.driver import InversionDriver
 
-from .logger import get_logger
-from .mesh.params import MeshParams
-from .models.events import Anomaly, Erosion, Overburden
-from .models.params import ModelParams, OverburdenParams, PlateParams
-from .models.plates import Plate
-from .models.series import Scenario
-from .params import PlateSimulationParams
-from .simulations.params import SimulationParams
+from plate_simulation.logger import get_logger
+from plate_simulation.mesh.params import MeshParams
+from plate_simulation.models.events import Anomaly, Erosion, Overburden
+from plate_simulation.models.params import ModelParams, OverburdenParams, PlateParams
+from plate_simulation.models.plates import Plate
+from plate_simulation.models.series import Scenario
+from plate_simulation.params import PlateSimulationParams
+from plate_simulation.simulations.params import SimulationParams
 
 
 class PlateSimulationDriver:
@@ -53,6 +53,11 @@ class PlateSimulationDriver:
         with fetch_active_workspace(self.params.workspace, mode="r+"):
             self.params.simulation.mesh = self.mesh
             self.params.simulation.starting_model = self.model
+
+            if not isinstance(self.params.simulation.topography_object, Surface):
+                raise ValueError(
+                    "The topography object of the forward simulation must be a 'Surface'."
+                )
 
         driver = InversionDriver(self.params.simulation)
         self._logger.info("running the simulation...")
@@ -256,4 +261,5 @@ class PlateSimulationDriver:
 
 
 if __name__ == "__main__":
-    PlateSimulationDriver.main(Path(sys.argv[1]))
+    file = Path(sys.argv[1])
+    PlateSimulationDriver.main(file)

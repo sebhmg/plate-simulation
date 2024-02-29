@@ -7,11 +7,17 @@
 #
 
 from copy import deepcopy
+from pathlib import Path
 
 from geoh5py import Workspace
 from geoh5py.groups import SimPEGGroup
 from geoh5py.ui_json import InputFile
-from simpeg_drivers.potential_fields.gravity.constants import default_ui_json
+from simpeg_drivers.electromagnetics.time_domain.constants import (
+    default_ui_json as tdem_default_ui_json,
+)
+from simpeg_drivers.potential_fields.gravity.constants import (
+    default_ui_json as gravity_default_ui_json,
+)
 from simpeg_drivers.potential_fields.gravity.params import GravityParams
 
 from plate_simulation import assets_path
@@ -19,12 +25,66 @@ from plate_simulation.driver import PlateSimulationDriver
 from plate_simulation.mesh.params import MeshParams
 from plate_simulation.models.params import ModelParams
 
-from . import get_survey, get_topography
+from . import get_survey, get_tem_survey, get_topography
 
 # pylint: disable=duplicate-code
 
 
-def test_gravity_plate_simulation_params_from_input_file(tmp_path):
+def get_input_file(filepath: Path) -> InputFile:
+    with Workspace(filepath / "test.geoh5") as ws:
+        topography = get_topography(ws)
+        survey = get_tem_survey(ws, 2, 1)
+
+        ifile = InputFile.read_ui_json(
+            assets_path() / "uijson" / "plate_simulation.ui.json", validate=False
+        )
+        ifile.data["name"] = "test_tem_plate_simulation"
+        ifile.data["geoh5"] = ws
+
+        # Add simulation parameter
+        tem_inversion = SimPEGGroup.create(ws)
+        options = deepcopy(tdem_default_ui_json)
+        options["inversion_type"] = "tdem"
+        options["forward_only"] = True
+        options["geoh5"] = str(ws.h5file)
+        options["topography_object"]["value"] = str(topography.uid)
+        options["data_object"]["value"] = str(survey.uid)
+        options["z_channel_bool"] = True
+        tem_inversion.options = options
+        ifile.data["simulation"] = tem_inversion
+
+        # Add mesh parameters
+        ifile.data["u_cell_size"] = 10.0
+        ifile.data["v_cell_size"] = 10.0
+        ifile.data["w_cell_size"] = 10.0
+        ifile.data["depth_core"] = 400.0
+        ifile.data["max_distance"] = 200.0
+        ifile.data["padding_distance"] = 1500.0
+
+        # Add model parameters
+        ifile.data["background"] = 1000.0
+        ifile.data["overburden"] = 5.0
+        ifile.data["thickness"] = 50.0
+        ifile.data["plate"] = 2.0
+        ifile.data["center_x"] = 0.0
+        ifile.data["center_y"] = 0.0
+        ifile.data["center_z"] = -250.0
+        ifile.data["width"] = 100.0
+        ifile.data["strike_length"] = 100.0
+        ifile.data["dip_length"] = 100.0
+        ifile.data["dip"] = 0.0
+        ifile.data["dip_direction"] = 0.0
+
+    return ifile
+
+
+def test_plate_simulation(tmp_path):
+    ifile = get_input_file(tmp_path)
+    ifile.write_ui_json("test_plate_simulation.ui.json", path=tmp_path)
+    PlateSimulationDriver.main(Path(tmp_path / "test_plate_simulation.ui.json"))
+
+
+def test_plate_simulation_params_from_input_file(tmp_path):
     with Workspace(tmp_path / "test.geoh5") as ws:
         topography = get_topography(ws)
         survey = get_survey(ws, 10, 10)
@@ -37,7 +97,7 @@ def test_gravity_plate_simulation_params_from_input_file(tmp_path):
 
         # Add simulation parameter
         gravity_inversion = SimPEGGroup.create(ws)
-        options = deepcopy(default_ui_json)
+        options = deepcopy(gravity_default_ui_json)
         options["inversion_type"] = "gravity"
         options["forward_only"] = True
         options["geoh5"] = str(ws.h5file)

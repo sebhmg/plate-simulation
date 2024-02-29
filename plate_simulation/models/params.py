@@ -14,30 +14,30 @@ class PlateParams(BaseModel):
 
     :param name: Name to be given to the geoh5py Surface object
         representing the plate.
-    :param anomaly: Value given to the plate.
+    :param plate: Value given to the plate.
     :param center_x: X-coordinate of the center of the plate.
     :param center_y: Y-coordinate of the center of the plate.
     :param center_z: Z-coordinate of the center of the plate.
-    :param length: U-size of the plate.
     :param width: V-size of the plate.
-    :param depth: W-size of the plate.
+    :param strike_length: U-size of the plate.
+    :param dip_length: W-size of the plate.
     :param dip: Orientation of the u-axis in degree from horizontal.
-    :param azimuth: Orientation of the u axis in degree from north.
+    :param dip_direction: Orientation of the u axis in degree from north.
     :param reference: Point of rotation to be 'center' or 'top'.
     """
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     name: str
-    anomaly: float
+    value: float
     center_x: float
     center_y: float
     center_z: float
-    length: float
     width: float
-    depth: float
+    strike_length: float
+    dip_length: float
     dip: float = 0.0
-    azimuth: float = 0.0
+    dip_direction: float = 0.0
     reference: str = "center"
 
 
@@ -46,7 +46,7 @@ class OverburdenParams(BaseModel):
     Parameters for the overburden layer.
 
     :param thickness: Thickness of the overburden layer.
-    :param value: Value given to the overburden layer.
+    :param overburden: Value given to the overburden layer.
     """
 
     thickness: float

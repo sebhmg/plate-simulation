@@ -13,6 +13,7 @@ from uuid import UUID
 import numpy as np
 from geoh5py import Workspace
 from geoh5py.groups import SimPEGGroup
+from geoh5py.objects import ObjectBase, Surface
 from geoh5py.ui_json import InputFile
 from simpeg_drivers.electromagnetics.time_domain.constants import (
     default_ui_json as tdem_default_ui_json,
@@ -32,50 +33,50 @@ from . import get_survey, get_tem_survey, get_topography
 # pylint: disable=duplicate-code
 
 
+def get_simulation_group(workspace: Workspace, survey: ObjectBase, topography: Surface):
+    tem_inversion = SimPEGGroup.create(workspace)
+    options = deepcopy(InputFile.stringify(tdem_default_ui_json))
+    options["inversion_type"] = "tdem"
+    options["forward_only"] = True
+    options["geoh5"] = str(workspace.h5file)
+    options["topography_object"]["value"] = str(topography.uid)
+    options["data_object"]["value"] = str(survey.uid)
+    options["z_channel_bool"] = True
+    tem_inversion.options = options
+
+    return tem_inversion
+
+
 def get_input_file(filepath: Path) -> InputFile:
     with Workspace(filepath / "test.geoh5") as ws:
         topography = get_topography(ws)
         survey = get_tem_survey(ws, 2, 1)
+        simulation = get_simulation_group(ws, survey, topography)
 
         ifile = InputFile.read_ui_json(
             assets_path() / "uijson" / "plate_simulation.ui.json", validate=False
         )
-        ifile.data["name"] = "test_tem_plate_simulation"
-        ifile.data["geoh5"] = ws
-
-        # Add simulation parameter
-        tem_inversion = SimPEGGroup.create(ws)
-        options = deepcopy(tdem_default_ui_json)
-        options["inversion_type"] = "tdem"
-        options["forward_only"] = True
-        options["geoh5"] = str(ws.h5file)
-        options["topography_object"]["value"] = str(topography.uid)
-        options["data_object"]["value"] = str(survey.uid)
-        options["z_channel_bool"] = True
-        tem_inversion.options = options
-        ifile.data["simulation"] = tem_inversion
-
-        # Add mesh parameters
-        ifile.data["u_cell_size"] = 10.0
-        ifile.data["v_cell_size"] = 10.0
-        ifile.data["w_cell_size"] = 10.0
-        ifile.data["depth_core"] = 400.0
-        ifile.data["max_distance"] = 200.0
-        ifile.data["padding_distance"] = 1500.0
-
-        # Add model parameters
-        ifile.data["background"] = 1000.0
-        ifile.data["overburden"] = 5.0
-        ifile.data["thickness"] = 50.0
-        ifile.data["plate"] = 2.0
-        ifile.data["center_x"] = 0.0
-        ifile.data["center_y"] = 0.0
-        ifile.data["center_z"] = -250.0
-        ifile.data["width"] = 100.0
-        ifile.data["strike_length"] = 100.0
-        ifile.data["dip_length"] = 100.0
-        ifile.data["dip"] = 0.0
-        ifile.data["dip_direction"] = 0.0
+        ifile.set_data_value("name", "test_tem_plate_simulation")
+        ifile.set_data_value("geoh5", ws)
+        ifile.set_data_value("simulation", simulation)
+        ifile.set_data_value("u_cell_size", 10.0)
+        ifile.set_data_value("v_cell_size", 10.0)
+        ifile.set_data_value("w_cell_size", 10.0)
+        ifile.set_data_value("depth_core", 400.0)
+        ifile.set_data_value("max_distance", 200.0)
+        ifile.set_data_value("padding_distance", 1500.0)
+        ifile.set_data_value("background", 1000.0)
+        ifile.set_data_value("overburden", 5.0)
+        ifile.set_data_value("thickness", 50.0)
+        ifile.set_data_value("plate", 2.0)
+        ifile.set_data_value("center_x", 0.0)
+        ifile.set_data_value("center_y", 0.0)
+        ifile.set_data_value("center_z", -250.0)
+        ifile.set_data_value("width", 100.0)
+        ifile.set_data_value("strike_length", 100.0)
+        ifile.set_data_value("dip_length", 100.0)
+        ifile.set_data_value("dip", 20.0)
+        ifile.set_data_value("dip_direction", 20.0)
 
     return ifile
 
@@ -93,7 +94,7 @@ def test_plate_simulation(tmp_path):
 
         assert data.property_groups[0].name == "Iteration_0_z"
         assert len(data.property_groups[0].properties) == 3
-        assert mesh.n_cells == 33230
+        assert mesh.n_cells == 31928
         assert len(np.unique(model.values)) == 4
         assert all(k in np.unique(model.values) for k in [0.001, 0.2, 0.5])
         assert any(np.isnan(np.unique(model.values)))

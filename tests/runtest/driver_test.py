@@ -28,7 +28,7 @@ from plate_simulation.driver import PlateSimulationDriver
 from plate_simulation.mesh.params import MeshParams
 from plate_simulation.models.params import ModelParams
 
-from . import get_survey, get_tem_survey, get_topography
+from . import get_survey, get_topography
 
 # pylint: disable=duplicate-code
 
@@ -41,6 +41,8 @@ def get_simulation_group(workspace: Workspace, survey: ObjectBase, topography: S
     options["geoh5"] = str(workspace.h5file)
     options["topography_object"]["value"] = str(topography.uid)
     options["data_object"]["value"] = str(survey.uid)
+    options["x_channel_bool"] = True
+    options["y_channel_bool"] = True
     options["z_channel_bool"] = True
     tem_inversion.options = options
 
@@ -49,8 +51,14 @@ def get_simulation_group(workspace: Workspace, survey: ObjectBase, topography: S
 
 def get_input_file(filepath: Path) -> InputFile:
     with Workspace(filepath / "test.geoh5") as ws:
-        topography = get_topography(ws)
-        survey = get_tem_survey(ws, 2, 1)
+        with Workspace(assets_path() / "demo.geoh5") as demo_workspace:
+            survey = demo_workspace.get_entity("Simulation rx")[0].copy(
+                parent=ws, copy_children=False
+            )
+            topography = demo_workspace.get_entity("Topography")[0].copy(parent=ws)
+
+        # topography = get_topography(ws)
+        # survey = get_tem_survey(ws, 200, 1)
         simulation = get_simulation_group(ws, survey, topography)
 
         ifile = InputFile.read_ui_json(
@@ -59,24 +67,24 @@ def get_input_file(filepath: Path) -> InputFile:
         ifile.set_data_value("name", "test_tem_plate_simulation")
         ifile.set_data_value("geoh5", ws)
         ifile.set_data_value("simulation", simulation)
-        ifile.set_data_value("u_cell_size", 10.0)
-        ifile.set_data_value("v_cell_size", 10.0)
-        ifile.set_data_value("w_cell_size", 10.0)
-        ifile.set_data_value("depth_core", 400.0)
+        ifile.set_data_value("u_cell_size", 50.0)
+        ifile.set_data_value("v_cell_size", 50.0)
+        ifile.set_data_value("w_cell_size", 50.0)
+        ifile.set_data_value("depth_core", 600.0)
         ifile.set_data_value("max_distance", 200.0)
-        ifile.set_data_value("padding_distance", 1500.0)
-        ifile.set_data_value("background", 1000.0)
-        ifile.set_data_value("overburden", 5.0)
+        ifile.set_data_value("padding_distance", 1000.0)
+        ifile.set_data_value("background", 2000.0)
+        ifile.set_data_value("overburden", 7500.0)
         ifile.set_data_value("thickness", 50.0)
-        ifile.set_data_value("plate", 2.0)
+        ifile.set_data_value("plate", 20.0)
         ifile.set_data_value("center_x", 0.0)
         ifile.set_data_value("center_y", 0.0)
-        ifile.set_data_value("center_z", -250.0)
+        ifile.set_data_value("center_z", -175.0)
         ifile.set_data_value("width", 100.0)
-        ifile.set_data_value("strike_length", 100.0)
-        ifile.set_data_value("dip_length", 100.0)
-        ifile.set_data_value("dip", 20.0)
-        ifile.set_data_value("dip_direction", 20.0)
+        ifile.set_data_value("strike_length", 1000.0)
+        ifile.set_data_value("dip_length", 300.0)
+        ifile.set_data_value("dip", 160.0)
+        ifile.set_data_value("dip_direction", 330.0)
 
     return ifile
 
@@ -94,7 +102,7 @@ def test_plate_simulation(tmp_path):
 
         assert data.property_groups[0].name == "Iteration_0_z"
         assert len(data.property_groups[0].properties) == 3
-        assert mesh.n_cells == 31928
+        assert mesh.n_cells == 7982
         assert len(np.unique(model.values)) == 4
         assert all(k in np.unique(model.values) for k in [0.001, 0.2, 0.5])
         assert any(np.isnan(np.unique(model.values)))

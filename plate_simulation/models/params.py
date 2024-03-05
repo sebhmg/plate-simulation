@@ -21,7 +21,7 @@ class PlateParams(BaseModel):
     :param width: V-size of the plate.
     :param strike_length: U-size of the plate.
     :param dip_length: W-size of the plate.
-    :param dip: Orientation of the u-axis in degree from horizontal.
+    :param dip: Orientation of the v-axis in degree from horizontal.
     :param dip_direction: Orientation of the u axis in degree from north.
     :param reference: Point of rotation to be 'center' or 'top'.
     """
@@ -36,8 +36,8 @@ class PlateParams(BaseModel):
     width: float
     strike_length: float
     dip_length: float
-    dip: float = 0.0
-    dip_direction: float = 0.0
+    dip: float = 90.0
+    dip_direction: float = 90.0
     reference: str = "center"
 
 

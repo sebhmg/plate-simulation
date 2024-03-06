@@ -96,12 +96,12 @@ class Anomaly(Event):
     """
 
     def __init__(self, surface: Surface, value: float):
-        self.surface = Body(surface)
+        self.body = Body(surface)
         self.value = value
 
     def realize(self, mesh: Octree, model: np.ndarray) -> np.ndarray:
         """Fill the model within the surface with the anomaly value."""
-        model[self.surface.mask(mesh)] = self.value
+        model[self.body.mask(mesh)] = self.value
         return model
 
 

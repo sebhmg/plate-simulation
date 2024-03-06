@@ -40,6 +40,20 @@
     "value": 200.0,
     "enabled": true
   },
+  "number": {
+    "main": true,
+    "group": "Plate",
+    "label": "Number of plates",
+    "value": 1,
+    "enabled": true
+  },
+  "spacing": {
+    "main": true,
+    "group": "Plate",
+    "label": "Spacing (m)",
+    "value": 0.0,
+    "enabled": true
+  },
   "plate": {
     "main": true,
     "group": "Plate",
@@ -47,26 +61,29 @@
     "value": 20.0,
     "enabled": true
   },
-  "center_x": {
-    "label": "Easting",
+  "x_offset": {
+    "label": "X Offset (m)",
     "group": "Plate",
     "main": true,
     "value": 0.0,
-    "enabled": true
+    "enabled": true,
+    "tooltip": "Offset is relative to the center of the survey."
   },
-  "center_y": {
-    "label": "Northing",
+  "y_offset": {
+    "label": "Y Offset (m)",
     "main": true,
     "group": "Plate",
     "value": 0.0,
-    "enabled": true
+    "enabled": true,
+    "tooltip": "Offset is relative to the center of the survey."
   },
-  "center_z": {
-    "label": "Elevation",
+  "depth": {
+    "label": "Depth",
     "main": true,
     "group": "Plate",
     "value": -200.0,
-    "enabled": true
+    "enabled": true,
+    "tooltip": "Depth is relative to the mean of topography."
   },
   "width": {
     "label": "Thickness",

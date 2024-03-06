@@ -75,14 +75,16 @@ def get_input_file(filepath: Path) -> InputFile:
         ifile.set_data_value("overburden", 7500.0)
         ifile.set_data_value("thickness", 50.0)
         ifile.set_data_value("plate", 20.0)
-        ifile.set_data_value("center_x", 0.0)
-        ifile.set_data_value("center_y", 0.0)
-        ifile.set_data_value("center_z", -175.0)
+        ifile.set_data_value("x_offset", 0.0)
+        ifile.set_data_value("y_offset", 0.0)
+        ifile.set_data_value("depth", -175.0)
         ifile.set_data_value("width", 100.0)
         ifile.set_data_value("strike_length", 1000.0)
         ifile.set_data_value("dip_length", 300.0)
         ifile.set_data_value("dip", 65.0)
         ifile.set_data_value("dip_direction", 65.0)
+        ifile.set_data_value("number", 1)
+        ifile.set_data_value("spacing", 0.0)
 
     return ifile
 
@@ -103,7 +105,7 @@ def test_plate_simulation(tmp_path):
             k.name in [f"Iteration_0_{i}" for i in "xyz"] for k in data.property_groups
         )
         assert all(len(k.properties) == 20 for k in data.property_groups)
-        assert mesh.n_cells == 13372
+        assert mesh.n_cells == 13253
         assert len(np.unique(model.values)) == 4
         assert all(
             k in np.unique(model.values) for k in [1.0 / 7500, 1.0 / 2000, 1.0 / 20]
@@ -111,6 +113,7 @@ def test_plate_simulation(tmp_path):
         assert any(np.isnan(np.unique(model.values)))
 
 
+# pylint: disable=too-many-statements
 def test_plate_simulation_params_from_input_file(tmp_path):
     with Workspace(tmp_path / "test.geoh5") as ws:
         topography = get_topography(ws)
@@ -146,14 +149,16 @@ def test_plate_simulation_params_from_input_file(tmp_path):
         ifile.data["overburden"] = 5.0
         ifile.data["thickness"] = 50.0
         ifile.data["plate"] = 2.0
-        ifile.data["center_x"] = 0.0
-        ifile.data["center_y"] = 0.0
-        ifile.data["center_z"] = -250.0
+        ifile.data["depth"] = -250
         ifile.data["width"] = 100.0
         ifile.data["strike_length"] = 100.0
         ifile.data["dip_length"] = 100.0
         ifile.data["dip"] = 0.0
         ifile.data["dip_direction"] = 0.0
+        ifile.data["number"] = 9
+        ifile.data["spacing"] = 10.0
+        ifile.data["x_offset"] = 10.0
+        ifile.data["y_offset"] = 10.0
 
         params = PlateSimulationDriver.params_from_input_file(ifile)
         assert isinstance(params.simulation, GravityParams)
@@ -179,12 +184,14 @@ def test_plate_simulation_params_from_input_file(tmp_path):
         assert params.model.overburden.thickness == 50.0
         assert params.model.overburden.value == 0.2
         assert params.model.plate.value == 0.5
-        assert params.model.plate.center_x == 0.0
-        assert params.model.plate.center_y == 0.0
-        assert params.model.plate.center_z == -250.0
+        assert params.model.plate.depth == -250.0
         assert params.model.plate.width == 100.0
         assert params.model.plate.strike_length == 100.0
         assert params.model.plate.dip_length == 100.0
         assert params.model.plate.dip == 0.0
         assert params.model.plate.dip_direction == 0.0
         assert params.model.plate.reference == "center"
+        assert params.model.plate.number == 9
+        assert params.model.plate.spacing == 10.0
+        assert params.model.plate.x_offset == 10.0
+        assert params.model.plate.y_offset == 10.0

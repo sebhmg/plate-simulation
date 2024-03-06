@@ -5,6 +5,7 @@
 #  All rights reserved.
 #
 
+import string
 from pathlib import Path
 
 from geoh5py.objects import ObjectBase, Surface
@@ -24,7 +25,9 @@ class MeshParams(BaseModel):
     minimum_level: int = 8
     diagonal_balance: bool = False
 
-    def octree_params(self, survey: ObjectBase, topography: Surface, plate: Surface):
+    def octree_params(
+        self, survey: ObjectBase, topography: Surface, plates: list[Surface]
+    ):
         refinements = {
             "Refinement A object": topography,
             "Refinement A levels": [0, 2],
@@ -32,12 +35,18 @@ class MeshParams(BaseModel):
             "Refinement B object": survey,
             "Refinement B levels": [4, 2],
             "Refinement B type": "radial",
-            "Refinement C object": plate,
-            "Refinement C levels": [2, 1],
-            "Refinement C type": "surface",
         }
+        for plate, letter in zip(plates, string.ascii_uppercase[2:]):
+            refinements.update(
+                {
+                    f"Refinement {letter} object": plate,
+                    f"Refinement {letter} levels": [2, 1],
+                    f"Refinement {letter} type": "surface",
+                }
+            )
+
         octree_params = OctreeParams(
-            geoh5=plate.workspace,
+            geoh5=plates[0].workspace,
             objects=survey,
             u_cell_size=self.u_cell_size,
             v_cell_size=self.v_cell_size,
@@ -47,7 +56,7 @@ class MeshParams(BaseModel):
             max_distance=self.max_distance,
             minimum_level=self.minimum_level,
             diagonal_balance=self.diagonal_balance,
-            **refinements
+            **refinements,
         )
         assert isinstance(survey.workspace.h5file, Path)
         path = survey.workspace.h5file.parent

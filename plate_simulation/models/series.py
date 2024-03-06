@@ -16,7 +16,7 @@ from geoh5py.data import FloatData
 from geoh5py.objects import Octree
 from geoh5py.shared.utils import fetch_active_workspace
 
-from .events import Erosion, Overburden
+from .events import Anomaly, Erosion, Overburden
 
 if TYPE_CHECKING:
     from .events import Deposition, Event
@@ -71,6 +71,17 @@ class Lithology(Series):
         :param model: Model to be updated by the events in the history.
         """
         return super().realize(mesh, model)
+
+
+class DikeSwarm(Series):
+    """
+    Model a set of dike intrusions.
+
+    :param history: Sequence of intrusions represented by Anomaly objects.
+    """
+
+    def __init__(self, history: Sequence[Anomaly]):
+        super().__init__(history)
 
 
 class Scenario(Series):

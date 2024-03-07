@@ -104,9 +104,10 @@ class Plate:
     def _rotate(self, vertices: np.ndarray) -> np.ndarray:
         """Rotate vertices and adjust for reference point."""
 
-        theta = (540.0 - np.asarray(self.params.dip_direction)) % 360.0
-        phi = 90 + self.params.dip
-        rotated_vertices = rotate_xyz(vertices, self.center, theta, phi)
+        theta = -1 * self.params.dip_direction
+        phi = 90.0 - self.params.dip
+        dipped_vertices = rotate_xyz(vertices, self.center, 0.0, phi)
+        rotated_vertices = rotate_xyz(dipped_vertices, self.center, theta, 0.0)
 
         if self.params.reference == "top":
             offset = np.mean(rotated_vertices[4:, :], axis=0) - self.center

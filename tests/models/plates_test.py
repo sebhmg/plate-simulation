@@ -90,4 +90,4 @@ def test_dipping_plates_all_quadrants(tmp_path):
                 plate_surface.vertices, [0.0, 0.0, 0.0], dip_direction, 0.0
             )
             locs = rotate_xyz(locs, [0.0, 0.0, 0.0], 0.0, dip - 90)
-            assert are_collocated(locs, reference.vertices)
+            assert np.allclose(locs, reference.vertices)

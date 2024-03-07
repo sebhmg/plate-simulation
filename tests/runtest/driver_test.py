@@ -83,8 +83,8 @@ def get_input_file(filepath: Path) -> InputFile:
         ifile.set_data_value("dip_length", 300.0)
         ifile.set_data_value("dip", 65.0)
         ifile.set_data_value("dip_direction", 65.0)
-        ifile.set_data_value("number", 1)
-        ifile.set_data_value("spacing", 0.0)
+        ifile.set_data_value("number", 2)
+        ifile.set_data_value("spacing", 400.0)
 
     return ifile
 
@@ -105,7 +105,7 @@ def test_plate_simulation(tmp_path):
             k.name in [f"Iteration_0_{i}" for i in "xyz"] for k in data.property_groups
         )
         assert all(len(k.properties) == 20 for k in data.property_groups)
-        assert mesh.n_cells == 13253
+        assert mesh.n_cells == 14751
         assert len(np.unique(model.values)) == 4
         assert all(
             k in np.unique(model.values) for k in [1.0 / 7500, 1.0 / 2000, 1.0 / 20]

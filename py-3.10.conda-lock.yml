@@ -15,8 +15,8 @@
 version: 1
 metadata:
   content_hash:
-    win-64: 0b5025e4eeeccebd9f92bffafe85179d7a7f27c980deedf5277f8e42bedf9d7c
-    linux-64: 4167dc30ca07343adfb2f62ae1fe08586a4c6dbd30da26a237bcf82803c4a13a
+    win-64: 3db51bdfb59a7db56a7bbe5697098eb1d4b9330c64370a4fdbf7e897977c6aa0
+    linux-64: 866be41d53ec6d189ea95f4759efabfbb315961164fb93d61e5eb993e9452f79
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -742,31 +742,35 @@ package:
   category: main
   optional: false
 - name: empymod
-  version: 2.2.2
+  version: 2.3.0
   manager: conda
   platform: linux-64
   dependencies:
-    numba: '>=0.47'
-    python: '>=3.7'
-    scipy: '>=1.4.0'
-  url: https://conda.anaconda.org/conda-forge/noarch/empymod-2.2.2-pyhd8ed1ab_0.conda
+    libdlf: ''
+    numba: '>=0.53'
+    python: '>=3.9'
+    scipy: '>=1.9'
+    scooby: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/empymod-2.3.0-pyhd8ed1ab_0.conda
   hash:
-    md5: bebcf8f5112a7d755e2781fe9f87ae7b
-    sha256: c489c425cb75c30288516c140f47d109b4643ab31f17c3f230be38aae7d464f5
+    md5: b035a9e0a7dbde0948d16766c2dc4914
+    sha256: ecdc488a517a0db946ba7b6bbb010cf4a791331e180f6092225a8fb91af66fb5
   category: main
   optional: false
 - name: empymod
-  version: 2.2.2
+  version: 2.3.0
   manager: conda
   platform: win-64
   dependencies:
-    python: '>=3.7'
-    scipy: '>=1.4.0'
-    numba: '>=0.47'
-  url: https://conda.anaconda.org/conda-forge/noarch/empymod-2.2.2-pyhd8ed1ab_0.conda
+    scooby: ''
+    libdlf: ''
+    python: '>=3.9'
+    scipy: '>=1.9'
+    numba: '>=0.53'
+  url: https://conda.anaconda.org/conda-forge/noarch/empymod-2.3.0-pyhd8ed1ab_0.conda
   hash:
-    md5: bebcf8f5112a7d755e2781fe9f87ae7b
-    sha256: c489c425cb75c30288516c140f47d109b4643ab31f17c3f230be38aae7d464f5
+    md5: b035a9e0a7dbde0948d16766c2dc4914
+    sha256: ecdc488a517a0db946ba7b6bbb010cf4a791331e180f6092225a8fb91af66fb5
   category: main
   optional: false
 - name: exceptiongroup
@@ -1502,6 +1506,32 @@ package:
   hash:
     md5: 002b1b723b44dbd286b9e3708762433c
     sha256: e2886a84eaa0fbeca1d1d810270f234431d190402b4a79acf756ca2d16000354
+  category: main
+  optional: false
+- name: libdlf
+  version: 0.2.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    numpy: ''
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/libdlf-0.2.0-pyhd8ed1ab_0.tar.bz2
+  hash:
+    md5: 302f29a6b23069f2605a7842654360c5
+    sha256: a71d6cc5eed68ce3089033901ae792b61585e1494413af801b6c7d837b62aca4
+  category: main
+  optional: false
+- name: libdlf
+  version: 0.2.0
+  manager: conda
+  platform: win-64
+  dependencies:
+    numpy: ''
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/libdlf-0.2.0-pyhd8ed1ab_0.tar.bz2
+  hash:
+    md5: 302f29a6b23069f2605a7842654360c5
+    sha256: a71d6cc5eed68ce3089033901ae792b61585e1494413af801b6c7d837b62aca4
   category: main
   optional: false
 - name: libedit
@@ -3068,27 +3098,27 @@ package:
   category: main
   optional: false
 - name: pyparsing
-  version: 3.1.1
+  version: 3.1.2
   manager: conda
   platform: linux-64
   dependencies:
     python: '>=3.6'
-  url: https://conda.anaconda.org/conda-forge/noarch/pyparsing-3.1.1-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/pyparsing-3.1.2-pyhd8ed1ab_0.conda
   hash:
-    md5: 176f7d56f0cfe9008bdf1bccd7de02fb
-    sha256: 4a1332d634b6c2501a973655d68f08c9c42c0bd509c349239127b10572b8354b
+    md5: b9a4dacf97241704529131a0dfc0494f
+    sha256: 06c77cb03e5dde2d939b216c99dd2db52ea93a4c7c599f3882f136005c359c7b
   category: main
   optional: false
 - name: pyparsing
-  version: 3.1.1
+  version: 3.1.2
   manager: conda
   platform: win-64
   dependencies:
     python: '>=3.6'
-  url: https://conda.anaconda.org/conda-forge/noarch/pyparsing-3.1.1-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/pyparsing-3.1.2-pyhd8ed1ab_0.conda
   hash:
-    md5: 176f7d56f0cfe9008bdf1bccd7de02fb
-    sha256: 4a1332d634b6c2501a973655d68f08c9c42c0bd509c349239127b10572b8354b
+    md5: b9a4dacf97241704529131a0dfc0494f
+    sha256: 06c77cb03e5dde2d939b216c99dd2db52ea93a4c7c599f3882f136005c359c7b
   category: main
   optional: false
 - name: pysocks
@@ -3234,29 +3264,29 @@ package:
   category: main
   optional: false
 - name: python-dateutil
-  version: 2.8.2
+  version: 2.9.0
   manager: conda
   platform: linux-64
   dependencies:
-    python: '>=3.6'
+    python: '>=3.7'
     six: '>=1.5'
-  url: https://conda.anaconda.org/conda-forge/noarch/python-dateutil-2.8.2-pyhd8ed1ab_0.tar.bz2
+  url: https://conda.anaconda.org/conda-forge/noarch/python-dateutil-2.9.0-pyhd8ed1ab_0.conda
   hash:
-    md5: dd999d1cc9f79e67dbb855c8924c7984
-    sha256: 54d7785c7678166aa45adeaccfc1d2b8c3c799ca2dc05d4a82bb39b1968bd7da
+    md5: 2cf4264fffb9e6eff6031c5b6884d61c
+    sha256: f3ceef02ac164a8d3a080d0d32f8e2ebe10dd29e3a685d240e38b3599e146320
   category: main
   optional: false
 - name: python-dateutil
-  version: 2.8.2
+  version: 2.9.0
   manager: conda
   platform: win-64
   dependencies:
-    python: '>=3.6'
+    python: '>=3.7'
     six: '>=1.5'
-  url: https://conda.anaconda.org/conda-forge/noarch/python-dateutil-2.8.2-pyhd8ed1ab_0.tar.bz2
+  url: https://conda.anaconda.org/conda-forge/noarch/python-dateutil-2.9.0-pyhd8ed1ab_0.conda
   hash:
-    md5: dd999d1cc9f79e67dbb855c8924c7984
-    sha256: 54d7785c7678166aa45adeaccfc1d2b8c3c799ca2dc05d4a82bb39b1968bd7da
+    md5: 2cf4264fffb9e6eff6031c5b6884d61c
+    sha256: f3ceef02ac164a8d3a080d0d32f8e2ebe10dd29e3a685d240e38b3599e146320
   category: main
   optional: false
 - name: python_abi
@@ -3429,6 +3459,30 @@ package:
   hash:
     md5: d44c1bad75bb3e4d40066b3d3dd718ed
     sha256: 4a02b93fae869bc4e188aa808b1bed276dd7c06450b85bbb964d102ffc940184
+  category: main
+  optional: false
+- name: scooby
+  version: 0.9.2
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: '>=3.8'
+  url: https://conda.anaconda.org/conda-forge/noarch/scooby-0.9.2-pyhd8ed1ab_0.conda
+  hash:
+    md5: 66dc03353b88f5f2db8c630854174a3f
+    sha256: 2da33192d89f313fcda87b1c852d4bce9cda32bc3dc06c9348c2415f637d0deb
+  category: main
+  optional: false
+- name: scooby
+  version: 0.9.2
+  manager: conda
+  platform: win-64
+  dependencies:
+    python: '>=3.8'
+  url: https://conda.anaconda.org/conda-forge/noarch/scooby-0.9.2-pyhd8ed1ab_0.conda
+  hash:
+    md5: 66dc03353b88f5f2db8c630854174a3f
+    sha256: 2da33192d89f313fcda87b1c852d4bce9cda32bc3dc06c9348c2415f637d0deb
   category: main
   optional: false
 - name: setuptools
@@ -3735,29 +3789,29 @@ package:
   category: main
   optional: false
 - name: trimesh
-  version: 4.1.6
+  version: 4.1.7
   manager: conda
   platform: linux-64
   dependencies:
     numpy: ''
     python: '>=2.7'
-  url: https://conda.anaconda.org/conda-forge/noarch/trimesh-4.1.6-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/trimesh-4.1.7-pyhd8ed1ab_0.conda
   hash:
-    md5: ce6237c043e77e300060596a7669ab4b
-    sha256: a3f5d4f01212e745fb5c31d7b5056b18254022f0948a0a208f13a492c97e1f03
+    md5: b4a19dc7a49418e73a5bbd101aa82dcc
+    sha256: e9e60a0cad319efb20efb40c34adc634a18d13ebaee14b3720e332b019ba7875
   category: main
   optional: false
 - name: trimesh
-  version: 4.1.6
+  version: 4.1.7
   manager: conda
   platform: win-64
   dependencies:
     numpy: ''
     python: '>=2.7'
-  url: https://conda.anaconda.org/conda-forge/noarch/trimesh-4.1.6-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/trimesh-4.1.7-pyhd8ed1ab_0.conda
   hash:
-    md5: ce6237c043e77e300060596a7669ab4b
-    sha256: a3f5d4f01212e745fb5c31d7b5056b18254022f0948a0a208f13a492c97e1f03
+    md5: b4a19dc7a49418e73a5bbd101aa82dcc
+    sha256: e9e60a0cad319efb20efb40c34adc634a18d13ebaee14b3720e332b019ba7875
   category: main
   optional: false
 - name: typing-extensions
@@ -4489,25 +4543,25 @@ package:
   manager: pip
   platform: linux-64
   dependencies:
-    pydiso: '>=0.0.3,<0.1.0'
-    param-sweeps: '>=0.1.7a1,<0.2.0'
-    mkl: '>=2022.0.0,<2023.0.0'
-    octree-creation-app: '>=0.1.0a2,<0.2.0'
-    scipy: '>=1.10.1,<1.11.0'
-    h5py: '*'
-    geoana: '>=0.4.0,<0.5.0'
     distributed: '>=2022.10.0,<2022.11.0'
-    numpy: '>=1.23.5,<1.24.0'
-    geoh5py: '>=0.9.0a1,<0.10.0'
+    scipy: '>=1.10.1,<1.11.0'
     mira-simpeg: '>=0.19.0.dev4,<0.20.0'
-    geoapps-utils: '>=0.3.0a1,<0.4.0'
-    simpeg-archive: '>=0.11.0.dev6,<0.12.0'
+    param-sweeps: '>=0.1.7a1,<0.2.0'
     zarr: '>=2.14.2,<2.15.0'
-    tqdm: '>=4.64.0,<5.0.0'
-    dask: '>=2022.10.0,<2022.11.0'
-    pillow: '*'
     discretize: '>=0.10.0,<0.11.0'
+    pydiso: '>=0.0.3,<0.1.0'
+    numpy: '>=1.23.5,<1.24.0'
+    geoana: '>=0.4.0,<0.5.0'
+    simpeg-archive: '>=0.11.0.dev6,<0.12.0'
+    geoh5py: '>=0.9.0a1,<0.10.0'
+    mkl: '>=2022.0.0,<2023.0.0'
+    dask: '>=2022.10.0,<2022.11.0'
+    tqdm: '>=4.64.0,<5.0.0'
+    pillow: '*'
     pymatsolver: '>=0.2.0,<0.3.0'
+    geoapps-utils: '>=0.3.0a1,<0.4.0'
+    octree-creation-app: '>=0.1.0a2,<0.2.0'
+    h5py: '*'
   url: https://github.com/MiraGeoscience/simpeg-drivers/archive/refs/heads/develop.zip
   hash:
     sha256: ''
@@ -4521,25 +4575,25 @@ package:
   manager: pip
   platform: win-64
   dependencies:
-    pydiso: '>=0.0.3,<0.1.0'
-    param-sweeps: '>=0.1.7a1,<0.2.0'
-    mkl: '>=2022.0.0,<2023.0.0'
-    octree-creation-app: '>=0.1.0a2,<0.2.0'
-    scipy: '>=1.10.1,<1.11.0'
-    h5py: '*'
-    geoana: '>=0.4.0,<0.5.0'
     distributed: '>=2022.10.0,<2022.11.0'
-    numpy: '>=1.23.5,<1.24.0'
-    geoh5py: '>=0.9.0a1,<0.10.0'
+    scipy: '>=1.10.1,<1.11.0'
     mira-simpeg: '>=0.19.0.dev4,<0.20.0'
-    geoapps-utils: '>=0.3.0a1,<0.4.0'
-    simpeg-archive: '>=0.11.0.dev6,<0.12.0'
+    param-sweeps: '>=0.1.7a1,<0.2.0'
     zarr: '>=2.14.2,<2.15.0'
-    tqdm: '>=4.64.0,<5.0.0'
-    dask: '>=2022.10.0,<2022.11.0'
-    pillow: '*'
     discretize: '>=0.10.0,<0.11.0'
+    pydiso: '>=0.0.3,<0.1.0'
+    numpy: '>=1.23.5,<1.24.0'
+    geoana: '>=0.4.0,<0.5.0'
+    simpeg-archive: '>=0.11.0.dev6,<0.12.0'
+    geoh5py: '>=0.9.0a1,<0.10.0'
+    mkl: '>=2022.0.0,<2023.0.0'
+    dask: '>=2022.10.0,<2022.11.0'
+    tqdm: '>=4.64.0,<5.0.0'
+    pillow: '*'
     pymatsolver: '>=0.2.0,<0.3.0'
+    geoapps-utils: '>=0.3.0a1,<0.4.0'
+    octree-creation-app: '>=0.1.0a2,<0.2.0'
+    h5py: '*'
   url: https://github.com/MiraGeoscience/simpeg-drivers/archive/refs/heads/develop.zip
   hash:
     sha256: ''

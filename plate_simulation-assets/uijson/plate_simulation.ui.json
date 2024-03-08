@@ -77,13 +77,21 @@
     "enabled": true,
     "tooltip": "Offset is relative to the center of the survey."
   },
+  "true_elevation": {
+    "label": "True elevation",
+    "main": true,
+    "group": "Plate",
+    "value": false,
+    "enabled": true,
+    "tooltip": "If checked 'Depth' is true elevation, otherwise it is relative to mean topography."
+  },
   "depth": {
     "label": "Depth",
     "main": true,
     "group": "Plate",
     "value": -200.0,
     "enabled": true,
-    "tooltip": "Depth is relative to the mean of topography."
+    "tooltip": "Elevation if 'Use elevation' checked, otherwise depth below mean topography ."
   },
   "width": {
     "label": "Thickness",

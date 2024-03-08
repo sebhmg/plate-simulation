@@ -25,10 +25,10 @@ def test_replicate_even(tmp_path):
     surface = Surface.create(
         workspace,
         name="test",
-        vertices=np.array([[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0]]),
+        vertices=np.array([[-1, -1, 0], [1, -1, 0], [1, 1, 0], [-1, 1, 0]]),
         cells=np.array([[0, 1, 2], [0, 2, 3]]),
     )
-    surfaces = replicate(surface, 2, 10.0, 90.0, np.array([0.0, 0.0, 0.0]))
+    surfaces = replicate(surface, 2, 10.0, 90.0)
     assert surfaces[0].name == "test offset 1"
     assert np.allclose(surfaces[0].vertices.mean(axis=0), np.array([-5.0, 0.0, 0.0]))
     assert surfaces[1].name == "test offset 2"
@@ -40,10 +40,10 @@ def test_replicate_odd(tmp_path):
     surface = Surface.create(
         workspace,
         name="test",
-        vertices=np.array([[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0]]),
+        vertices=np.array([[-1, -1, 0], [1, -1, 0], [1, 1, 0], [-1, 1, 0]]),
         cells=np.array([[0, 1, 2], [0, 2, 3]]),
     )
-    surfaces = replicate(surface, 3, 5.0, 0.0, np.array([0.0, 0.0, 0.0]))
+    surfaces = replicate(surface, 3, 5.0, 0.0)
     assert np.allclose(surfaces[0].vertices.mean(axis=0), np.array([0.0, -5.0, 0.0]))
     assert np.allclose(surfaces[1].vertices.mean(axis=0), np.array([0.0, 0.0, 0.0]))
     assert np.allclose(surfaces[2].vertices.mean(axis=0), np.array([0.0, 5.0, 0.0]))

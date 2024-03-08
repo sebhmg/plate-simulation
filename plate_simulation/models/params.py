@@ -5,6 +5,8 @@
 #  All rights reserved.
 #
 
+import numpy as np
+from geoh5py.objects import ObjectBase, Surface
 from pydantic import BaseModel, ConfigDict, model_validator
 
 
@@ -41,6 +43,7 @@ class PlateParams(BaseModel):
     dip: float = 90.0
     dip_direction: float = 90.0
     reference: str = "center"
+    true_elevation: bool = False
     number: int = 1
     spacing: float = 0.0
     x_offset: float = 0.0
@@ -52,6 +55,35 @@ class PlateParams(BaseModel):
         if "number" in data and data["number"] == 1:
             data.pop("spacing")
         return data
+
+    @property
+    def halfplate(self):
+        return 0.5 * self.dip_length * np.sin(np.deg2rad(self.dip))
+
+    def center(
+        self, survey: ObjectBase, topography: Surface, true_elevation: bool = False
+    ) -> np.ndarray:
+        """
+        Find the plate center relative to a survey and topography.
+
+        :param survey: geoh5py survey object for plate simulation.
+        :param topogarphy: topography object.
+        :param true_elevation: If True, the center of the plate will be at
+            the specified depth. otherwise, the top of the plate will be at
+            the specified depth below the mean of topography.
+        """
+        xy = np.array(
+            [
+                survey.vertices[:, 0].mean() + self.x_offset,
+                survey.vertices[:, 1].mean() + self.y_offset,
+            ]
+        )
+        z = (
+            self.depth
+            if true_elevation
+            else topography.vertices[:, 2].mean() - self.depth - self.halfplate
+        )
+        return np.hstack([xy, z])
 
 
 class OverburdenParams(BaseModel):

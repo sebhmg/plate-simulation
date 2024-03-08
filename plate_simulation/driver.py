@@ -10,7 +10,6 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-import numpy as np
 from geoh5py.data import FloatData
 from geoh5py.groups import SimPEGGroup
 from geoh5py.objects import Octree, Points, Surface
@@ -78,23 +77,19 @@ class PlateSimulationDriver:
 
     @property
     def topography(self) -> FloatData:
-        return self.params.simulation.topography_object.vertices
+        return self.params.simulation.topography_object
 
     @property
     def surfaces(self) -> list[Surface]:
         """Returns a list of surfaces representing the plates for simulation."""
 
         if self._surfaces is None:
-            halfplate = (
-                0.5
-                * self.params.model.plate.dip_length
-                * np.sin(np.deg2rad(self.params.model.plate.dip))
-            )
-
             plate = Plate(
                 self.params.workspace,
                 self.params.model.plate,
-                center_z=self.topography[:, 2].mean() - halfplate,
+                *self.params.model.plate.center(
+                    self.survey, self.topography, self.params.model.plate.true_elevation
+                ),
             )
 
             self._surfaces = replicate(
@@ -102,7 +97,6 @@ class PlateSimulationDriver:
                 self.params.model.plate.number,
                 self.params.model.plate.spacing,
                 self.params.model.plate.dip_direction,
-                origin=self.survey.vertices.mean(axis=0),
             )
 
         return self._surfaces
@@ -149,8 +143,10 @@ class PlateSimulationDriver:
             thickness=self.params.model.overburden.thickness,
             value=self.params.model.overburden.value,
         )
-        anomalies = [Anomaly(s, self.params.model.plate.value) for s in self.surfaces]
-        dikes = DikeSwarm(anomalies)
+
+        dikes = DikeSwarm(
+            [Anomaly(s, self.params.model.plate.value) for s in self.surfaces]
+        )
 
         erosion = Erosion(
             surface=self.params.simulation.topography_object,
@@ -209,6 +205,7 @@ class PlateSimulationDriver:
             dip_length=ifile.data["dip_length"],  # type: ignore
             dip=ifile.data["dip"],  # type: ignore
             dip_direction=ifile.data["dip_direction"],  # type: ignore
+            true_elevation=ifile.data["true_elevation"],  # type: ignore
             number=ifile.data["number"],  # type: ignore
             spacing=ifile.data["spacing"],  # type: ignore
             x_offset=ifile.data["x_offset"],  # type: ignore

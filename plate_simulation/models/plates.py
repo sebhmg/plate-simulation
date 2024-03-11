@@ -85,23 +85,23 @@ class Plate:
     def vertices(self) -> np.ndarray:
         """Vertices for triangulation of a rectangular prism in 3D space."""
 
-        x_1 = self.center_x - (self.params.strike_length / 2.0)
-        x_2 = self.center_x + (self.params.strike_length / 2.0)
-        y_1 = self.center_y - (self.params.width / 2.0)
-        y_2 = self.center_y + (self.params.width / 2.0)
-        z_1 = self.center_z - (self.params.dip_length / 2.0)
-        z_2 = self.center_z + (self.params.dip_length / 2.0)
+        u_1 = self.center_x - (self.params.strike_length / 2.0)
+        u_2 = self.center_x + (self.params.strike_length / 2.0)
+        v_1 = self.center_y - (self.params.dip_length / 2.0)
+        v_2 = self.center_y + (self.params.dip_length / 2.0)
+        w_1 = self.center_z - (self.params.width / 2.0)
+        w_2 = self.center_z + (self.params.width / 2.0)
 
         vertices = np.array(
             [
-                [x_1, y_1, z_1],
-                [x_2, y_1, z_1],
-                [x_1, y_2, z_1],
-                [x_2, y_2, z_1],
-                [x_1, y_1, z_2],
-                [x_2, y_1, z_2],
-                [x_1, y_2, z_2],
-                [x_2, y_2, z_2],
+                [u_1, v_1, w_1],
+                [u_2, v_1, w_1],
+                [u_1, v_2, w_1],
+                [u_2, v_2, w_1],
+                [u_1, v_1, w_2],
+                [u_2, v_1, w_2],
+                [u_1, v_2, w_2],
+                [u_2, v_2, w_2],
             ]
         )
 
@@ -111,9 +111,8 @@ class Plate:
         """Rotate vertices and adjust for reference point."""
 
         theta = -1 * self.params.dip_direction
-        phi = 90.0 - self.params.dip
-        dipped_vertices = rotate_xyz(vertices, self.center, 0.0, phi)
-        rotated_vertices = rotate_xyz(dipped_vertices, self.center, theta, 0.0)
+        phi = -1 * self.params.dip
+        rotated_vertices = rotate_xyz(vertices, self.center, theta, phi)
 
         if self.params.reference == "top":
             offset = np.mean(rotated_vertices[4:, :], axis=0) - self.center

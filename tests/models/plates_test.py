@@ -29,6 +29,7 @@ def vertical_east_striking_plate(workspace):
         width=10.0,
         strike_length=1000.0,
         dip_length=500.0,
+        dip=90.0,
         dip_direction=0.0,
     )
     plate = Plate(workspace, params)
@@ -85,5 +86,5 @@ def test_dipping_plates_all_quadrants(tmp_path):
             locs = rotate_xyz(
                 plate_surface.vertices, [0.0, 0.0, 0.0], dip_direction, 0.0
             )
-            locs = rotate_xyz(locs, [0.0, 0.0, 0.0], 0.0, dip - 90)
+            locs = rotate_xyz(locs, [0.0, 0.0, 0.0], 0.0, dip - 90.0)
             assert np.allclose(locs, reference.vertices)

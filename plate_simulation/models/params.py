@@ -7,7 +7,7 @@
 
 import numpy as np
 from geoh5py.objects import ObjectBase, Surface
-from pydantic import BaseModel, ConfigDict, model_validator
+from pydantic import BaseModel, ConfigDict, field_validator, model_validator
 
 
 class PlateParams(BaseModel):
@@ -35,7 +35,7 @@ class PlateParams(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     name: str
-    value: float
+    plate: float
     depth: float
     width: float
     strike_length: float
@@ -48,6 +48,11 @@ class PlateParams(BaseModel):
     spacing: float = 0.0
     x_offset: float = 0.0
     y_offset: float = 0.0
+
+    @field_validator("plate", mode="before")
+    @classmethod
+    def reciprocal(cls, value: float) -> float:
+        return 1.0 / value
 
     @model_validator(mode="before")
     @classmethod
@@ -72,12 +77,20 @@ class PlateParams(BaseModel):
             the specified depth. otherwise, the top of the plate will be at
             the specified depth below the mean of topography.
         """
+
+        if survey.vertices is None:
+            raise ValueError("The survey object must have vertices.")
+
         xy = np.array(
             [
                 survey.vertices[:, 0].mean() + self.x_offset,
                 survey.vertices[:, 1].mean() + self.y_offset,
             ]
         )
+
+        if topography.vertices is None:
+            raise ValueError("The topography object must have vertices.")
+
         z = (
             self.depth
             if true_elevation
@@ -95,7 +108,12 @@ class OverburdenParams(BaseModel):
     """
 
     thickness: float
-    value: float
+    overburden: float
+
+    @field_validator("overburden", mode="before")
+    @classmethod
+    def reciprocal(cls, value: float) -> float:
+        return 1.0 / value
 
 
 class ModelParams(BaseModel):
@@ -114,3 +132,8 @@ class ModelParams(BaseModel):
     background: float
     overburden: OverburdenParams
     plate: PlateParams
+
+    @field_validator("background", mode="before")
+    @classmethod
+    def reciprocal(cls, value: float) -> float:
+        return 1.0 / value

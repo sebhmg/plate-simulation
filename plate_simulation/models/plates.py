@@ -81,10 +81,10 @@ class Plate:
 
         u_1 = self.params.center_x - (self.params.strike_length / 2.0)
         u_2 = self.params.center_x + (self.params.strike_length / 2.0)
-        w_1 = self.params.center_y - (self.params.width / 2.0)
-        w_2 = self.params.center_y + (self.params.width / 2.0)
-        v_1 = self.params.center_z - (self.params.dip_length / 2.0)
-        v_2 = self.params.center_z + (self.params.dip_length / 2.0)
+        v_1 = self.params.center_y - (self.params.dip_length / 2.0)
+        v_2 = self.params.center_y + (self.params.dip_length / 2.0)
+        w_1 = self.params.center_z - (self.params.width / 2.0)
+        w_2 = self.params.center_z + (self.params.width / 2.0)
 
         vertices = np.array(
             [

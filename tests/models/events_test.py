@@ -64,7 +64,7 @@ def test_anomaly(tmp_path):
         _, octree = get_topo_mesh(ws)
         params = PlateParams(
             name="my plate",
-            value=10.0,
+            plate=10.0,
             depth=-1.5,
             width=10.0,
             strike_length=10.0,

@@ -169,8 +169,9 @@ class PlateSimulationDriver:
         if ifile.data is None:  # type: ignore
             raise ValueError("Input file has no data loaded.")
 
-        params = PlateSimulationParams.build(ifile)
-        return PlateSimulationDriver(params).run()
+        with ifile.geoh5.open():  # type: ignore
+            params = PlateSimulationParams.build(ifile)
+            return PlateSimulationDriver(params).run()
 
 
 if __name__ == "__main__":

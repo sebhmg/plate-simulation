@@ -24,7 +24,7 @@ from simpeg_drivers.potential_fields.gravity.constants import (
 from simpeg_drivers.potential_fields.gravity.params import GravityParams
 
 from plate_simulation import assets_path
-from plate_simulation.driver import PlateSimulationDriver
+from plate_simulation.driver import PlateSimulationDriver, PlateSimulationParams
 from plate_simulation.mesh.params import MeshParams
 from plate_simulation.models.params import ModelParams
 
@@ -161,7 +161,7 @@ def test_plate_simulation_params_from_input_file(tmp_path):
         ifile.data["x_offset"] = 10.0
         ifile.data["y_offset"] = 10.0
 
-        params = PlateSimulationDriver.params_from_input_file(ifile)
+        params = PlateSimulationParams.build(ifile)
         assert isinstance(params.simulation, GravityParams)
         assert params.simulation.inversion_type == "gravity"
         assert params.simulation.forward_only
@@ -183,8 +183,8 @@ def test_plate_simulation_params_from_input_file(tmp_path):
         assert params.model.name == "test_gravity_plate_simulation"
         assert params.model.background == 0.001
         assert params.model.overburden.thickness == 50.0
-        assert params.model.overburden.value == 0.2
-        assert params.model.plate.value == 0.5
+        assert params.model.overburden.overburden == 0.2
+        assert params.model.plate.plate == 0.5
         assert params.model.plate.depth == -250.0
         assert params.model.plate.width == 100.0
         assert params.model.plate.strike_length == 100.0

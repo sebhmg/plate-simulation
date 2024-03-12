@@ -16,7 +16,7 @@ def test_plate_params(tmp_path):
     workspace = Workspace(tmp_path / "test.geoh5")
     params = PlateParams(
         name="my plate",
-        value=1.0,
+        plate=1.0,
         depth=100.0,
         width=20.0,
         strike_length=1500.0,

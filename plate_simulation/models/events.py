@@ -63,7 +63,9 @@ class Overburden(Event):
 
     def realize(self, mesh: Octree, model: np.ndarray) -> np.ndarray:
         """Fill the model below the topography with the overburden value."""
-        model[~self.topography.mask(mesh, offset=-1 * self.thickness)] = self.value
+        model[
+            ~self.topography.mask(mesh, offset=-1 * self.thickness, reference="center")
+        ] = self.value
         return model
 
 

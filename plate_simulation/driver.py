@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 
 from geoh5py.data import FloatData
+from geoh5py.groups import SimPEGGroup
 from geoh5py.objects import Octree, Points, Surface
 from geoh5py.shared.utils import fetch_active_workspace
 from geoh5py.ui_json import InputFile
@@ -47,7 +48,7 @@ class PlateSimulationDriver:
         self._model: FloatData | None = None
         self._logger = get_logger("Plate Simulation")
 
-    def run(self) -> FloatData:
+    def run(self) -> SimPEGGroup:
         """Create octree mesh, fill model, and simulate."""
         with fetch_active_workspace(self.params.workspace, mode="r+"):
             self.params.simulation.mesh = self.mesh
@@ -64,7 +65,7 @@ class PlateSimulationDriver:
         driver.run()
         self._logger.info("done.")
 
-        return self.model
+        return driver.out_group
 
     @property
     def survey(self):
@@ -255,7 +256,8 @@ class PlateSimulationDriver:
             raise ValueError("Input file has no data loaded.")
 
         params = PlateSimulationDriver.params_from_input_file(ifile)  # type: ignore
-        _ = PlateSimulationDriver(params).run()
+
+        return PlateSimulationDriver(params).run()
 
 
 if __name__ == "__main__":

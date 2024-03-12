@@ -94,14 +94,18 @@
     "group": "Plate",
     "main": true,
     "value": 60.0,
-    "enabled": true
+    "enabled": true,
+    "min": 0.0,
+    "max": 90.0
   },
   "dip_direction": {
     "label": "Dip Direction",
     "group": "Plate",
     "main": true,
     "value": 90.0,
-    "enabled": true
+    "enabled": true,
+    "min": 0.0,
+    "max": 360.0
   },
   "u_cell_size": {
     "min": 0.0,

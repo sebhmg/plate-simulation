@@ -57,7 +57,19 @@ def get_input_file(filepath: Path) -> InputFile:
             )
             topography = demo_workspace.get_entity("Topography")[0].copy(parent=ws)
 
-        simulation = get_simulation_group(ws, survey, topography)
+            mask = np.zeros(survey.n_vertices, dtype=bool)
+            mask[::10] = True
+            new_survey = survey.copy(mask=mask)
+            new_survey.cells = np.c_[
+                np.arange(new_survey.n_vertices - 1),
+                np.arange(1, new_survey.n_vertices),
+            ]
+            new_survey.transmitters.cells = np.c_[
+                np.arange(new_survey.n_vertices - 1),
+                np.arange(1, new_survey.n_vertices),
+            ]
+
+        simulation = get_simulation_group(ws, new_survey, topography)
 
         ifile = InputFile.read_ui_json(
             assets_path() / "uijson" / "plate_simulation.ui.json", validate=False

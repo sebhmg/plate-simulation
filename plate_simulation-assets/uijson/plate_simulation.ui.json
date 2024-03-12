@@ -126,6 +126,11 @@
     "min": 0.0,
     "max": 360.0
   },
+  "generate_sweep": {
+    "label": "Generate sweep file",
+    "main": true,
+    "value": false
+  },
   "u_cell_size": {
     "min": 0.0,
     "group": "Mesh",

@@ -17,6 +17,7 @@ from geoh5py.shared.utils import fetch_active_workspace
 from geoh5py.ui_json import InputFile
 from octree_creation_app.driver import OctreeDriver
 from simpeg_drivers.driver import InversionDriver
+from param_sweeps.generate import generate
 
 from plate_simulation.logger import get_logger
 from plate_simulation.models.events import Anomaly, Erosion, Overburden
@@ -163,14 +164,29 @@ class PlateSimulationDriver:
         return scenario.geologize()
 
     @staticmethod
-    def main(ifile: Path | InputFile):
+    def start(ifile: str | Path | InputFile):
         """Run the plate simulation driver from an input file."""
+
+        if isinstance(ifile, str):
+            ifile = Path(ifile)
 
         if isinstance(ifile, Path):
             ifile = InputFile.read_ui_json(ifile)
 
         if ifile.data is None:  # type: ignore
             raise ValueError("Input file has no data loaded.")
+
+        generate_sweep = ifile.data["generate_sweep"]  # type: ignore
+        if generate_sweep:
+            filepath = Path(ifile.path_name)
+            ifile.data["generate_sweep"] = False
+            name = filepath.name
+            path = filepath.parent
+            ifile.write_ui_json(name=name, path=path)
+            generate(  # pylint: disable=unexpected-keyword-arg
+                str(filepath), update_values={"conda_environment": "plate_simulation"}
+            )
+            return
 
         with ifile.geoh5.open():  # type: ignore
             params = PlateSimulationParams.build(ifile)
@@ -179,4 +195,4 @@ class PlateSimulationDriver:
 
 if __name__ == "__main__":
     file = Path(sys.argv[1])
-    PlateSimulationDriver.main(file)
+    PlateSimulationDriver.start(file)

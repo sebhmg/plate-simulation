@@ -89,12 +89,15 @@ class PlateSimulationDriver:
                 ),
             )
 
-            self._surfaces = replicate(
-                plate.surface,
-                self.params.model.plate.number,
-                self.params.model.plate.spacing,
-                self.params.model.plate.dip_direction,
-            )
+            if self.params.model.plate.number == 1:
+                self._surfaces = [plate.surface]
+            else:
+                self._surfaces = replicate(
+                    plate.surface,
+                    self.params.model.plate.number,
+                    self.params.model.plate.spacing,
+                    self.params.model.plate.dip_direction,
+                )
 
         return self._surfaces
 

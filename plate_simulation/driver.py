@@ -87,9 +87,7 @@ class PlateSimulationDriver:
             plate = Plate(
                 self.params.workspace,
                 self.params.model.plate,
-                *self.params.model.plate.center(
-                    self.survey, self.topography, self.params.model.plate.true_elevation
-                ),
+                *self.params.model.plate.center(self.survey, self.topography),
             )
 
             self._surfaces = replicate(
@@ -205,11 +203,11 @@ class PlateSimulationDriver:
             dip_length=ifile.data["dip_length"],  # type: ignore
             dip=ifile.data["dip"],  # type: ignore
             dip_direction=ifile.data["dip_direction"],  # type: ignore
-            true_elevation=ifile.data["true_elevation"],  # type: ignore
+            relative_locations=ifile.data["relative_locations"],  # type: ignore
             number=ifile.data["number"],  # type: ignore
             spacing=ifile.data["spacing"],  # type: ignore
-            x_offset=ifile.data["x_offset"],  # type: ignore
-            y_offset=ifile.data["y_offset"],  # type: ignore
+            x_location=ifile.data["x_location"],  # type: ignore
+            y_location=ifile.data["y_location"],  # type: ignore
         )
 
     @staticmethod

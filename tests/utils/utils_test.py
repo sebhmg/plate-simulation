@@ -29,6 +29,8 @@ def test_replicate_even(tmp_path):
         cells=np.array([[0, 1, 2], [0, 2, 3]]),
     )
     surfaces = replicate(surface, 2, 10.0, 90.0)
+    assert surfaces[0].vertices is not None
+    assert surfaces[1].vertices is not None
     assert surfaces[0].name == "test offset 1"
     assert np.allclose(surfaces[0].vertices.mean(axis=0), np.array([-5.0, 0.0, 0.0]))
     assert surfaces[1].name == "test offset 2"
@@ -44,6 +46,9 @@ def test_replicate_odd(tmp_path):
         cells=np.array([[0, 1, 2], [0, 2, 3]]),
     )
     surfaces = replicate(surface, 3, 5.0, 0.0)
+    assert surfaces[0].vertices is not None
+    assert surfaces[1].vertices is not None
+    assert surfaces[2].vertices is not None
     assert np.allclose(surfaces[0].vertices.mean(axis=0), np.array([0.0, -5.0, 0.0]))
     assert np.allclose(surfaces[1].vertices.mean(axis=0), np.array([0.0, 0.0, 0.0]))
     assert np.allclose(surfaces[2].vertices.mean(axis=0), np.array([0.0, 5.0, 0.0]))

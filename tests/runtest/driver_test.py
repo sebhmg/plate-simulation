@@ -57,7 +57,19 @@ def get_input_file(filepath: Path) -> InputFile:
             )
             topography = demo_workspace.get_entity("Topography")[0].copy(parent=ws)
 
-        simulation = get_simulation_group(ws, survey, topography)
+            mask = np.zeros(survey.n_vertices, dtype=bool)
+            mask[::10] = True
+            new_survey = survey.copy(mask=mask)
+            new_survey.cells = np.c_[
+                np.arange(new_survey.n_vertices - 1),
+                np.arange(1, new_survey.n_vertices),
+            ]
+            new_survey.transmitters.cells = np.c_[
+                np.arange(new_survey.n_vertices - 1),
+                np.arange(1, new_survey.n_vertices),
+            ]
+
+        simulation = get_simulation_group(ws, new_survey, topography)
 
         ifile = InputFile.read_ui_json(
             assets_path() / "uijson" / "plate_simulation.ui.json", validate=False
@@ -106,7 +118,7 @@ def test_plate_simulation(tmp_path):
             k.name in [f"Iteration_0_{i}" for i in "xyz"] for k in data.property_groups
         )
         assert all(len(k.properties) == 20 for k in data.property_groups)
-        assert mesh.n_cells == 14821
+        assert mesh.n_cells == 13218
         assert len(np.unique(model.values)) == 4
         assert all(
             k in np.unique(model.values) for k in [1.0 / 7500, 1.0 / 2000, 1.0 / 20]

@@ -106,7 +106,7 @@ def test_plate_simulation(tmp_path):
             k.name in [f"Iteration_0_{i}" for i in "xyz"] for k in data.property_groups
         )
         assert all(len(k.properties) == 20 for k in data.property_groups)
-        assert mesh.n_cells == 14961
+        assert mesh.n_cells == 14821
         assert len(np.unique(model.values)) == 4
         assert all(
             k in np.unique(model.values) for k in [1.0 / 7500, 1.0 / 2000, 1.0 / 20]

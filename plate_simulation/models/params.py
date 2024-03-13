@@ -54,12 +54,11 @@ class PlateParams(BaseModel):
     def reciprocal(cls, value: float) -> float:
         return 1.0 / value
 
-    @model_validator(mode="before")
-    @classmethod
-    def single_plate(cls, data: dict):
-        if "number" in data and data["number"] == 1:
-            data.pop("spacing")
-        return data
+    @model_validator(mode="after")
+    def single_plate(self):
+        if self.number == 1:
+            self.spacing = 0.0
+        return self
 
     @property
     def halfplate(self):

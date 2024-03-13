@@ -104,7 +104,7 @@
     "label": "Relative locations",
     "main": true,
     "group": "Plate",
-    "value": false,
+    "value": true,
     "enabled": true,
     "tooltip": "If checked locations are relative to the survey center in xy and mean topography in z."
   },

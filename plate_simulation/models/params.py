@@ -5,7 +5,9 @@
 #  All rights reserved.
 #
 
-from pydantic import BaseModel, ConfigDict
+import numpy as np
+from geoh5py.objects import ObjectBase, Surface
+from pydantic import BaseModel, ConfigDict, model_validator
 
 
 class PlateParams(BaseModel):
@@ -13,32 +15,83 @@ class PlateParams(BaseModel):
     Parameters describing an anomalous plate.
 
     :param name: Name to be given to the geoh5py Surface object
-        representing the plate.
-    :param plate: Value given to the plate.
-    :param center_x: X-coordinate of the center of the plate.
-    :param center_y: Y-coordinate of the center of the plate.
-    :param center_z: Z-coordinate of the center of the plate.
+        representing the plate(s).
+    :param plate: Value given to the plate(s).
     :param width: V-size of the plate.
     :param strike_length: U-size of the plate.
     :param dip_length: W-size of the plate.
     :param dip: Orientation of the v-axis in degree from horizontal.
     :param dip_direction: Orientation of the u axis in degree from north.
     :param reference: Point of rotation to be 'center' or 'top'.
+    :param number: Number of offset plates to be created.
+    :param spacing: Spacing between plates.
+    :param relative_locations: If True locations are relative to survey in xy and
+        mean topography in z.
+    :param x_location: Easting offset relative to survey.
+    :param y_location: Northing offset relative to survey.
+    :param depth: plate(s) depth relative to mean topography.
     """
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     name: str
     value: float
-    center_x: float
-    center_y: float
-    center_z: float
     width: float
     strike_length: float
     dip_length: float
     dip: float = 90.0
     dip_direction: float = 90.0
     reference: str = "center"
+    number: int = 1
+    spacing: float = 0.0
+    relative_locations: bool = False
+    x_location: float = 0.0
+    y_location: float = 0.0
+    depth: float
+
+    @model_validator(mode="before")
+    @classmethod
+    def single_plate(cls, data: dict):
+        if "number" in data and data["number"] == 1:
+            data.pop("spacing")
+        return data
+
+    @property
+    def halfplate(self):
+        """Compute half the z-projection length of the plate."""
+        return 0.5 * self.dip_length * np.sin(np.deg2rad(self.dip))
+
+    def center(self, survey: ObjectBase, topography: Surface) -> list[float]:
+        """
+        Find the plate center relative to a survey and topography.
+
+        :param survey: geoh5py survey object for plate simulation.
+        :param topogarphy: topography object.
+        """
+        return self._get_xy(survey) + [self._get_z(topography)]
+
+    def _get_xy(self, survey: ObjectBase) -> list[float]:
+        """Return true or relative locations in x and y."""
+        if self.relative_locations:
+            xy = [
+                survey.vertices[:, 0].mean() + self.x_location,
+                survey.vertices[:, 1].mean() + self.y_location,
+            ]
+        else:
+            xy = [self.x_location, self.y_location]
+
+        return xy
+
+    def _get_z(self, topography: Surface) -> float:
+        """Return true or relative locations in z."""
+        if topography.vertices is None:
+            raise ValueError("Topography object has no vertices.")
+        if self.relative_locations:
+            z = topography.vertices[:, 2].mean() - self.depth - self.halfplate
+        else:
+            z = self.depth
+
+        return z
 
 
 class OverburdenParams(BaseModel):

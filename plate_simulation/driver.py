@@ -23,9 +23,10 @@ from plate_simulation.mesh.params import MeshParams
 from plate_simulation.models.events import Anomaly, Erosion, Overburden
 from plate_simulation.models.params import ModelParams, OverburdenParams, PlateParams
 from plate_simulation.models.plates import Plate
-from plate_simulation.models.series import Scenario
+from plate_simulation.models.series import DikeSwarm, Scenario
 from plate_simulation.params import PlateSimulationParams
 from plate_simulation.simulations.params import SimulationParams
+from plate_simulation.utils import replicate
 
 
 class PlateSimulationDriver:
@@ -42,7 +43,7 @@ class PlateSimulationDriver:
 
     def __init__(self, params: PlateSimulationParams):
         self.params = params
-        self._plate: Plate | None = None
+        self._surfaces: list[Surface] | None = None
         self._survey: Points | None = None
         self._mesh: Octree | None = None
         self._model: FloatData | None = None
@@ -75,20 +76,36 @@ class PlateSimulationDriver:
         return self._survey
 
     @property
+    def topography(self) -> Surface:
+        return self.params.simulation.topography_object
+
+    @property
+    def surfaces(self) -> list[Surface]:
+        """Returns a list of surfaces representing the plates for simulation."""
+
+        if self._surfaces is None:
+            plate = Plate(
+                self.params.workspace,
+                self.params.model.plate,
+                *self.params.model.plate.center(self.survey, self.topography),
+            )
+
+            self._surfaces = replicate(
+                plate.surface,
+                self.params.model.plate.number,
+                self.params.model.plate.spacing,
+                self.params.model.plate.dip_direction,
+            )
+
+        return self._surfaces
+
+    @property
     def mesh(self) -> Octree:
         """Returns an octree mesh built from mesh parameters."""
         if self._mesh is None:
             self._mesh = self.make_mesh()
 
         return self._mesh
-
-    @property
-    def plate(self) -> Plate:
-        """Returns the plate object built from plate parameters."""
-        if self._plate is None:
-            self._plate = Plate(self.params.workspace, self.params.model.plate)
-
-        return self._plate
 
     @property
     def model(self) -> FloatData:
@@ -107,7 +124,7 @@ class PlateSimulationDriver:
 
         self._logger.info("making the mesh...")
         octree_params = self.params.mesh.octree_params(
-            self.survey, self.params.simulation.topography_object, self.plate.surface
+            self.survey, self.params.simulation.topography_object, self.surfaces
         )
         octree_driver = OctreeDriver(octree_params)
         mesh = octree_driver.run()
@@ -117,15 +134,16 @@ class PlateSimulationDriver:
     def make_model(self) -> FloatData:
         """Create background + plate and overburden model from parameters."""
 
-        self._logger.info("building the model...")
+        self._logger.info("Building the model...")
+
         overburden = Overburden(
             topography=self.params.simulation.topography_object,
             thickness=self.params.model.overburden.thickness,
             value=self.params.model.overburden.value,
         )
 
-        anomaly = Anomaly(
-            surface=self.plate.surface, value=self.params.model.plate.value
+        dikes = DikeSwarm(
+            [Anomaly(s, self.params.model.plate.value) for s in self.surfaces]
         )
 
         erosion = Erosion(
@@ -136,7 +154,7 @@ class PlateSimulationDriver:
             workspace=self.params.workspace,
             mesh=self.mesh,
             background=self.params.model.background,
-            history=[anomaly, overburden, erosion],
+            history=[dikes, overburden, erosion],
             name=self.params.model.name,
         )
 
@@ -179,14 +197,17 @@ class PlateSimulationDriver:
         return PlateParams(
             name="plate",
             value=1.0 / ifile.data["plate"],  # type: ignore
-            center_x=ifile.data["center_x"],  # type: ignore
-            center_y=ifile.data["center_y"],  # type: ignore
-            center_z=ifile.data["center_z"],  # type: ignore
             width=ifile.data["width"],  # type: ignore
+            depth=ifile.data["depth"],  # type: ignore
             strike_length=ifile.data["strike_length"],  # type: ignore
             dip_length=ifile.data["dip_length"],  # type: ignore
             dip=ifile.data["dip"],  # type: ignore
             dip_direction=ifile.data["dip_direction"],  # type: ignore
+            relative_locations=ifile.data["relative_locations"],  # type: ignore
+            number=ifile.data["number"],  # type: ignore
+            spacing=ifile.data["spacing"],  # type: ignore
+            x_location=ifile.data["x_location"],  # type: ignore
+            y_location=ifile.data["y_location"],  # type: ignore
         )
 
     @staticmethod

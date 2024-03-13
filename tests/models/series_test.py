@@ -114,6 +114,7 @@ def test_scenario(tmp_path):
             name="model",
         )
         model = scenario.geologize()
+        assert model.values is not None
 
         ind = octree.centroids[:, 2] > 0.0
         assert all(np.isnan(model.values[ind]))

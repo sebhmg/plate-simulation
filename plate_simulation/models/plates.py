@@ -27,9 +27,19 @@ class Plate:
     :param surface: Surface object representing the plate.
     """
 
-    def __init__(self, workspace: Workspace, params: PlateParams):
+    def __init__(
+        self,
+        workspace: Workspace,
+        params: PlateParams,
+        center_x: float = 0.0,
+        center_y: float = 0.0,
+        center_z: float = 0.0,
+    ):
         self.workspace = workspace
         self.params = params
+        self.center_x = center_x
+        self.center_y = center_y
+        self.center_z = center_z
         self._surface: Surface | None = None
 
     @property
@@ -49,11 +59,7 @@ class Plate:
     @property
     def center(self) -> Sequence[float]:
         """Center of the block."""
-        return [
-            self.params.center_x,
-            self.params.center_y,
-            self.params.center_z,
-        ]
+        return [self.center_x, self.center_y, self.center_z]
 
     @property
     def triangles(self) -> np.ndarray:
@@ -79,12 +85,12 @@ class Plate:
     def vertices(self) -> np.ndarray:
         """Vertices for triangulation of a rectangular prism in 3D space."""
 
-        u_1 = self.params.center_x - (self.params.strike_length / 2.0)
-        u_2 = self.params.center_x + (self.params.strike_length / 2.0)
-        v_1 = self.params.center_y - (self.params.dip_length / 2.0)
-        v_2 = self.params.center_y + (self.params.dip_length / 2.0)
-        w_1 = self.params.center_z - (self.params.width / 2.0)
-        w_2 = self.params.center_z + (self.params.width / 2.0)
+        u_1 = self.center_x - (self.params.strike_length / 2.0)
+        u_2 = self.center_x + (self.params.strike_length / 2.0)
+        v_1 = self.center_y - (self.params.dip_length / 2.0)
+        v_2 = self.center_y + (self.params.dip_length / 2.0)
+        w_1 = self.center_z - (self.params.width / 2.0)
+        w_2 = self.center_z + (self.params.width / 2.0)
 
         vertices = np.array(
             [
@@ -110,9 +116,9 @@ class Plate:
 
         if self.params.reference == "top":
             offset = np.mean(rotated_vertices[4:, :], axis=0) - self.center
-            self.params.center_x -= offset[0]
-            self.params.center_y -= offset[1]
-            self.params.center_z -= offset[2]
+            self.center_x -= offset[0]
+            self.center_y -= offset[1]
+            self.center_z -= offset[2]
             rotated_vertices -= offset
 
         return rotated_vertices

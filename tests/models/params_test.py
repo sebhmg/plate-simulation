@@ -24,11 +24,11 @@ def test_plate_params(tmp_path):
         dip=90.0,
         dip_direction=0.0,
         reference="center",
-        true_elevation=False,
         number=1,
         spacing=10.0,
-        x_offset=10.0,
-        y_offset=10.0,
+        relative_locations=True,
+        x_location=10.0,
+        y_location=10.0,
     )
     assert params.spacing == 0.0
 
@@ -44,8 +44,9 @@ def test_plate_params(tmp_path):
         cells=np.array([[0, 1, 2], [0, 2, 3]]),
     )
 
-    center = params.center(survey, topography, true_elevation=True)
-    assert np.allclose(center, np.array([[0, 0, 100]]))
+    center = params.center(survey, topography)
+    assert np.allclose(center, [0, 0, -300])
 
-    center = params.center(survey, topography, true_elevation=False)
-    assert np.allclose(center, np.array([[0, 0, -300]]))
+    params.relative_locations = False
+    center = params.center(survey, topography)
+    assert np.allclose(center, [10, 10, 100])

@@ -136,7 +136,7 @@ class PlateSimulationDriver:
     def make_model(self) -> FloatData:
         """Create background + plate and overburden model from parameters."""
 
-        self._logger.info("building the model...")
+        self._logger.info("Building the model...")
 
         overburden = Overburden(
             topography=self.params.simulation.topography_object,

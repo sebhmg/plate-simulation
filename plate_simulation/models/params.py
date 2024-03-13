@@ -78,6 +78,8 @@ class PlateParams(BaseModel):
                 survey.vertices[:, 1].mean() + self.y_offset,
             ]
         )
+        if topography.vertices is None:
+            raise ValueError("Topography object has no vertices.")
         z = (
             self.depth
             if true_elevation

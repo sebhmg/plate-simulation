@@ -76,7 +76,7 @@ class PlateSimulationDriver:
         return self._survey
 
     @property
-    def topography(self) -> FloatData:
+    def topography(self) -> Surface:
         return self.params.simulation.topography_object
 
     @property

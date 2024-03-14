@@ -57,7 +57,19 @@ def get_input_file(filepath: Path) -> InputFile:
             )
             topography = demo_workspace.get_entity("Topography")[0].copy(parent=ws)
 
-        simulation = get_simulation_group(ws, survey, topography)
+            mask = np.zeros(survey.n_vertices, dtype=bool)
+            mask[::10] = True
+            new_survey = survey.copy(mask=mask)
+            new_survey.cells = np.c_[
+                np.arange(new_survey.n_vertices - 1),
+                np.arange(1, new_survey.n_vertices),
+            ]
+            new_survey.transmitters.cells = np.c_[
+                np.arange(new_survey.n_vertices - 1),
+                np.arange(1, new_survey.n_vertices),
+            ]
+
+        simulation = get_simulation_group(ws, new_survey, topography)
 
         ifile = InputFile.read_ui_json(
             assets_path() / "uijson" / "plate_simulation.ui.json", validate=False
@@ -75,10 +87,6 @@ def get_input_file(filepath: Path) -> InputFile:
         ifile.set_data_value("overburden", 7500.0)
         ifile.set_data_value("thickness", 50.0)
         ifile.set_data_value("plate", 20.0)
-        ifile.set_data_value("x_offset", 100.0)
-        ifile.set_data_value("y_offset", 100.0)
-        ifile.set_data_value("depth", -175.0)
-        ifile.set_data_value("true_elevation", True)
         ifile.set_data_value("width", 100.0)
         ifile.set_data_value("strike_length", 1000.0)
         ifile.set_data_value("dip_length", 300.0)
@@ -86,6 +94,10 @@ def get_input_file(filepath: Path) -> InputFile:
         ifile.set_data_value("dip_direction", 65.0)
         ifile.set_data_value("number", 2)
         ifile.set_data_value("spacing", 600.0)
+        ifile.set_data_value("relative_locations", True)
+        ifile.set_data_value("x_location", 100.0)
+        ifile.set_data_value("y_location", 100.0)
+        ifile.set_data_value("depth", 50.0)
 
     return ifile
 
@@ -106,7 +118,7 @@ def test_plate_simulation(tmp_path):
             k.name in [f"Iteration_0_{i}" for i in "xyz"] for k in data.property_groups
         )
         assert all(len(k.properties) == 20 for k in data.property_groups)
-        assert mesh.n_cells == 14961
+        assert mesh.n_cells == 14849
         assert len(np.unique(model.values)) == 4
         assert all(
             k in np.unique(model.values) for k in [1.0 / 7500, 1.0 / 2000, 1.0 / 20]
@@ -158,8 +170,9 @@ def test_plate_simulation_params_from_input_file(tmp_path):
         ifile.data["dip_direction"] = 0.0
         ifile.data["number"] = 9
         ifile.data["spacing"] = 10.0
-        ifile.data["x_offset"] = 10.0
-        ifile.data["y_offset"] = 10.0
+        ifile.data["relative_locations"] = True
+        ifile.data["x_location"] = 10.0
+        ifile.data["y_location"] = 10.0
 
         params = PlateSimulationParams.build(ifile)
         assert isinstance(params.simulation, GravityParams)
@@ -194,5 +207,6 @@ def test_plate_simulation_params_from_input_file(tmp_path):
         assert params.model.plate.reference == "center"
         assert params.model.plate.number == 9
         assert params.model.plate.spacing == 10.0
-        assert params.model.plate.x_offset == 10.0
-        assert params.model.plate.y_offset == 10.0
+        assert params.model.plate.relative_locations
+        assert params.model.plate.x_location == 10.0
+        assert params.model.plate.y_location == 10.0

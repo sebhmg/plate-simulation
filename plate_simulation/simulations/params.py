@@ -23,6 +23,8 @@ class SimulationParams:
     @classmethod
     def from_simpeg_group(cls, group: SimPEGGroup, workspace) -> InversionBaseParams:
         input_file = InputFile(ui_json=deepcopy(group.options), validate=False)
+        if input_file.ui_json is None:
+            raise ValueError("Input file must have ui_json set.")
         input_file.ui_json["mesh"]["value"] = None
         input_file.ui_json["geoh5"] = workspace
         assert input_file.data is not None, "Input file data must be set."

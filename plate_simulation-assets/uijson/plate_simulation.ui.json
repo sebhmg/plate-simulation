@@ -55,38 +55,6 @@
     "value": 20.0,
     "enabled": true
   },
-  "x_offset": {
-    "label": "X Offset (m)",
-    "group": "Plate",
-    "main": true,
-    "value": 0.0,
-    "enabled": true,
-    "tooltip": "Offset is relative to the center of the survey."
-  },
-  "y_offset": {
-    "label": "Y Offset (m)",
-    "main": true,
-    "group": "Plate",
-    "value": 0.0,
-    "enabled": true,
-    "tooltip": "Offset is relative to the center of the survey."
-  },
-  "true_elevation": {
-    "label": "True elevation",
-    "main": true,
-    "group": "Plate",
-    "value": false,
-    "enabled": true,
-    "tooltip": "If checked 'Depth' is true elevation, otherwise it is relative to mean topography."
-  },
-  "depth": {
-    "label": "Depth",
-    "main": true,
-    "group": "Plate",
-    "value": -200.0,
-    "enabled": true,
-    "tooltip": "Elevation if 'Use elevation' checked, otherwise depth below mean topography ."
-  },
   "width": {
     "label": "Thickness",
     "group": "Plate",
@@ -125,6 +93,38 @@
     "enabled": true,
     "min": 0.0,
     "max": 360.0
+  },
+  "relative_locations": {
+    "label": "Relative locations",
+    "main": true,
+    "group": "Plate",
+    "value": true,
+    "enabled": true,
+    "tooltip": "If checked locations are relative to the survey center in xy and mean topography in z."
+  },
+  "x_location": {
+    "label": "X (m)",
+    "group": "Plate",
+    "main": true,
+    "value": 0.0,
+    "enabled": true,
+    "tooltip": "If relative locations, X is relative to the center of the survey."
+  },
+  "y_location": {
+    "label": "Y (m)",
+    "main": true,
+    "group": "Plate",
+    "value": 0.0,
+    "enabled": true,
+    "tooltip": "If relative locations, Y is relative to the center of the survey."
+  },
+  "depth": {
+    "label": "Z (m)",
+    "main": true,
+    "group": "Plate",
+    "value": -200.0,
+    "enabled": true,
+    "tooltip": "If relative location, Z is relative to the mean of topography."
   },
   "generate_sweep": {
     "label": "Generate sweep file",

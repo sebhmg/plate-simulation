@@ -16,8 +16,8 @@ from geoh5py.objects import Octree, Points, Surface
 from geoh5py.shared.utils import fetch_active_workspace
 from geoh5py.ui_json import InputFile
 from octree_creation_app.driver import OctreeDriver
-from simpeg_drivers.driver import InversionDriver
 from param_sweeps.generate import generate
+from simpeg_drivers.driver import InversionDriver
 
 from plate_simulation.logger import get_logger
 from plate_simulation.models.events import Anomaly, Erosion, Overburden
@@ -85,9 +85,7 @@ class PlateSimulationDriver:
             plate = Plate(
                 self.params.geoh5,
                 self.params.model.plate,
-                *self.params.model.plate.center(
-                    self.survey, self.topography, self.params.model.plate.true_elevation
-                ),
+                *self.params.model.plate.center(self.survey, self.topography),
             )
 
             if self.params.model.plate.number == 1:
@@ -137,7 +135,7 @@ class PlateSimulationDriver:
     def make_model(self) -> FloatData:
         """Create background + plate and overburden model from parameters."""
 
-        self._logger.info("building the model...")
+        self._logger.info("Building the model...")
 
         overburden = Overburden(
             topography=self.params.simulation.topography_object,
@@ -178,15 +176,15 @@ class PlateSimulationDriver:
 
         generate_sweep = ifile.data["generate_sweep"]  # type: ignore
         if generate_sweep:
-            filepath = Path(ifile.path_name)
-            ifile.data["generate_sweep"] = False
+            filepath = Path(ifile.path_name)  # type: ignore
+            ifile.data["generate_sweep"] = False  # type: ignore
             name = filepath.name
             path = filepath.parent
-            ifile.write_ui_json(name=name, path=path)
+            ifile.write_ui_json(name=name, path=path)  # type: ignore
             generate(  # pylint: disable=unexpected-keyword-arg
                 str(filepath), update_values={"conda_environment": "plate_simulation"}
             )
-            return
+            return None
 
         with ifile.geoh5.open():  # type: ignore
             params = PlateSimulationParams.build(ifile)

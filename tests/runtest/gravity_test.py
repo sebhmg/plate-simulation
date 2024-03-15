@@ -15,7 +15,6 @@ from plate_simulation.driver import PlateSimulationDriver
 from plate_simulation.mesh.params import MeshParams
 from plate_simulation.models.params import ModelParams, OverburdenParams, PlateParams
 from plate_simulation.params import PlateSimulationParams
-from plate_simulation.simulations.params import SimulationParams
 
 from . import get_survey, get_topography
 
@@ -34,11 +33,11 @@ def test_gravity_plate_simulation(tmp_path):
             max_distance=200.0,
         )
 
-        overburden_params = OverburdenParams(thickness=50.0, value=5.0)
+        overburden_params = OverburdenParams(thickness=50.0, overburden=5.0)
 
         plate_params = PlateParams(
             name="plate",
-            value=2.0,
+            plate=2.0,
             depth=-250.0,
             width=100.0,
             strike_length=100.0,
@@ -64,13 +63,14 @@ def test_gravity_plate_simulation(tmp_path):
 
         gravity_inversion = SimPEGGroup.create(ws)
         gravity_inversion.options = options
-        simulation_params = SimulationParams.from_simpeg_group(gravity_inversion, ws)
 
         params = PlateSimulationParams(
-            workspace=ws,
+            title="test",
+            run_command="run",
+            geoh5=ws,
             mesh=mesh_params,
             model=model_params,
-            simulation=simulation_params,
+            simulation=gravity_inversion,
         )
 
         driver = PlateSimulationDriver(params)

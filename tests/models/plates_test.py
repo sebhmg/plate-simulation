@@ -24,7 +24,7 @@ def are_collocated(pts1, pts2):
 def vertical_east_striking_plate(workspace):
     params = PlateParams(
         name="my plate",
-        value=1.0,
+        plate=1.0,
         depth=0.0,
         width=10.0,
         strike_length=1000.0,
@@ -72,7 +72,7 @@ def test_dipping_plates_all_quadrants(tmp_path):
         for dip in [20.0, 70.0]:
             params = PlateParams(
                 name=f"plate dipping {dip} at {dip_direction}",
-                value=1.0,
+                plate=1.0,
                 depth=0.0,
                 width=10.0,
                 strike_length=1000.0,

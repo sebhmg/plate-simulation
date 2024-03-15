@@ -7,7 +7,7 @@
 
 import numpy as np
 from geoh5py.objects import ObjectBase, Surface
-from pydantic import BaseModel, ConfigDict, model_validator
+from pydantic import BaseModel, ConfigDict, field_validator, model_validator
 
 
 class PlateParams(BaseModel):
@@ -35,7 +35,7 @@ class PlateParams(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     name: str
-    value: float
+    plate: float
     width: float
     strike_length: float
     dip_length: float
@@ -49,12 +49,16 @@ class PlateParams(BaseModel):
     y_location: float = 0.0
     depth: float
 
-    @model_validator(mode="before")
+    @field_validator("plate", mode="before")
     @classmethod
-    def single_plate(cls, data: dict):
-        if "number" in data and data["number"] == 1:
-            data.pop("spacing")
-        return data
+    def reciprocal(cls, value: float) -> float:
+        return 1.0 / value
+
+    @model_validator(mode="after")
+    def single_plate(self):
+        if self.number == 1:
+            self.spacing = 0.0
+        return self
 
     @property
     def halfplate(self):
@@ -66,7 +70,7 @@ class PlateParams(BaseModel):
         Find the plate center relative to a survey and topography.
 
         :param survey: geoh5py survey object for plate simulation.
-        :param topogarphy: topography object.
+        :param topography: topography object.
         """
         return self._get_xy(survey) + [self._get_z(topography)]
 
@@ -103,7 +107,12 @@ class OverburdenParams(BaseModel):
     """
 
     thickness: float
-    value: float
+    overburden: float
+
+    @field_validator("overburden", mode="before")
+    @classmethod
+    def reciprocal(cls, value: float) -> float:
+        return 1.0 / value
 
 
 class ModelParams(BaseModel):
@@ -122,3 +131,8 @@ class ModelParams(BaseModel):
     background: float
     overburden: OverburdenParams
     plate: PlateParams
+
+    @field_validator("background", mode="before")
+    @classmethod
+    def reciprocal(cls, value: float) -> float:
+        return 1.0 / value

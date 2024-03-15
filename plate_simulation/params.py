@@ -5,15 +5,19 @@
 #  All rights reserved.
 #
 
+from geoapps_utils.driver.data import BaseData
 from geoapps_utils.driver.params import BaseParams
 from geoh5py import Workspace
-from pydantic import BaseModel, ConfigDict
+from geoh5py.groups import SimPEGGroup
+from geoh5py.shared.utils import fetch_active_workspace
+from pydantic import field_validator
 
 from .mesh.params import MeshParams
 from .models.params import ModelParams
+from .simulations.params import SimulationParams
 
 
-class PlateSimulationParams(BaseModel):
+class PlateSimulationParams(BaseData):
     """
     Parameters for the plate simulation driver.
 
@@ -26,9 +30,20 @@ class PlateSimulationParams(BaseModel):
         created by the driver.
     """
 
-    model_config = ConfigDict(arbitrary_types_allowed=True)
-
-    workspace: Workspace
+    geoh5: Workspace
     mesh: MeshParams
     model: ModelParams
     simulation: BaseParams
+
+    @field_validator("simulation", mode="before")
+    @classmethod
+    def simpeg_group_to_params(cls, value: SimPEGGroup) -> BaseParams:
+        if value.options is None:
+            raise ValueError("SimPEGGroup must have an options dictionary.")
+
+        with fetch_active_workspace(value.workspace, mode="r+"):
+            value.options["geoh5"] = str(value.workspace.h5file)
+            simulation_params = SimulationParams.from_simpeg_group(
+                value, workspace=value.workspace
+            )
+            return simulation_params

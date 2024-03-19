@@ -105,7 +105,7 @@ def get_input_file(filepath: Path) -> InputFile:
 def test_plate_simulation(tmp_path):
     ifile = get_input_file(tmp_path)
     ifile.write_ui_json("test_plate_simulation.ui.json", path=tmp_path)
-    result = PlateSimulationDriver.main(
+    result = PlateSimulationDriver.start(
         Path(tmp_path / "test_plate_simulation.ui.json")
     )
     with Workspace(result.options["geoh5"]) as ws:

@@ -13,23 +13,17 @@
     "value": "simulation",
     "enabled": true
   },
-  "export_model": {
-    "main": true,
-    "label": "Export mesh/model",
-    "value": true,
-    "enabled": true
-  },
   "background": {
     "main": true,
     "group": "Basement",
-    "label": "Basement",
+    "label": "Resistivity (ohm-m)",
     "value": 2000.0,
     "enabled": true
   },
   "overburden": {
     "main": true,
     "group": "Overburden",
-    "label": "Resistivity",
+    "label": "Resistivity (ohm-m)",
     "value": 8000.0,
     "enabled": true
   },
@@ -57,7 +51,7 @@
   "plate": {
     "main": true,
     "group": "Plate",
-    "label": "Resistivity",
+    "label": "Resistivity (ohm-m)",
     "value": 20.0,
     "enabled": true
   },
@@ -132,6 +126,11 @@
     "enabled": true,
     "tooltip": "If relative location, Z is relative to the mean of topography."
   },
+  "generate_sweep": {
+    "label": "Generate sweep file",
+    "main": true,
+    "value": false
+  },
   "u_cell_size": {
     "min": 0.0,
     "group": "Mesh",
@@ -172,6 +171,12 @@
     "group": "Mesh",
     "label": "Padding distance",
     "value": 1000.0,
+    "enabled": true
+  },
+  "export_model": {
+    "main": false,
+    "label": "Export mesh/model",
+    "value": true,
     "enabled": true
   },
   "run_command": "plate_simulation.driver",

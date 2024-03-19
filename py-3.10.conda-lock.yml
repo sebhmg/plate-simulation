@@ -15,8 +15,8 @@
 version: 1
 metadata:
   content_hash:
-    win-64: 5a1ddc3c82517f3a8bcce75f3f392957dffd5b11f2569154172e87ab063c6e80
-    linux-64: 9957bdb7b829b3883e47477391c34ba635cd38eedb41941b0f186486401a80a6
+    win-64: 516acdcc8b4fad198a458ba1cd12e3b858f5ba06b9a34275992d0e7d1424897f
+    linux-64: 023b073aa4fb5416c76e5c31b1f1e496c8116f288a71beb991e4e3e6a381b9ee
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -501,7 +501,7 @@ package:
   category: main
   optional: false
 - name: coverage
-  version: 7.4.3
+  version: 7.4.4
   manager: conda
   platform: linux-64
   dependencies:
@@ -509,14 +509,14 @@ package:
     python: '>=3.10,<3.11.0a0'
     python_abi: 3.10.*
     tomli: ''
-  url: https://conda.anaconda.org/conda-forge/linux-64/coverage-7.4.3-py310h2372a71_1.conda
+  url: https://conda.anaconda.org/conda-forge/linux-64/coverage-7.4.4-py310h2372a71_0.conda
   hash:
-    md5: d9c1e9a3a198a7d4454261fbc220b89b
-    sha256: 15085cef9c602438214c7fd1ac1505b8ff02fe5255687d368bc53d7d2b1c9c21
+    md5: 2d948842110ae68e4f2e7738f92bf7e1
+    sha256: e95f08ca0f555a5e16e7ef800317e04a237ef6622073d1c9dfb8792a06d28336
   category: dev
   optional: true
 - name: coverage
-  version: 7.4.3
+  version: 7.4.4
   manager: conda
   platform: win-64
   dependencies:
@@ -526,10 +526,10 @@ package:
     ucrt: '>=10.0.20348.0'
     vc: '>=14.2,<15'
     vc14_runtime: '>=14.29.30139'
-  url: https://conda.anaconda.org/conda-forge/win-64/coverage-7.4.3-py310h8d17308_1.conda
+  url: https://conda.anaconda.org/conda-forge/win-64/coverage-7.4.4-py310h8d17308_0.conda
   hash:
-    md5: 744093fdc2a23a46cfaac887c14ecfdd
-    sha256: 49932409427bf4057a4dd2315c1288cd58f2ec76a44f9bd78b5ae7916a422ef3
+    md5: f52d17cf10b0451ec05c24d14f72870b
+    sha256: 1d12680e79b05ef32d04142539307b2744de2e6798870340ac27982e2adb052d
   category: dev
   optional: true
 - name: cycler
@@ -888,27 +888,27 @@ package:
   category: main
   optional: false
 - name: fsspec
-  version: 2024.2.0
+  version: 2024.3.0
   manager: conda
   platform: linux-64
   dependencies:
     python: '>=3.8'
-  url: https://conda.anaconda.org/conda-forge/noarch/fsspec-2024.2.0-pyhca7485f_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/fsspec-2024.3.0-pyhca7485f_0.conda
   hash:
-    md5: fad86b90138cf5d82c6f5a2ed6e683d9
-    sha256: 3f7e123dd82fe99450d1e0ffa389e8218ef8c9ee257c836e21b489548c039ae6
+    md5: 30e975286171f6d96b0caf5498fb0634
+    sha256: 3329551042b00f92210e69ca9b14ea67897b0d6737a06b9f51b31fb7ca337dc7
   category: main
   optional: false
 - name: fsspec
-  version: 2024.2.0
+  version: 2024.3.0
   manager: conda
   platform: win-64
   dependencies:
     python: '>=3.8'
-  url: https://conda.anaconda.org/conda-forge/noarch/fsspec-2024.2.0-pyhca7485f_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/fsspec-2024.3.0-pyhca7485f_0.conda
   hash:
-    md5: fad86b90138cf5d82c6f5a2ed6e683d9
-    sha256: 3f7e123dd82fe99450d1e0ffa389e8218ef8c9ee257c836e21b489548c039ae6
+    md5: 30e975286171f6d96b0caf5498fb0634
+    sha256: 3329551042b00f92210e69ca9b14ea67897b0d6737a06b9f51b31fb7ca337dc7
   category: main
   optional: false
 - name: geoana
@@ -1448,7 +1448,7 @@ package:
   category: main
   optional: false
 - name: libcurl
-  version: 8.5.0
+  version: 8.6.0
   manager: conda
   platform: linux-64
   dependencies:
@@ -1457,16 +1457,16 @@ package:
     libnghttp2: '>=1.58.0,<2.0a0'
     libssh2: '>=1.11.0,<2.0a0'
     libzlib: '>=1.2.13,<1.3.0a0'
-    openssl: '>=3.2.0,<4.0a0'
+    openssl: '>=3.2.1,<4.0a0'
     zstd: '>=1.5.5,<1.6.0a0'
-  url: https://conda.anaconda.org/conda-forge/linux-64/libcurl-8.5.0-hca28451_0.conda
+  url: https://conda.anaconda.org/conda-forge/linux-64/libcurl-8.6.0-hca28451_0.conda
   hash:
-    md5: 7144d5a828e2cae218e0e3c98d8a0aeb
-    sha256: 00a6bea5ff90ca58eeb15ebc98e08ffb88bddaff27396bb62640064f59d29cf0
+    md5: 704739398d858872cb91610f49f0ef29
+    sha256: 357ce806adf1818dc8dccdcd64627758e1858eb0d8a9c91aae4a0eeee2a44608
   category: main
   optional: false
 - name: libcurl
-  version: 8.5.0
+  version: 8.6.0
   manager: conda
   platform: win-64
   dependencies:
@@ -1476,10 +1476,10 @@ package:
     ucrt: '>=10.0.20348.0'
     vc: '>=14.2,<15'
     vc14_runtime: '>=14.29.30139'
-  url: https://conda.anaconda.org/conda-forge/win-64/libcurl-8.5.0-hd5e4a3a_0.conda
+  url: https://conda.anaconda.org/conda-forge/win-64/libcurl-8.6.0-hd5e4a3a_0.conda
   hash:
-    md5: c95eb3d60266dd47b8eb864e10d6bcf3
-    sha256: 8c933416c61445ab51515a5ca8c32ddc4f83180d5dc43684e4a80915022ffe1f
+    md5: 9cc8dea844a89245dfe8618521ef8d6a
+    sha256: 49904a3c1ede193cf9044e8379067bf56850fb03f64abbf57ca45f7e6d2d3888
   category: main
   optional: false
 - name: libdeflate
@@ -2029,7 +2029,7 @@ package:
   category: main
   optional: false
 - name: libxml2
-  version: 2.12.5
+  version: 2.12.6
   manager: conda
   platform: linux-64
   dependencies:
@@ -2038,14 +2038,14 @@ package:
     libiconv: '>=1.17,<2.0a0'
     libzlib: '>=1.2.13,<1.3.0a0'
     xz: '>=5.2.6,<6.0a0'
-  url: https://conda.anaconda.org/conda-forge/linux-64/libxml2-2.12.5-h232c23b_0.conda
+  url: https://conda.anaconda.org/conda-forge/linux-64/libxml2-2.12.6-h232c23b_0.conda
   hash:
-    md5: c442ebfda7a475f5e78f1c8e45f1e919
-    sha256: db9bf97e9e367985204331b58a059ebd5a4e0cb9e1c8754e9ecb23046b7b7bc1
+    md5: d86653ff5ccb88bf7f13833fdd8789e0
+    sha256: 4646ae14fb226080d2bfeb89510147abebd603bab1c80bb6b3c02a01c10c6ee5
   category: main
   optional: false
 - name: libxml2
-  version: 2.12.5
+  version: 2.12.6
   manager: conda
   platform: win-64
   dependencies:
@@ -2054,10 +2054,10 @@ package:
     ucrt: '>=10.0.20348.0'
     vc: '>=14.2,<15'
     vc14_runtime: '>=14.29.30139'
-  url: https://conda.anaconda.org/conda-forge/win-64/libxml2-2.12.5-hc3477c8_0.conda
+  url: https://conda.anaconda.org/conda-forge/win-64/libxml2-2.12.6-hc3477c8_0.conda
   hash:
-    md5: d8c3c1c8242db352f38cd1dc0bf44f77
-    sha256: 15696b049911b3ea5d37672408e500fb27e375d865f8cceac9cb02f9349e6804
+    md5: 3c32fe752618a88e83f515a1fdd0e9a1
+    sha256: 1840ebacace4e8439b1cafbf8df004cd75f7647afc6d37812b86c035e4311fbf
   category: main
   optional: false
 - name: libzlib
@@ -2087,16 +2087,16 @@ package:
   category: main
   optional: false
 - name: llvm-openmp
-  version: 17.0.6
+  version: 18.1.1
   manager: conda
   platform: linux-64
   dependencies:
     libzlib: '>=1.2.13,<1.3.0a0'
     zstd: '>=1.5.5,<1.6.0a0'
-  url: https://conda.anaconda.org/conda-forge/linux-64/llvm-openmp-17.0.6-h4dfa4b3_0.conda
+  url: https://conda.anaconda.org/conda-forge/linux-64/llvm-openmp-18.1.1-h4dfa4b3_0.conda
   hash:
-    md5: c1665f9c1c9f6c93d8b4e492a6a39056
-    sha256: 18a9db4cc139e72e8eac80a34f6536491fe318d3785bc2c35fac42cd00676376
+    md5: 89023cfc92c7e9dd2e822ebdb4f753b0
+    sha256: a85cadbb1b00d181a6462700c3d1da7092c53b3f1f90c76ec560fef34aff226b
   category: main
   optional: false
 - name: llvmlite
@@ -4373,37 +4373,37 @@ package:
   category: main
   optional: false
 - name: octree-creation-app
-  version: 0.1.0a4
+  version: 0.1.0a5
   manager: pip
   platform: linux-64
   dependencies:
     pillow: '>=10.0.1,<11.0.0'
     discretize: '>=0.10.0,<0.11.0'
-    geoapps-utils: 0.3.0a3
-    geoh5py: '>=0.9.0a1,<0.10.0'
+    geoapps-utils: '>=0.3.0-alpha.1,<0.4.0'
+    geoh5py: '>=0.9.0-alpha.1,<0.10.0'
     h5py: '>=3.2.1,<4.0.0'
     numpy: '>=1.23.5,<1.24.0'
     scipy: '>=1.10.1,<1.11.0'
-  url: https://files.pythonhosted.org/packages/46/09/2f1b6745cd87898e5f57f5d1cc5549a066e07a942a086486b34d083c6d1f/octree_creation_app-0.1.0a4-py3-none-any.whl
+  url: https://files.pythonhosted.org/packages/92/99/22a6cb41f8a402890ce111cf826b0b42ee90ccad864ce0ee5a6f51833512/octree_creation_app-0.1.0a5-py3-none-any.whl
   hash:
-    sha256: eaf0df62fc2482996081cf70db211ae5d097ac55b1c37c390ea696cfa5cb0aa5
+    sha256: dbac9379be13eb714656f224424dc1d70735fa3284d2f045d6c30d63b3ad0f9d
   category: main
   optional: false
 - name: octree-creation-app
-  version: 0.1.0a4
+  version: 0.1.0a5
   manager: pip
   platform: win-64
   dependencies:
     pillow: '>=10.0.1,<11.0.0'
     discretize: '>=0.10.0,<0.11.0'
-    geoapps-utils: 0.3.0a3
-    geoh5py: '>=0.9.0a1,<0.10.0'
+    geoapps-utils: '>=0.3.0-alpha.1,<0.4.0'
+    geoh5py: '>=0.9.0-alpha.1,<0.10.0'
     h5py: '>=3.2.1,<4.0.0'
     numpy: '>=1.23.5,<1.24.0'
     scipy: '>=1.10.1,<1.11.0'
-  url: https://files.pythonhosted.org/packages/46/09/2f1b6745cd87898e5f57f5d1cc5549a066e07a942a086486b34d083c6d1f/octree_creation_app-0.1.0a4-py3-none-any.whl
+  url: https://files.pythonhosted.org/packages/92/99/22a6cb41f8a402890ce111cf826b0b42ee90ccad864ce0ee5a6f51833512/octree_creation_app-0.1.0a5-py3-none-any.whl
   hash:
-    sha256: eaf0df62fc2482996081cf70db211ae5d097ac55b1c37c390ea696cfa5cb0aa5
+    sha256: dbac9379be13eb714656f224424dc1d70735fa3284d2f045d6c30d63b3ad0f9d
   category: main
   optional: false
 - name: pandas
@@ -4435,27 +4435,27 @@ package:
   category: main
   optional: false
 - name: param-sweeps
-  version: 0.1.7a1
+  version: 0.1.7a3
   manager: pip
   platform: linux-64
   dependencies:
-    geoh5py: '>=0.9.0a1,<0.10.0'
+    geoh5py: '>=0.9.0-alpha.1,<0.10.0'
     numpy: '>=1.23.5,<1.24.0'
-  url: https://files.pythonhosted.org/packages/92/4d/dd1cc1f36dedf2a7e606840f9b2a2f601c26fb5ae408a9f09edccb0536ca/param_sweeps-0.1.7a1-py3-none-any.whl
+  url: https://files.pythonhosted.org/packages/6e/61/3c1824cd7d1a3b5cf8f711cbb84a42b3d8cbc441ece31de063d5708a9e97/param_sweeps-0.1.7a3-py3-none-any.whl
   hash:
-    sha256: 2a82acf94d50507f9a2922ff96b90e22326d9e0deb632a03fc4ae7008defca05
+    sha256: a842cf4d220baa76078618c6f8023dea73d8940297f95f12ab3774eab808b7a8
   category: main
   optional: false
 - name: param-sweeps
-  version: 0.1.7a1
+  version: 0.1.7a3
   manager: pip
   platform: win-64
   dependencies:
-    geoh5py: '>=0.9.0a1,<0.10.0'
+    geoh5py: '>=0.9.0-alpha.1,<0.10.0'
     numpy: '>=1.23.5,<1.24.0'
-  url: https://files.pythonhosted.org/packages/92/4d/dd1cc1f36dedf2a7e606840f9b2a2f601c26fb5ae408a9f09edccb0536ca/param_sweeps-0.1.7a1-py3-none-any.whl
+  url: https://files.pythonhosted.org/packages/6e/61/3c1824cd7d1a3b5cf8f711cbb84a42b3d8cbc441ece31de063d5708a9e97/param_sweeps-0.1.7a3-py3-none-any.whl
   hash:
-    sha256: 2a82acf94d50507f9a2922ff96b90e22326d9e0deb632a03fc4ae7008defca05
+    sha256: a842cf4d220baa76078618c6f8023dea73d8940297f95f12ab3774eab808b7a8
   category: main
   optional: false
 - name: pytz
@@ -4511,25 +4511,25 @@ package:
   manager: pip
   platform: linux-64
   dependencies:
-    mira-simpeg: '>=0.19.0.dev7,<0.20.0'
-    pydantic: '>=2.5.2,<2.6.0'
-    distributed: '>=2022.10.0,<2022.11.0'
-    pydiso: '>=0.0.3,<0.1.0'
-    octree-creation-app: '>=0.1.0a3,<0.2.0'
-    tqdm: '>=4.64.0,<5.0.0'
-    geoapps-utils: '>=0.3.0a2,<0.4.0'
     geoana: '>=0.4.0,<0.5.0'
-    h5py: '*'
-    discretize: '>=0.10.0,<0.11.0'
+    mira-simpeg: '>=0.19.0.dev7,<0.20.0'
     scipy: '>=1.10.1,<1.11.0'
-    geoh5py: '>=0.9.0a2,<0.10.0'
-    pillow: '*'
-    pymatsolver: '>=0.2.0,<0.3.0'
+    discretize: '>=0.10.0,<0.11.0'
+    h5py: '*'
+    tqdm: '>=4.64.0,<5.0.0'
+    octree-creation-app: '>=0.1.0a3,<0.2.0'
     zarr: '>=2.14.2,<2.15.0'
+    dask: '>=2022.10.0,<2022.11.0'
+    pymatsolver: '>=0.2.0,<0.3.0'
+    geoapps-utils: '>=0.3.0a2,<0.4.0'
     numpy: '>=1.23.5,<1.24.0'
     mkl: '>=2022.0.0,<2023.0.0'
+    pillow: '*'
+    pydantic: '>=2.5.2,<2.6.0'
     param-sweeps: '>=0.1.7a1,<0.2.0'
-    dask: '>=2022.10.0,<2022.11.0'
+    pydiso: '>=0.0.3,<0.1.0'
+    distributed: '>=2022.10.0,<2022.11.0'
+    geoh5py: '>=0.9.0a2,<0.10.0'
   url: https://github.com/MiraGeoscience/simpeg-drivers/archive/refs/heads/develop.zip
   hash:
     sha256: ''
@@ -4543,25 +4543,25 @@ package:
   manager: pip
   platform: win-64
   dependencies:
-    mira-simpeg: '>=0.19.0.dev7,<0.20.0'
-    pydantic: '>=2.5.2,<2.6.0'
-    distributed: '>=2022.10.0,<2022.11.0'
-    pydiso: '>=0.0.3,<0.1.0'
-    octree-creation-app: '>=0.1.0a3,<0.2.0'
-    tqdm: '>=4.64.0,<5.0.0'
-    geoapps-utils: '>=0.3.0a2,<0.4.0'
     geoana: '>=0.4.0,<0.5.0'
-    h5py: '*'
-    discretize: '>=0.10.0,<0.11.0'
+    mira-simpeg: '>=0.19.0.dev7,<0.20.0'
     scipy: '>=1.10.1,<1.11.0'
-    geoh5py: '>=0.9.0a2,<0.10.0'
-    pillow: '*'
-    pymatsolver: '>=0.2.0,<0.3.0'
+    discretize: '>=0.10.0,<0.11.0'
+    h5py: '*'
+    tqdm: '>=4.64.0,<5.0.0'
+    octree-creation-app: '>=0.1.0a3,<0.2.0'
     zarr: '>=2.14.2,<2.15.0'
+    dask: '>=2022.10.0,<2022.11.0'
+    pymatsolver: '>=0.2.0,<0.3.0'
+    geoapps-utils: '>=0.3.0a2,<0.4.0'
     numpy: '>=1.23.5,<1.24.0'
     mkl: '>=2022.0.0,<2023.0.0'
+    pillow: '*'
+    pydantic: '>=2.5.2,<2.6.0'
     param-sweeps: '>=0.1.7a1,<0.2.0'
-    dask: '>=2022.10.0,<2022.11.0'
+    pydiso: '>=0.0.3,<0.1.0'
+    distributed: '>=2022.10.0,<2022.11.0'
+    geoh5py: '>=0.9.0a2,<0.10.0'
   url: https://github.com/MiraGeoscience/simpeg-drivers/archive/refs/heads/develop.zip
   hash:
     sha256: ''

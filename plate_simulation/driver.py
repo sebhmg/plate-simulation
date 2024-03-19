@@ -16,6 +16,7 @@ from geoh5py.objects import Octree, Points, Surface
 from geoh5py.shared.utils import fetch_active_workspace
 from geoh5py.ui_json import InputFile
 from octree_creation_app.driver import OctreeDriver
+from param_sweeps.generate import generate
 from simpeg_drivers.driver import InversionDriver
 
 from plate_simulation.logger import get_logger
@@ -87,12 +88,15 @@ class PlateSimulationDriver:
                 *self.params.model.plate.center(self.survey, self.topography),
             )
 
-            self._surfaces = replicate(
-                plate.surface,
-                self.params.model.plate.number,
-                self.params.model.plate.spacing,
-                self.params.model.plate.dip_direction,
-            )
+            if self.params.model.plate.number == 1:
+                self._surfaces = [plate.surface]
+            else:
+                self._surfaces = replicate(
+                    plate.surface,
+                    self.params.model.plate.number,
+                    self.params.model.plate.spacing,
+                    self.params.model.plate.dip_direction,
+                )
 
         return self._surfaces
 
@@ -158,14 +162,29 @@ class PlateSimulationDriver:
         return scenario.geologize()
 
     @staticmethod
-    def main(ifile: Path | InputFile):
+    def start(ifile: str | Path | InputFile):
         """Run the plate simulation driver from an input file."""
+
+        if isinstance(ifile, str):
+            ifile = Path(ifile)
 
         if isinstance(ifile, Path):
             ifile = InputFile.read_ui_json(ifile)
 
         if ifile.data is None:  # type: ignore
             raise ValueError("Input file has no data loaded.")
+
+        generate_sweep = ifile.data["generate_sweep"]  # type: ignore
+        if generate_sweep:
+            filepath = Path(ifile.path_name)  # type: ignore
+            ifile.data["generate_sweep"] = False  # type: ignore
+            name = filepath.name
+            path = filepath.parent
+            ifile.write_ui_json(name=name, path=path)  # type: ignore
+            generate(  # pylint: disable=unexpected-keyword-arg
+                str(filepath), update_values={"conda_environment": "plate_simulation"}
+            )
+            return None
 
         with ifile.geoh5.open():  # type: ignore
             params = PlateSimulationParams.build(ifile)
@@ -174,4 +193,4 @@ class PlateSimulationDriver:
 
 if __name__ == "__main__":
     file = Path(sys.argv[1])
-    PlateSimulationDriver.main(file)
+    PlateSimulationDriver.start(file)

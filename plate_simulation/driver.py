@@ -82,10 +82,20 @@ class PlateSimulationDriver:
         """Returns a list of surfaces representing the plates for simulation."""
 
         if self._surfaces is None:
+            offset = (
+                self.params.model.overburden.thickness
+                if self.params.model.plate.reference_surface == "overburden"
+                else 0.0
+            )
+            center = self.params.model.plate.center(
+                self.survey,
+                self.topography,
+                depth_offset=offset,
+            )
             plate = Plate(
                 self.params.geoh5,
                 self.params.model.plate,
-                *self.params.model.plate.center(self.survey, self.topography),
+                *center,
             )
 
             if self.params.model.plate.number == 1:

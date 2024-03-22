@@ -100,7 +100,7 @@
     "group": "Plate",
     "value": true,
     "enabled": true,
-    "tooltip": "If checked locations are relative to the survey center in xy and mean topography in z."
+    "tooltip": "If checked locations are relative to the survey center in xy and either topography or overburden in z according to 'Depth reference' selecion."
   },
   "x_location": {
     "label": "X (m)",
@@ -122,9 +122,29 @@
     "label": "Z (m)",
     "main": true,
     "group": "Plate",
-    "value": -200.0,
+    "value": 200.0,
     "enabled": true,
-    "tooltip": "If relative location, Z is relative to the mean of topography."
+    "tooltip": "If relative location, Z is relative to the topography or overburden according to 'Depth reference' selection."
+  },
+  "reference_surface": {
+    "label": "Depth reference",
+    "main": true,
+    "group": "Plate",
+    "dependency": "relative_locations",
+    "dependencyType": "enabled",
+    "choiceList": ["topography", "overburden"],
+    "tooltop": "If relative locations, the depth will be below the min/mean/max (according to 'Reference type') of the reference surface chosen.",
+    "value": "overburden"
+  },
+  "reference_type": {
+    "label": "Reference type",
+    "main": true,
+    "group":  "Plate",
+    "dependency": "relative_locations",
+    "dependencyType": "enabled",
+    "choiceList": ["min", "mean", "max"],
+    "tooltip": "If relative locations, the depth will be below the min/mean/max of the 'Depth reference' chosen.",
+    "value":  "min"
   },
   "generate_sweep": {
     "label": "Generate sweep file",

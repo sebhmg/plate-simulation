@@ -29,6 +29,8 @@ def test_plate_params(tmp_path):
         relative_locations=True,
         x_location=10.0,
         y_location=10.0,
+        reference_surface="topography",
+        reference_type="mean",
     )
     assert params.spacing == 0.0
 

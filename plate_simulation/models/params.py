@@ -5,9 +5,19 @@
 #  All rights reserved.
 #
 
+from typing import TypeVar
+
 import numpy as np
 from geoh5py.objects import ObjectBase, Surface
-from pydantic import BaseModel, ConfigDict, field_validator, model_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    ValidationInfo,
+    field_validator,
+    model_validator,
+)
+
+T = TypeVar("T")
 
 
 class PlateParams(BaseModel):
@@ -30,6 +40,11 @@ class PlateParams(BaseModel):
     :param x_location: Easting offset relative to survey.
     :param y_location: Northing offset relative to survey.
     :param depth: plate(s) depth relative to mean topography.
+    :param reference_surface: Switches between using topography and overburden as
+        depth reference of the plate.
+    :param reference_type: Type of reference for plate depth.  Can be 'mean'
+        'min', or 'max'.  Resulting depth will be relative to the mean,
+        minimum, or maximum of the reference surface.
     """
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
@@ -48,11 +63,19 @@ class PlateParams(BaseModel):
     x_location: float = 0.0
     y_location: float = 0.0
     depth: float
+    reference_surface: str = "topography"
+    reference_type: str = "mean"
 
     @field_validator("plate", mode="before")
     @classmethod
     def reciprocal(cls, value: float) -> float:
         return 1.0 / value
+
+    @field_validator("reference_surface", "reference_type")
+    @classmethod
+    def default_if_null(cls, value: T | None, info: ValidationInfo) -> T:
+        value = value or getattr(cls, info.field_name)
+        return value
 
     @model_validator(mode="after")
     def single_plate(self):
@@ -65,14 +88,20 @@ class PlateParams(BaseModel):
         """Compute half the z-projection length of the plate."""
         return 0.5 * self.dip_length * np.sin(np.deg2rad(self.dip))
 
-    def center(self, survey: ObjectBase, topography: Surface) -> list[float]:
+    def center(
+        self,
+        survey: ObjectBase,
+        surface: Surface,
+        depth_offset: float = 0.0,
+    ) -> list[float]:
         """
         Find the plate center relative to a survey and topography.
 
         :param survey: geoh5py survey object for plate simulation.
-        :param topography: topography object.
+        :param surface: surface object to reference plate depth from.
+        :param depth_offset: Additional offset to be added to the depth of the plate.
         """
-        return self._get_xy(survey) + [self._get_z(topography)]
+        return self._get_xy(survey) + [self._get_z(surface, depth_offset)]
 
     def _get_xy(self, survey: ObjectBase) -> list[float]:
         """Return true or relative locations in x and y."""
@@ -86,12 +115,13 @@ class PlateParams(BaseModel):
 
         return xy
 
-    def _get_z(self, topography: Surface) -> float:
+    def _get_z(self, surface: Surface, offset: float = 0.0) -> float:
         """Return true or relative locations in z."""
-        if topography.vertices is None:
+        if surface.vertices is None:
             raise ValueError("Topography object has no vertices.")
         if self.relative_locations:
-            z = topography.vertices[:, 2].mean() - self.depth - self.halfplate
+            z = getattr(surface.vertices[:, 2], self.reference_type)()
+            z -= offset + self.depth + self.halfplate
         else:
             z = self.depth
 

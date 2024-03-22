@@ -122,7 +122,7 @@
     "label": "Z (m)",
     "main": true,
     "group": "Plate",
-    "value": 200.0,
+    "value": -200.0,
     "enabled": true,
     "tooltip": "If relative location, Z is relative to the topography or overburden according to 'Depth reference' selection."
   },

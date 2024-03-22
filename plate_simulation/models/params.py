@@ -116,12 +116,18 @@ class PlateParams(BaseModel):
         return xy
 
     def _get_z(self, surface: Surface, offset: float = 0.0) -> float:
-        """Return true or relative locations in z."""
+        """
+        Return true or relative locations in z.
+
+        :param surface: Surface object to reference plate depth from.
+        :offset: Additional offset to be added to the depth.
+
+        """
         if surface.vertices is None:
             raise ValueError("Topography object has no vertices.")
         if self.relative_locations:
             z = getattr(surface.vertices[:, 2], self.reference_type)()
-            z -= offset + self.depth + self.halfplate
+            z += offset - (self.depth + self.halfplate)
         else:
             z = self.depth
 

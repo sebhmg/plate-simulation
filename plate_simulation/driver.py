@@ -90,7 +90,7 @@ class PlateSimulationDriver:
             center = self.params.model.plate.center(
                 self.survey,
                 self.topography,
-                depth_offset=offset,
+                depth_offset=-1 * offset,
             )
             plate = Plate(
                 self.params.geoh5,

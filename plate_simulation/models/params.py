@@ -127,7 +127,7 @@ class PlateParams(BaseModel):
             raise ValueError("Topography object has no vertices.")
         if self.relative_locations:
             z = getattr(surface.vertices[:, 2], self.reference_type)()
-            z += offset - (self.depth + self.halfplate)
+            z += offset + self.depth - self.halfplate
         else:
             z = self.depth
 

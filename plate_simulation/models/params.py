@@ -37,13 +37,14 @@ class PlateParams(BaseModel):
     :param spacing: Spacing between plates.
     :param relative_locations: If True locations are relative to survey in xy and
         mean topography in z.
-    :param x_location: Easting offset relative to survey.
-    :param y_location: Northing offset relative to survey.
-    :param depth: plate(s) depth relative to mean topography.
+    :param easting: Easting offset relative to survey.
+    :param northing: Northing offset relative to survey.
+    :param elevation: plate(s) elevation.  May be true elevation or relative to
+        overburden or topography.
     :param reference_surface: Switches between using topography and overburden as
-        depth reference of the plate.
-    :param reference_type: Type of reference for plate depth.  Can be 'mean'
-        'min', or 'max'.  Resulting depth will be relative to the mean,
+        elevation reference of the plate.
+    :param reference_type: Type of reference for plate elevation.  Can be 'mean'
+        'min', or 'max'.  Resulting elevation will be relative to the mean,
         minimum, or maximum of the reference surface.
     """
 
@@ -60,9 +61,9 @@ class PlateParams(BaseModel):
     number: int = 1
     spacing: float = 0.0
     relative_locations: bool = False
-    x_location: float = 0.0
-    y_location: float = 0.0
-    depth: float
+    easting: float = 0.0
+    northing: float = 0.0
+    elevation: float
     reference_surface: str = "topography"
     reference_type: str = "mean"
 
@@ -107,11 +108,11 @@ class PlateParams(BaseModel):
         """Return true or relative locations in x and y."""
         if self.relative_locations:
             xy = [
-                survey.vertices[:, 0].mean() + self.x_location,
-                survey.vertices[:, 1].mean() + self.y_location,
+                survey.vertices[:, 0].mean() + self.easting,
+                survey.vertices[:, 1].mean() + self.northing,
             ]
         else:
-            xy = [self.x_location, self.y_location]
+            xy = [self.easting, self.northing]
 
         return xy
 
@@ -127,9 +128,9 @@ class PlateParams(BaseModel):
             raise ValueError("Topography object has no vertices.")
         if self.relative_locations:
             z = getattr(surface.vertices[:, 2], self.reference_type)()
-            z += offset + self.depth - self.halfplate
+            z += offset + self.elevation - self.halfplate
         else:
-            z = self.depth
+            z = self.elevation
 
         return z
 

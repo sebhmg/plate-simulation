@@ -38,7 +38,7 @@ def test_gravity_plate_simulation(tmp_path):
         plate_params = PlateParams(
             name="plate",
             plate=2.0,
-            depth=-250.0,
+            elevation=-250.0,
             width=100.0,
             strike_length=100.0,
             dip_length=100.0,

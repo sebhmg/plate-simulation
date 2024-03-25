@@ -25,7 +25,7 @@ def vertical_east_striking_plate(workspace):
     params = PlateParams(
         name="my plate",
         plate=1.0,
-        depth=0.0,
+        elevation=0.0,
         width=10.0,
         strike_length=1000.0,
         dip_length=500.0,
@@ -73,7 +73,7 @@ def test_dipping_plates_all_quadrants(tmp_path):
             params = PlateParams(
                 name=f"plate dipping {dip} at {dip_direction}",
                 plate=1.0,
-                depth=0.0,
+                elevation=0.0,
                 width=10.0,
                 strike_length=1000.0,
                 dip_length=500.0,

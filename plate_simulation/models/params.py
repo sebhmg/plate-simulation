@@ -72,11 +72,10 @@ class PlateParams(BaseModel):
     def reciprocal(cls, value: float) -> float:
         return 1.0 / value
 
-    @field_validator("reference_surface", "reference_type")
+    @field_validator("reference_surface", "reference_type", mode="before")
     @classmethod
-    def default_if_null(cls, value: T | None, info: ValidationInfo) -> T:
-        value = value or getattr(cls, info.field_name)
-        return value
+    def none_to_default(cls, value: T | None, info: ValidationInfo) -> T:
+        return value or cls.model_fields[info.field_name].default  # type: ignore
 
     @model_validator(mode="after")
     def single_plate(self):

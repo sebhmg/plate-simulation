@@ -17,7 +17,6 @@ def test_plate_params(tmp_path):
     params = PlateParams(
         name="my plate",
         plate=1.0,
-        depth=100.0,
         width=20.0,
         strike_length=1500.0,
         dip_length=400.0,
@@ -27,8 +26,11 @@ def test_plate_params(tmp_path):
         number=1,
         spacing=10.0,
         relative_locations=True,
-        x_location=10.0,
-        y_location=10.0,
+        easting=10.0,
+        northing=10.0,
+        elevation=-100.0,
+        reference_surface="topography",
+        reference_type="mean",
     )
     assert params.spacing == 0.0
 
@@ -49,4 +51,27 @@ def test_plate_params(tmp_path):
 
     params.relative_locations = False
     center = params.center(survey, topography)
-    assert np.allclose(center, [10, 10, 100])
+    assert np.allclose(center, [10, 10, -100])
+
+
+def test_plate_params_empty_reference():
+    params = PlateParams(
+        name="my plate",
+        plate=1.0,
+        width=20.0,
+        strike_length=1500.0,
+        dip_length=400.0,
+        dip=90.0,
+        dip_direction=0.0,
+        reference="center",
+        number=1,
+        spacing=10.0,
+        relative_locations=True,
+        easting=10.0,
+        northing=10.0,
+        elevation=-100.0,
+        reference_surface=None,
+        reference_type=None,
+    )
+    assert params.reference_surface == "topography"
+    assert params.reference_type == "mean"

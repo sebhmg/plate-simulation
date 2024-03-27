@@ -65,7 +65,7 @@ def test_anomaly(tmp_path):
         params = PlateParams(
             name="my plate",
             plate=10.0,
-            depth=-1.5,
+            elevation=-1.5,
             width=10.0,
             strike_length=10.0,
             dip_length=1.0,

@@ -95,9 +95,11 @@ def get_input_file(filepath: Path) -> InputFile:
         ifile.set_data_value("number", 2)
         ifile.set_data_value("spacing", 600.0)
         ifile.set_data_value("relative_locations", True)
-        ifile.set_data_value("x_location", 100.0)
-        ifile.set_data_value("y_location", 100.0)
-        ifile.set_data_value("depth", 50.0)
+        ifile.set_data_value("easting", 100.0)
+        ifile.set_data_value("northing", 100.0)
+        ifile.set_data_value("elevation", -100.0)
+        ifile.set_data_value("reference_surface", "overburden")
+        ifile.set_data_value("reference_type", "min")
 
     return ifile
 
@@ -118,7 +120,7 @@ def test_plate_simulation(tmp_path):
             k.name in [f"Iteration_0_{i}" for i in "xyz"] for k in data.property_groups
         )
         assert all(len(k.properties) == 20 for k in data.property_groups)
-        assert mesh.n_cells == 14849
+        assert mesh.n_cells == 15136
         assert len(np.unique(model.values)) == 4
         assert all(
             k in np.unique(model.values) for k in [1.0 / 7500, 1.0 / 2000, 1.0 / 20]
@@ -162,7 +164,6 @@ def test_plate_simulation_params_from_input_file(tmp_path):
         ifile.data["overburden"] = 5.0
         ifile.data["thickness"] = 50.0
         ifile.data["plate"] = 2.0
-        ifile.data["depth"] = -250
         ifile.data["width"] = 100.0
         ifile.data["strike_length"] = 100.0
         ifile.data["dip_length"] = 100.0
@@ -171,8 +172,11 @@ def test_plate_simulation_params_from_input_file(tmp_path):
         ifile.data["number"] = 9
         ifile.data["spacing"] = 10.0
         ifile.data["relative_locations"] = True
-        ifile.data["x_location"] = 10.0
-        ifile.data["y_location"] = 10.0
+        ifile.data["easting"] = 10.0
+        ifile.data["northing"] = 10.0
+        ifile.data["elevation"] = -250
+        ifile.data["reference_surface"] = "topography"
+        ifile.data["reference_type"] = "mean"
 
         params = PlateSimulationParams.build(ifile)
         assert isinstance(params.simulation, GravityParams)
@@ -198,7 +202,6 @@ def test_plate_simulation_params_from_input_file(tmp_path):
         assert params.model.overburden.thickness == 50.0
         assert params.model.overburden.overburden == 0.2
         assert params.model.plate.plate == 0.5
-        assert params.model.plate.depth == -250.0
         assert params.model.plate.width == 100.0
         assert params.model.plate.strike_length == 100.0
         assert params.model.plate.dip_length == 100.0
@@ -208,5 +211,6 @@ def test_plate_simulation_params_from_input_file(tmp_path):
         assert params.model.plate.number == 9
         assert params.model.plate.spacing == 10.0
         assert params.model.plate.relative_locations
-        assert params.model.plate.x_location == 10.0
-        assert params.model.plate.y_location == 10.0
+        assert params.model.plate.easting == 10.0
+        assert params.model.plate.northing == 10.0
+        assert params.model.plate.elevation == -250.0

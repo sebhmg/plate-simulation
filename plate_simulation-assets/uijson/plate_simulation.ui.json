@@ -100,31 +100,51 @@
     "group": "Plate",
     "value": true,
     "enabled": true,
-    "tooltip": "If checked locations are relative to the survey center in xy and mean topography in z."
+    "tooltip": "If checked locations are relative to the survey center and either topography or overburden in z according to 'Depth reference' selecion."
   },
-  "x_location": {
-    "label": "X (m)",
+  "easting": {
+    "label": "Easting (m)",
     "group": "Plate",
     "main": true,
     "value": 0.0,
     "enabled": true,
-    "tooltip": "If relative locations, X is relative to the center of the survey."
+    "tooltip": "If relative locations, Easting is relative to the center of the survey."
   },
-  "y_location": {
-    "label": "Y (m)",
+  "northing": {
+    "label": "Northing (m)",
     "main": true,
     "group": "Plate",
     "value": 0.0,
     "enabled": true,
-    "tooltip": "If relative locations, Y is relative to the center of the survey."
+    "tooltip": "If relative locations, Northing is relative to the center of the survey."
   },
-  "depth": {
-    "label": "Z (m)",
+  "elevation": {
+    "label": "Elevation (m)",
     "main": true,
     "group": "Plate",
-    "value": -200.0,
+    "value": 0.0,
     "enabled": true,
-    "tooltip": "If relative location, Z is relative to the mean of topography."
+    "tooltip": "If relative location, Elevation is relative to the topography or overburden according to 'Depth reference' selection."
+  },
+  "reference_surface": {
+    "label": "Depth reference",
+    "main": true,
+    "group": "Plate",
+    "dependency": "relative_locations",
+    "dependencyType": "enabled",
+    "choiceList": ["topography", "overburden"],
+    "tooltop": "If relative locations, the depth will be below the min/mean/max (according to 'Reference type') of the reference surface chosen.",
+    "value": "overburden"
+  },
+  "reference_type": {
+    "label": "Reference type",
+    "main": true,
+    "group":  "Plate",
+    "dependency": "relative_locations",
+    "dependencyType": "enabled",
+    "choiceList": ["min", "mean", "max"],
+    "tooltip": "If relative locations, the depth will be below the min/mean/max of the 'Depth reference' chosen.",
+    "value":  "min"
   },
   "generate_sweep": {
     "label": "Generate sweep file",

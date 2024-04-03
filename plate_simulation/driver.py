@@ -63,6 +63,7 @@ class PlateSimulationDriver:
 
         driver.run()
         self._logger.info("done.")
+        self._logger.handlers.clear()
 
         return driver.out_group
 

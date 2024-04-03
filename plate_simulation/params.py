@@ -21,9 +21,8 @@ class PlateSimulationParams(BaseData):
     """
     Parameters for the plate simulation driver.
 
-    workspace: Workspace in which the model will be built and results stored.
-    topography: Surface object representing the topography.
-    octree: Parameters for the octree mesh.
+    geoh5: Workspace in which the model will be built and results stored.
+    mesh: Parameters for the octree mesh.
     model: Parameters for the background + overburden and plate model.
     simulation: Simpeg group containing simulation options and a survey.  Any
         mesh or starting model selections will be replaced by the objects

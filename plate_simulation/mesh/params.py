@@ -59,9 +59,6 @@ class MeshParams(BaseModel):
             **refinements,
         )
 
-        for k, v in refinements.items():
-            octree_params.input_file.set_data_value(k, v)
-
         assert isinstance(survey.workspace.h5file, Path)
         path = survey.workspace.h5file.parent
         octree_params.input_file.write_ui_json(name="octree.ui.json", path=path)

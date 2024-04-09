@@ -199,7 +199,8 @@ class PlateSimulationDriver:
 
         with ifile.geoh5.open(mode="r+"):  # type: ignore
             params = PlateSimulationParams.build(ifile)
-            return PlateSimulationDriver(params).run()
+
+        return PlateSimulationDriver(params).run()
 
 
 if __name__ == "__main__":

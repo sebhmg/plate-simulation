@@ -30,17 +30,17 @@ class MeshParams(BaseModel):
     ):
         refinements = {
             "Refinement A object": topography,
-            "Refinement A levels": [0, 2],
+            "Refinement A levels": "0, 2",
             "Refinement A type": "surface",
             "Refinement B object": survey,
-            "Refinement B levels": [4, 2],
+            "Refinement B levels": "4, 2",
             "Refinement B type": "radial",
         }
         for plate, letter in zip(plates, string.ascii_uppercase[2:]):
             refinements.update(
                 {
                     f"Refinement {letter} object": plate,
-                    f"Refinement {letter} levels": [2, 1],
+                    f"Refinement {letter} levels": "2, 1",
                     f"Refinement {letter} type": "surface",
                 }
             )

@@ -21,9 +21,8 @@ class PlateSimulationParams(BaseData):
     """
     Parameters for the plate simulation driver.
 
-    workspace: Workspace in which the model will be built and results stored.
-    topography: Surface object representing the topography.
-    octree: Parameters for the octree mesh.
+    geoh5: Workspace in which the model will be built and results stored.
+    mesh: Parameters for the octree mesh.
     model: Parameters for the background + overburden and plate model.
     simulation: Simpeg group containing simulation options and a survey.  Any
         mesh or starting model selections will be replaced by the objects
@@ -42,7 +41,6 @@ class PlateSimulationParams(BaseData):
             raise ValueError("SimPEGGroup must have an options dictionary.")
 
         with fetch_active_workspace(value.workspace, mode="r+"):
-            value.options["geoh5"] = str(value.workspace.h5file)
             simulation_params = SimulationParams.from_simpeg_group(
                 value, workspace=value.workspace
             )

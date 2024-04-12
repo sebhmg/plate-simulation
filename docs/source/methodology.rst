@@ -112,7 +112,7 @@ specify the number of plates and their spacing.
 
     *Number of plates and spacing options.*
 
-For all choices of `n>1`, the plates will be evenly spaced at the requested
+For all choices of ``n>1``, the plates will be evenly spaced at the requested
 spacing.  All the plates will have the same parameters chosen later in
 the interface.  That is, they will all share the same resistivity, size,
 location and orientation.
@@ -124,7 +124,7 @@ location and orientation.
 
 The plate resistivity should be self-explanatory by now.
 
-.. figure:: /images/methodology/model/plate_resistivity_.png
+.. figure:: /images/methodology/model/plate_resistivity_option.png
     :align: center
 
     *Plate resistivity option.*
@@ -133,12 +133,18 @@ The shape of the plate is given as a 'thickness', 'strike length', and
 'dip length'.
 
 
+.. figure:: /images/methodology/model/plate_size.png
+    :align: center
+
+    *A dipping plate striking northeast with annotations for it's thickness,
+    strike length and dip length.*
+
 The orientation of the plate(s) is provided in terms of a
 
 .. figure:: /images/methodology/model/plate_orientation.png
     :align: center
 
-    *A dipping plate striking northeast and the orientation  of the plate(s) in the model.*
+    *Plate orientation options.*
 
 Data Simulation
 ---------------

@@ -22,9 +22,13 @@ build:
       # Make local files to have the real content on them
       - ./git-lfs checkout
     pre_build:
-      # Generate on-the-fly Sphinx configuration from Jupyter Book's _config.yml
-      - "jupyter-book config sphinx content/"
       - "pip install . --no-deps"
+
+sphinx:
+  builder: html
+  configuration: docs/conf.py
+  fail_on_warning: true
+
 
 conda:
   environment: environments/py-3.10-linux-64-dev.conda.lock.yml

@@ -28,34 +28,31 @@ refinements at the earth-air interface, the transmitter and receiver
 sites, and within the plate.
 
 .. figure:: /images/methodology/mesh/refinement.png
-   :align: center
+    :align: center
+    :width: 100%
 
-   *Octree mesh refinement for earth-air interface, receiver sites,
-   and within the mesh.*
+    *Octree mesh refinement for earth-air interface, receiver sites,
+    and within the mesh.*
 
 The meshing can be controlled by options exposed in the ui.json.
-Compared with the `octree-creation-app <https://octree-creation-app.readthedocs.io/en/latest/>`_
-, the options are significantly reduced since we have tailored many
-of the parameters to suit the needs of plate simulation.
+Those options are significantly reduced compared with the `octree-creation-app <https://octree-creation-app.readthedocs.io/en/latest/>`_
+since we have tailored many of the parameters to suit the needs of
+plate simulation.
 
 .. figure:: /images/methodology/mesh/mesh_options.png
-   :align: center
+    :align: center
 
-   *Octree mesh parameters exposed in the ui.json.*
+    *Octree mesh parameters exposed in the ui.json.*
 
 Geological Model
 ----------------
 
 The plate simulation package includes a module for generating
 basement + overburden + plate models within octree meshes.
-There are many permutations of this simple geological model
-scenario so the ui.json interface for this component is more
-complex that the meshing and simulation components.  For this
-reason, we will break the discussion down sub-sections, guided
-by the options in the ui.json. The bulk of the complexity comes
-from the choices pertaining to the plate, so we'll save those
-for last.  The basement and overburden options can be considered
-together as background model options that we'll discuss next
+There are many permutations of this simple geological scenario
+leading to a complex interface. To simplify things, we have
+broken the discussion into two sub-sections: background
+(basement and overburden) and plates.
 
 Background
 ~~~~~~~~~~
@@ -71,14 +68,13 @@ than the difference between overburden and any anomalous bodies
 (plates).
 
 .. figure:: /images/methodology/model/basement_options.png
-   :align: center
+    :align: center
 
-   *Basement resistivity option.*
+    *Basement resistivity option.*
 
-The overburden is discretized by the resistivity and the thickness
-of the layer.  The thickness is referenced to the earth-air interface.
-In this way, the overburden layer is the first layer in the model
-below the air and extends into the earth by the amount specified
+The overburden is discretized by the resistivity and thickness
+of the layer.  The thickness is referenced to the earth-air
+interface and extends into the earth by the amount specified
 in the thickness parameter.
 
 .. figure:: /images/methodology/model/overburden_options.png
@@ -88,11 +84,12 @@ in the thickness parameter.
 
 .. figure:: /images/methodology/model/overburden_and_basement.png
     :align: center
+    :width: 100%
 
     *Model section highlighting the overburden and basement boundary.*
 
 Plates
-~~~~~~~~
+~~~~~~
 
 In this section we will discuss the various plate options available
 through the ui.json and their impact on the resulting discretized
@@ -103,9 +100,8 @@ model.
 
     *Plate options available in the ui.json.*
 
-Due to the complexity of the interface, we will again break this down
-into sub-sections.  The first set of options allows the user to
-specify the number of plates and their spacing.
+The first set of options allows the user to specify the number of
+plates and their spacing.
 
 .. figure:: /images/methodology/model/n_plates_options.png
     :align: center
@@ -113,38 +109,123 @@ specify the number of plates and their spacing.
     *Number of plates and spacing options.*
 
 For all choices of ``n>1``, the plates will be evenly spaced at the requested
-spacing.  All the plates will have the same parameters chosen later in
-the interface.  That is, they will all share the same resistivity, size,
-location and orientation.
+spacing and will share the same resistivity, size and orientation.
 
 .. figure:: /images/methodology/model/three_plates.png
     :align: center
+    :width: 100%
 
     *Model created by choosing three plates spaced at 200m.*
 
-The plate resistivity should be self-explanatory by now.
+The plate resistivity is expected to be entered in Ohm-meters.
 
 .. figure:: /images/methodology/model/plate_resistivity_option.png
     :align: center
 
     *Plate resistivity option.*
 
-The shape of the plate is given as a 'thickness', 'strike length', and
+The size of the plate is given as a 'thickness', 'strike length', and
 'dip length'.
 
+.. figure:: /images/methodology/model/plate_size_options.png
+    :align: center
+
+    *Plate size options.*
+
+The image below shows a dipping plate with annotations showing the size
+parameters for that particular plate.
 
 .. figure:: /images/methodology/model/plate_size.png
     :align: center
+    :width: 100%
 
     *A dipping plate striking northeast with annotations for it's thickness,
     strike length and dip length.*
 
-The orientation of the plate(s) is provided in terms of a
+The orientation of the plate is provided in terms of a dip and dip direction.
+The dip is defined as the angle between the horizontal projection of the plate
+normal and the plate tangent sharing the same origin.  The dip direction is
+measured between the horizontal projection of the plate normal and the North
+arrow. See the image below for a visual representation of these angles.
 
 .. figure:: /images/methodology/model/plate_orientation.png
     :align: center
+    :width: 100%
 
-    *Plate orientation options.*
+    *Plate orientation options.  Plate orientation is given as a dip and dip direction.
+    The dip (b) is defined as the angle between the horizontal the projection of the
+    plate normal (n\') and the plate tangent sharing the same origin (t).  The dip
+    direction (a) is the angle measured between the horizontal projection of the plate
+    normal (n\') and due north (N).*
+
+The location of the plate can be provided in both relative and absolute terms.
+The position parameters are given as an easting, northing, and elevation.  If the
+relative locations checkbox is chosen, then the easting and northing will be
+relative to the center of the survey and the elevation will be relative to one of
+the available references.  The elevation may either be referenced to the earth-air
+interface or the overburden provided by the ``Depth reference`` dropdown.  Either of
+these choice can be relative to the minimum, maximum, or mean of the points making
+up the reference surface as given by the ``Reference type`` dropdown.  In all of these
+cases the distance provided will act as a depth below the reference to the *top of
+plate* in the *z negative down* convention.  If the relative locations checkbox is not
+chosen, then the easting, northing, and elevation is simply the location of the
+center of the plate.
+
+.. figure:: /images/methodology/model/plate_location_options.png
+    :align: center
+
+    *Plate location options in relative mode. Notice the* ``Elevation`` *is given as
+    negative to ensure the top of the plate is below the selected min of the
+    overburden.*
+
+.. figure:: /images/methodology/model/plate_location.png
+    :align: center
+    :width: 100%
+
+    *Example of a relative elevation referenced 100m below the minimum of the
+    overburden layer.*
 
 Data Simulation
 ---------------
+
+The simulation parameters control the forward modeling of the plate model
+discretized within the octree mesh.  Rather than exposing the parameters within
+the plate simulation interface all over again, we simply allow the user to
+select an existing forward modelling SimPEG group.  It is expected that the
+user will have already edited those options and provided at least a topography
+and survey object as well as selected one or more components to simulate.  The
+user may also provide a name to the new SimPEG group that will be used to store
+the results.
+
+.. figure:: /images/methodology/data/simpeg_group_options.png
+    :align: center
+
+    *Selecting the initialized forward modelling SimPEG group and naming the
+    group that will store the plate simulation results.*
+
+The required SimPEG group can be created within Geoscience ANALYST through the
+``Geophysics`` menu under ``SimPEG Python Interface`` entry.
+
+.. figure:: /images/methodology/data/simpeg_group_creation.png
+    :align: center
+    :width: 100%
+
+    *Creating a SimPEG group to be selected within the plate simulation interface.*
+
+Once created, the options can be edited by right-clicking the group and choosing
+the 'Edit Options' entry.
+
+.. figure:: /images/methodology/data/simpeg_group_edit_options.png
+    :align: center
+
+    *Editing the SimPEG group options.*
+
+Since plate-simulation will create it's own mesh and model, the mesh and
+conductivity selections can be ignored.  Selecting a value will not conflict
+with the plate-simulation objects and will simply be ignored.  In contrast, the
+survey, topography and at least one component must be selected to run the simulation.
+
+.. figure:: /images/methodology/data/simulation_options.png
+    :align: center
+
+    *Simulation options with annotations for required and not required components.*

@@ -78,6 +78,8 @@ pylint = "*"
 pytest = "*"
 pytest-cov = "*"
 tomli = "*"
+sphinx = "^5.0"
+readthedocs-sphinx-ext = "*"
 
 [tool.conda-lock]
 platforms = ['win-64', 'linux-64']

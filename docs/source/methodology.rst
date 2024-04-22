@@ -25,7 +25,7 @@ In order to accurately simulate our earth model, we need a mesh
 that is refined in key areas, while being coarse enough elsewhere to
 efficiently simulate data.  The plate simulation package includes
 refinements at the earth-air interface, the transmitter and receiver
-sites, and within the plate.
+sites and on the surface of plates.
 
 .. figure:: /images/methodology/mesh/refinement.png
     :align: center

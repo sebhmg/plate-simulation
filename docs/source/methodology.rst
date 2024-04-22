@@ -5,7 +5,7 @@ Methodology
 
 In order to simulate geohpysical data from a physical property model, we
 need three things: a computational mesh, a discretization of the model
-within that mesh, and a means to simulate the data.  Plate simulation
+within that mesh and a means to simulate the data.  Plate simulation
 relies on `discretize <https://discretize.simpeg.xyz/en/main/>`_ for
 octree mesh creation, and `SimPEG <https://simpeg.xyz/>`_ for finite
 volume based forward modeling.  Plate simulation includes a module for

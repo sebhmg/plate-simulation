@@ -35,7 +35,7 @@ sites and on the surface of plates.
     and within the mesh.*
 
 The meshing can be controlled by options exposed in the ui.json.
-Those options are significantly reduced compared with the `octree-creation-app <https://octree-creation-app.readthedocs.io/en/latest/>`_
+Those options are significantly reduced compared with the `octree-creation-app <https://mirageoscience-octree-creation-app.readthedocs-hosted.com/en/latest/>`_
 since we have tailored many of the parameters to suit the needs of
 plate simulation.
 

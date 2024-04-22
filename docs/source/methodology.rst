@@ -48,7 +48,7 @@ Geological Model
 ----------------
 
 The plate simulation package includes a module for generating
-basement + overburden + plate models within octree meshes.
+plate(s) embedded in a two-layer Earth model within octree meshes.
 There are many permutations of this simple geological scenario
 leading to a complex interface. To simplify things, we have
 broken the discussion into two sub-sections: background

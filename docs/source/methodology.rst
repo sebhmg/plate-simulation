@@ -9,7 +9,7 @@ within that mesh and a means to simulate the data.  Plate simulation
 relies on `discretize <https://discretize.simpeg.xyz/en/main/>`_ for
 octree mesh creation, and `SimPEG <https://simpeg.xyz/>`_ for finite
 volume based forward modeling.  Plate simulation includes a module for
-generating basement + overburden + plate models within octree meshes. In
+generating a simple two-layer model with embedded plate anomalies within octree meshes. In
 this section, we will discuss all three of these components, and their
 interface exposed by the ui.json file.
 

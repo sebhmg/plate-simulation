@@ -3,9 +3,10 @@
 Basic usage
 ===========
 
-The main entry points to the various modules is the [plate_simulation.ui.json](https://github.com/MiraGeoscience/plate-simulation/blob/develop/plate_simulation-assets/uijson/plate_simulation.ui.json) file.
-The ``ui.json`` has the dual purpose of (1) rendering a user-interface from Geoscience ANALYST and (2) storing the input
-parameters chosen by the user for the program to run. To learn more about the ui.json interface visit the
+The main entry points to the various modules is the `plate_simulation.ui.json <https://github.com/MiraGeoscience/plate-simulation/blob/develop/plate_simulation-assets/uijson/plate_simulation.ui.json>`_
+file. The ``ui.json`` has the dual purpose of (1) rendering a user-interface from
+Geoscience ANALYST and (2) storing the input parameters chosen by the user for the
+program to run. To learn more about the ui.json interface visit the
 `UIJson documentation <https://mirageoscience-geoh5py.readthedocs-hosted.com/en/latest/content/uijson_format/usage.html>`_ page.
 
 

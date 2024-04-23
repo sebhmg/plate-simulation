@@ -9,9 +9,16 @@ within that mesh and a means to simulate the data.  Plate simulation
 relies on `discretize <https://discretize.simpeg.xyz/en/main/>`_ for
 octree mesh creation, and `SimPEG <https://simpeg.xyz/>`_ for finite
 volume based forward modeling.  Plate simulation includes a module for
-generating a simple two-layer model with embedded plate anomalies within octree meshes. In
-this section, we will discuss all three of these components, and their
-interface exposed by the ui.json file.
+generating a simple two-layer model with embedded plate anomalies within
+octree meshes. In this section, we will discuss all three of these
+components, their interface exposed by the ui.json file, and the storage
+of results.
+
+.. figure:: /images/methodology/uijson.png
+    :align: center
+    :width: 80%
+
+    *Merged images of both tabs of the ui.json rendered interface.*
 
 .. contents::
 
@@ -188,6 +195,8 @@ center of the plate.
 Data Simulation
 ---------------
 
+.. _simpeg_group_options:
+
 The simulation parameters control the forward modeling of the plate model
 discretized within the octree mesh.  Rather than exposing the parameters within
 the plate simulation interface all over again, we simply allow the user to
@@ -196,6 +205,7 @@ user will have already edited those options and provided at least a topography
 and survey object as well as selected one or more components to simulate.  The
 user may also provide a name to the new SimPEG group that will be used to store
 the results.
+
 
 .. figure:: /images/methodology/data/simpeg_group_options.png
     :align: center
@@ -227,5 +237,33 @@ survey, topography and at least one component must be selected to run the simula
 
 .. figure:: /images/methodology/data/simulation_options.png
     :align: center
+    :width: 80%
 
     *Simulation options with annotations for required and not required components.*
+
+Results
+-------
+
+The results of the simulation are stored in the SimPEG group named in the
+:ref:`simpeg group option <simpeg_group_options>` section.
+
+.. figure:: /images/methodology/results.png
+    :align: center
+
+    *Results group containing a survey object with all the simulated data channels
+    stored in property groups, and an octree mesh containing the model parameterized
+    in the interface.*
+
+To iterate on the design of experiment, a user can simply copy the options, edit, and
+run again.
+
+.. figure:: /images/methodology/copy_options.png
+    :align: center
+
+    *Copying the options to run a new simulation.*
+
+If the user wishes to sweep one or more of the input parameters to run a large number of
+simulations, they can use the ``generate sweep file`` option to write a file used
+by the `param-sweeps <https://github.com/MiraGeoscience/param-sweeps>`_ package to do just
+that. It is beyond the scope of this document to discuss the use of that package, but
+there is a Github readme that explains it's usage.

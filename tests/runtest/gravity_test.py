@@ -55,6 +55,7 @@ def test_gravity_plate_simulation(tmp_path):
         )
 
         options = deepcopy(default_ui_json)
+        options["title"] = "gravity inversion"
         options["inversion_type"] = "gravity"
         options["forward_only"] = True
         options["geoh5"] = str(ws.h5file)
@@ -72,6 +73,5 @@ def test_gravity_plate_simulation(tmp_path):
             model=model_params,
             simulation=gravity_inversion,
         )
-
         driver = PlateSimulationDriver(params)
         driver.run()

@@ -39,7 +39,7 @@ def get_topo_mesh(workspace):
         "diagonal_balance": False,
         "Refinement A object": topography.uid,
         "Refinement A levels": [4, 2, 1],
-        "Refinement A type": "surface",
+        "Refinement A horizon": True,
     }
 
     # TODO - remove this when we fix octree-creation-app/driver.run method.

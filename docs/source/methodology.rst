@@ -267,3 +267,8 @@ simulations, they can use the ``generate sweep file`` option to write a file use
 by the `param-sweeps <https://github.com/MiraGeoscience/param-sweeps>`_ package to do just
 that. It is beyond the scope of this document to discuss the use of that package, but
 there is a Github readme that explains it's usage.
+
+.. figure:: /images/methodology/sweep_option.png
+    :align: center
+
+    *Generating a sweep file to run multiple simulations.*

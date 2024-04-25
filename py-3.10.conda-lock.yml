@@ -15,8 +15,8 @@
 version: 1
 metadata:
   content_hash:
-    win-64: 3c1c2ca5bcf739b380d789530f4340808da45ef4726df86c083b9e0ad7155b3a
-    linux-64: a1bdbc6c1dce5ee92b01a69cbb55d65330007bfe97c1a4e37558d7db524d37a1
+    win-64: 86001848d58b69aecc5f455b6545841ec9c99a912ebeade5f1b84a3f5787274e
+    linux-64: aa4d33f0e0eeeddc3c0655443eb09bb255c13e00953c6b965cb15fa24d160a4d
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -2484,13 +2484,10 @@ package:
   dependencies:
     geoh5py: '>=0.9.0-alpha.4,<0.10.0'
     numpy: '>=1.23.5,<1.24.0'
-  url: https://github.com/MiraGeoscience/param-sweeps/archive/refs/heads/release/0.1.7.zip
+  url: https://files.pythonhosted.org/packages/25/f8/71859702eb5dbc21bc76b2c14d9da22e57fa487652a1b6a308a0f7296bd2/param_sweeps-0.1.7a4-py3-none-any.whl
   hash:
-    sha256: ''
+    sha256: 7185d329ed56e04a068b6c7494397e9853dca8bd15f98e4ba2a5fc4f86dff5fe
   category: main
-  source:
-    type: url
-    url: https://github.com/MiraGeoscience/param-sweeps/archive/refs/heads/release/0.1.7.zip#sha256=
   optional: false
 - name: octree-creation-app
   version: 0.1.0a5
@@ -2514,25 +2511,25 @@ package:
   manager: pip
   platform: linux-64
   dependencies:
-    scipy: '>=1.10.1,<1.11.0'
-    pillow: '*'
-    discretize: '>=0.10.0,<0.11.0'
-    mkl: '>=2022.0.0,<2023.0.0'
-    pymatsolver: '>=0.2.0,<0.3.0'
-    geoh5py: '>=0.9.0-alpha.4,<0.10.0'
     distributed: '>=2022.10.0,<2022.11.0'
-    numpy: '>=1.23.5,<1.24.0'
     pydiso: '>=0.0.3,<0.1.0'
-    tqdm: '>=4.64.0,<5.0.0'
-    octree-creation-app: '>=0.1.0-alpha.5,<0.2.0'
-    geoapps-utils: '>=0.3.0a3,<0.4.0'
-    zarr: '>=2.14.2,<2.15.0'
-    param-sweeps: '>=0.1.7a3,<0.2.0'
+    discretize: '>=0.10.0,<0.11.0'
     pydantic: '>=2.5.2,<2.6.0'
-    mira-simpeg: '>=0.19.0.dev8,<0.20.0'
-    geoana: '>=0.4.0,<0.5.0'
+    mkl: '>=2022.0.0,<2023.0.0'
+    geoapps-utils: '>=0.3.0a3,<0.4.0'
+    octree-creation-app: '>=0.1.0a5,<0.2.0'
+    scipy: '>=1.10.1,<1.11.0'
     dask: '>=2022.10.0,<2022.11.0'
-    h5py: '*'
+    geoana: '>=0.4.0,<0.5.0'
+    pymatsolver: '>=0.2.0,<0.3.0'
+    geoh5py: '>=0.9.0a4,<0.10.0'
+    mira-simpeg: '>=0.19.0.dev8,<0.20.0'
+    tqdm: '>=4.64.0,<5.0.0'
+    pillow: '>=10.0.1,<11.0.0'
+    numpy: '>=1.23.5,<1.24.0'
+    zarr: '>=2.14.2,<2.15.0'
+    h5py: '>=3.2.1,<4.0.0'
+    param-sweeps: '>=0.1.7a4,<0.2.0'
   url: https://github.com/MiraGeoscience/simpeg-drivers/archive/refs/heads/release/0.1.0.zip
   hash:
     sha256: ''
@@ -4981,13 +4978,10 @@ package:
   dependencies:
     geoh5py: '>=0.9.0-alpha.4,<0.10.0'
     numpy: '>=1.23.5,<1.24.0'
-  url: https://github.com/MiraGeoscience/param-sweeps/archive/refs/heads/release/0.1.7.zip
+  url: https://files.pythonhosted.org/packages/25/f8/71859702eb5dbc21bc76b2c14d9da22e57fa487652a1b6a308a0f7296bd2/param_sweeps-0.1.7a4-py3-none-any.whl
   hash:
-    sha256: ''
+    sha256: 7185d329ed56e04a068b6c7494397e9853dca8bd15f98e4ba2a5fc4f86dff5fe
   category: main
-  source:
-    type: url
-    url: https://github.com/MiraGeoscience/param-sweeps/archive/refs/heads/release/0.1.7.zip#sha256=
   optional: false
 - name: octree-creation-app
   version: 0.1.0a5
@@ -5011,25 +5005,25 @@ package:
   manager: pip
   platform: win-64
   dependencies:
-    scipy: '>=1.10.1,<1.11.0'
-    pillow: '*'
-    discretize: '>=0.10.0,<0.11.0'
-    mkl: '>=2022.0.0,<2023.0.0'
-    pymatsolver: '>=0.2.0,<0.3.0'
-    geoh5py: '>=0.9.0-alpha.4,<0.10.0'
     distributed: '>=2022.10.0,<2022.11.0'
-    numpy: '>=1.23.5,<1.24.0'
     pydiso: '>=0.0.3,<0.1.0'
-    tqdm: '>=4.64.0,<5.0.0'
-    octree-creation-app: '>=0.1.0-alpha.5,<0.2.0'
-    geoapps-utils: '>=0.3.0a3,<0.4.0'
-    zarr: '>=2.14.2,<2.15.0'
-    param-sweeps: '>=0.1.7a3,<0.2.0'
+    discretize: '>=0.10.0,<0.11.0'
     pydantic: '>=2.5.2,<2.6.0'
-    mira-simpeg: '>=0.19.0.dev8,<0.20.0'
-    geoana: '>=0.4.0,<0.5.0'
+    mkl: '>=2022.0.0,<2023.0.0'
+    geoapps-utils: '>=0.3.0a3,<0.4.0'
+    octree-creation-app: '>=0.1.0a5,<0.2.0'
+    scipy: '>=1.10.1,<1.11.0'
     dask: '>=2022.10.0,<2022.11.0'
-    h5py: '*'
+    geoana: '>=0.4.0,<0.5.0'
+    pymatsolver: '>=0.2.0,<0.3.0'
+    geoh5py: '>=0.9.0a4,<0.10.0'
+    mira-simpeg: '>=0.19.0.dev8,<0.20.0'
+    tqdm: '>=4.64.0,<5.0.0'
+    pillow: '>=10.0.1,<11.0.0'
+    numpy: '>=1.23.5,<1.24.0'
+    zarr: '>=2.14.2,<2.15.0'
+    h5py: '>=3.2.1,<4.0.0'
+    param-sweeps: '>=0.1.7a4,<0.2.0'
   url: https://github.com/MiraGeoscience/simpeg-drivers/archive/refs/heads/release/0.1.0.zip
   hash:
     sha256: ''

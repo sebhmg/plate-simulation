@@ -53,7 +53,7 @@ This is as simple opening a miniforge terminal and running the following command
 
     conda create -n "plate-simulation" python=3.10
     conda activate plate-simulation
-    pip install plate-simulation lasio geoh5py tqdm
+    pip install plate-simulation octree-creation-app geoh5py geoapps-utils mira-simpeg param-sweeps simpeg-drivers
 
 This way you will have a *plate-simulation* environment that is already encoded into the ui.json files stored
 with the package in the assets folder, and can begin running the programs contained within right away.

@@ -9,6 +9,7 @@ import numpy as np
 from geoapps_utils.transformations import rotate_xyz
 from geoh5py import Workspace
 
+from plate_simulation.driver import PlateSimulationDriver
 from plate_simulation.models.params import PlateParams
 from plate_simulation.models.plates import Plate
 
@@ -32,8 +33,9 @@ def vertical_east_striking_plate(workspace):
         dip=90.0,
         dip_direction=0.0,
     )
-    plate = Plate(workspace, params)
-    return plate.surface
+    plate = Plate(params)
+
+    return PlateSimulationDriver.make_surface_from_plate(workspace, plate)
 
 
 def test_vertical_east_striking_plate(tmp_path):
@@ -82,9 +84,8 @@ def test_dipping_plates_all_quadrants(tmp_path):
                 reference="center",
             )
 
-            plate_surface = Plate(workspace, params).surface
-            locs = rotate_xyz(
-                plate_surface.vertices, [0.0, 0.0, 0.0], dip_direction, 0.0
-            )
+            plate = Plate(params)
+            surface = PlateSimulationDriver.make_surface_from_plate(workspace, plate)
+            locs = rotate_xyz(surface.vertices, [0.0, 0.0, 0.0], dip_direction, 0.0)
             locs = rotate_xyz(locs, [0.0, 0.0, 0.0], 0.0, dip - 90.0)
             assert np.allclose(locs, reference.vertices)

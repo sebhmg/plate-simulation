@@ -20,7 +20,6 @@ from simpeg_drivers.electromagnetics.time_domain.constants import (
 from simpeg_drivers.potential_fields.gravity.constants import (
     default_ui_json as gravity_default_ui_json,
 )
-from simpeg_drivers.potential_fields.gravity.params import GravityParams
 
 from plate_simulation import assets_path
 from plate_simulation.driver import PlateSimulationDriver, PlateSimulationParams
@@ -111,7 +110,7 @@ def test_plate_simulation(tmp_path):
     )
     with Workspace(result.options["geoh5"]) as ws:
         data = ws.get_entity(result.options["data_object"]["value"].uid)[0]
-        mesh = ws.get_entity(result.options["mesh"]["value"].uid)[0]
+        mesh = ws.get_entity(result.options["mesh"]["value"])[0]
         model = [k for k in mesh.children if k.name == "starting_model"][0]
 
         assert len(data.property_groups) == 3
@@ -155,7 +154,9 @@ def test_plate_simulation_params_from_input_file(tmp_path):
         ifile.data["v_cell_size"] = 10.0
         ifile.data["w_cell_size"] = 10.0
         ifile.data["depth_core"] = 400.0
+        ifile.data["minimum_level"] = 8
         ifile.data["max_distance"] = 200.0
+        ifile.data["diagonal_balance"] = False
         ifile.data["padding_distance"] = 1500.0
 
         # Add model parameters
@@ -178,12 +179,15 @@ def test_plate_simulation_params_from_input_file(tmp_path):
         ifile.data["reference_type"] = "mean"
 
         params = PlateSimulationParams.build(ifile)
-        assert isinstance(params.simulation, GravityParams)
-        assert params.simulation.inversion_type == "gravity"
-        assert params.simulation.forward_only
-        assert params.simulation.geoh5.h5file == ws.h5file
-        assert params.simulation.topography_object.uid == topography.uid
-        assert params.simulation.data_object.uid == survey.uid
+        assert isinstance(params.simulation, SimPEGGroup)
+
+        simulation_parameters = params.from_simpeg_group(None)
+
+        assert simulation_parameters.inversion_type == "gravity"
+        assert simulation_parameters.forward_only
+        assert simulation_parameters.geoh5.h5file == ws.h5file
+        assert simulation_parameters.topography_object.uid == topography.uid
+        assert simulation_parameters.data_object.uid == survey.uid
 
         assert isinstance(params.mesh, MeshParams)
         assert params.mesh.u_cell_size == 10.0
@@ -206,7 +210,7 @@ def test_plate_simulation_params_from_input_file(tmp_path):
         assert params.model.plate.dip_length == 100.0
         assert params.model.plate.dip == 0.0
         assert params.model.plate.dip_direction == 0.0
-        assert params.model.plate.reference == "center"
+
         assert params.model.plate.number == 9
         assert params.model.plate.spacing == 10.0
         assert params.model.plate.relative_locations

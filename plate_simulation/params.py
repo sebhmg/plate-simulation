@@ -46,7 +46,7 @@ class PlateSimulationParams(BaseData):
     model: ModelParams
     simulation: SimPEGGroup
 
-    def from_simpeg_group(self, out_group: UIJsonGroup) -> InversionBaseParams:
+    def from_simpeg_group(self, out_group: UIJsonGroup | None) -> InversionBaseParams:
         with fetch_active_workspace(self.geoh5, mode="r+"):
             group = self.simulation.copy(parent=out_group, copy_children=False)
 

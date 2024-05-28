@@ -11,9 +11,6 @@ from collections.abc import Sequence
 
 import numpy as np
 from geoapps_utils.transformations import rotate_xyz
-from geoh5py import Workspace
-from geoh5py.objects import Surface
-from geoh5py.shared.utils import fetch_active_workspace
 
 from plate_simulation.models.params import PlateParams
 
@@ -22,39 +19,21 @@ class Plate:
     """
     Define a rotated rectangular block in 3D space
 
-    :param workspace: Workspace to create the plate surface in.
     :param params: Parameters describing the plate.
     :param surface: Surface object representing the plate.
     """
 
     def __init__(
         self,
-        workspace: Workspace,
         params: PlateParams,
         center_x: float = 0.0,
         center_y: float = 0.0,
         center_z: float = 0.0,
     ):
-        self.workspace = workspace
         self.params = params
         self.center_x = center_x
         self.center_y = center_y
         self.center_z = center_z
-        self._surface: Surface | None = None
-
-    @property
-    def surface(self) -> Surface:
-        """Surface of plate"""
-
-        if self._surface is None:
-            with fetch_active_workspace(self.workspace, mode="r+"):
-                self._surface = Surface.create(
-                    self.workspace,
-                    vertices=self.vertices,
-                    cells=self.triangles,
-                    name=self.params.name,
-                )
-        return self._surface
 
     @property
     def center(self) -> Sequence[float]:
@@ -109,16 +88,8 @@ class Plate:
 
     def _rotate(self, vertices: np.ndarray) -> np.ndarray:
         """Rotate vertices and adjust for reference point."""
-
         theta = -1 * self.params.dip_direction
         phi = -1 * self.params.dip
         rotated_vertices = rotate_xyz(vertices, self.center, theta, phi)
-
-        if self.params.reference == "top":
-            offset = np.mean(rotated_vertices[4:, :], axis=0) - self.center
-            self.center_x -= offset[0]
-            self.center_y -= offset[1]
-            self.center_z -= offset[2]
-            rotated_vertices -= offset
 
         return rotated_vertices

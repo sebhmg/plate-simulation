@@ -1,5 +1,10 @@
 {
   "title": "Plate simulation",
+  "run_command": "plate_simulation.driver",
+  "conda_environment": "plate_simulation",
+  "monitoring_directory": "",
+  "geoh5": "",
+  "workspace_geoh5": "",
   "simulation": {
     "main": true,
     "label": "TEM SimPEG Group",
@@ -193,14 +198,34 @@
     "value": 1000.0,
     "enabled": true
   },
+  "diagonal_balance": {
+      "group": "Basic",
+      "label": "Diagonal Balance",
+      "main": true,
+      "value": true,
+      "tooltip": "Assure single octree level change on corner neighbours. UBC compatible mesh."
+  },
+  "minimum_level": {
+      "enabled": true,
+      "group": "Basic",
+      "label": "Minimum refinement level.",
+      "main": true,
+      "min": 1,
+      "tooltip": "Minimum refinement in padding region: 2**(n-1) x base_cell.",
+      "value": 4
+  },
   "export_model": {
     "main": false,
     "label": "Export mesh/model",
     "value": true,
     "enabled": true
   },
-  "run_command": "plate_simulation.driver",
-  "conda_environment": "plate_simulation",
-  "monitoring_directory": "",
-  "geoh5": ""
+  "out_group": {
+    "label": "Simulation group",
+    "value": "",
+    "groupType": "{BB50AC61-A657-4926-9C82-067658E246A0}",
+    "visible": true,
+    "optional": true,
+    "enabled": false
+  }
 }

@@ -57,7 +57,6 @@ class PlateParams(BaseModel):
     dip_length: float
     dip: float = 90.0
     dip_direction: float = 90.0
-    reference: str = "center"
     number: int = 1
     spacing: float = 0.0
     relative_locations: bool = False

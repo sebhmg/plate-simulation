@@ -62,13 +62,18 @@ simpeg-drivers = {version = "~0.1.0b6", source = "pypi", allow-prereleases = tru
 #---------------------------------------------------------------------------------
 dask = {version = "2022.10.*", extras = ["distributed"]}
 distributed = "2022.10.*"  # because conda-lock doesn't take dask extras into account
+fsspec = "2022.*"  # from simpeg[dask]
 geoana = "~0.4.0"  # from simpeg
 h5py = "*"  # from geoh5py
+matplotlib = "~3.7.1"  # from simpeg and geoana
 mkl = "2022.*"  # from simpeg
+pandas = "~2.2.1"  # from simpeg
 Pillow = "*"  # from geoh5py
 pydiso = "~0.0.3"  # from simpeg
 pymatsolver = "~0.2.0"  # from simpeg
-tqdm = "^4.64.0"
+scikit-learn = "~1.4.0"  # from simpeg
+tqdm = "^4.66.1"  # from simpeg
+tzdata = "2023.4"  # through pandas from SimPEG (constraint copied from simpeg-drivers)
 zarr = "~2.14.2"  # from simpeg using Dask
 
 ## about pip dependencies

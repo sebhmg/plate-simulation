@@ -109,7 +109,7 @@ def test_plate_simulation(tmp_path):
         Path(tmp_path / "test_plate_simulation.ui.json")
     )
     with Workspace(result.options["geoh5"]) as ws:
-        data = ws.get_entity(result.options["data_object"]["value"].uid)[0]
+        data = ws.get_entity(result.options["data_object"]["value"])[0]
         mesh = ws.get_entity(result.options["mesh"]["value"])[0]
         model = [k for k in mesh.children if k.name == "starting_model"][0]
 

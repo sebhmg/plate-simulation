@@ -65,7 +65,10 @@ class PlateSimulationDriver:
                     "The topography object of the forward simulation must be a 'Surface'."
                 )
 
+            self.simulation_parameters.update_group_options()
+
         driver = InversionDriver(self.simulation_parameters)
+
         self._logger.info("running the simulation...")
         driver.run()
 

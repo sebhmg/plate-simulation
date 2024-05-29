@@ -8,11 +8,12 @@
 
 from copy import deepcopy
 from pathlib import Path
+from uuid import UUID
 
 import numpy as np
 from geoh5py import Workspace
 from geoh5py.groups import SimPEGGroup
-from geoh5py.objects import ObjectBase, Surface
+from geoh5py.objects import AirborneTEMReceivers, ObjectBase, Octree, Surface
 from geoh5py.ui_json import InputFile
 from simpeg_drivers.electromagnetics.time_domain.constants import (
     default_ui_json as tdem_default_ui_json,
@@ -109,8 +110,11 @@ def test_plate_simulation(tmp_path):
         Path(tmp_path / "test_plate_simulation.ui.json")
     )
     with Workspace(result.options["geoh5"]) as ws:
-        data = ws.get_entity(result.options["data_object"]["value"])[0]
-        mesh = ws.get_entity(result.options["mesh"]["value"])[0]
+        out_group = ws.get_entity(UUID(result.options["out_group"]["value"]))[0]
+        data = [
+            obj for obj in out_group.children if isinstance(obj, AirborneTEMReceivers)
+        ][0]
+        mesh = [obj for obj in out_group.children if isinstance(obj, Octree)][0]
         model = [k for k in mesh.children if k.name == "starting_model"][0]
 
         assert len(data.property_groups) == 3
@@ -118,7 +122,7 @@ def test_plate_simulation(tmp_path):
             k.name in [f"Iteration_0_{i}" for i in "xyz"] for k in data.property_groups
         )
         assert all(len(k.properties) == 20 for k in data.property_groups)
-        assert mesh.n_cells == 15136
+        assert mesh.n_cells == 11412
         assert len(np.unique(model.values)) == 4
         assert all(
             k in np.unique(model.values) for k in [1.0 / 7500, 1.0 / 2000, 1.0 / 20]

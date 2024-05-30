@@ -30,29 +30,30 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.10, <3.11"
+
 numpy = "~1.23.5"  # also geoh5py, simpeg and geoana
 scipy = "~1.10.1"
 discretize = "~0.10.0"
 Rtree = "~1.2.0"
 trimesh = "~4.1.3"
 threadpoolctl = "~3.3.0"
-pydantic = "~2.5"
+pydantic = "~2.5.2"
 
 ## Pip dependencies from Git repositories
 #----------------------------------------
-geoh5py = {version = "~0.9.0a4", source = "pypi", allow-prereleases = true}
+geoh5py = {version = "~0.9.0-rc.3", source = "pypi", allow-prereleases = true}
 #geoh5py = {url = "https://github.com/MiraGeoscience/geoh5py/archive/refs/heads/release/0.9.0.zip#sha256="}
 
-octree-creation-app = {version = "~0.1.0a5", source = "pypi", allow-prereleases = true}
+octree-creation-app = {version = "~0.1.0rc2", source = "pypi", allow-prereleases = true}
 #octree-creation-app = {url = "https://github.com/MiraGeoscience/octree-creation-app/archive/refs/heads/release/0.1.0.zip#sha256="}
 
-geoapps-utils = {version = "~0.3.0a3", source = "pypi", allow-prereleases = true}
+geoapps-utils = {version = "~0.3.0rc4", source = "pypi", allow-prereleases = true}
 #geoapps-utils = {url = "https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/release/0.3.0.zip#sha256="}
 
-mira-simpeg = {version = "~0.19.0.dev8", source = "pypi"}
+mira-simpeg = {version = ">=0.19.0.8rc3,<0.19.0.9.dev", source = "pypi", allow-prereleases = true}
 #mira-simpeg = {url = "https://github.com/MiraGeoscience/simpeg/archive/refs/heads/release/v0.19.0.dev8+geoapps.0.12.0.zip#sha256="}
 
-param-sweeps = {version = "~0.1.7a4", source = "pypi", allow-prereleases = true}
+param-sweeps = {version = "~0.1.7rc1", source = "pypi", allow-prereleases = true}
 #param-sweeps = {url = "https://github.com/MiraGeoscience/param-sweeps/archive/refs/heads/release/0.1.7.zip#sha256="}
 
 simpeg-drivers = {version = "~0.1.0b6", source = "pypi", allow-prereleases = true}
@@ -64,11 +65,11 @@ dask = {version = "2022.10.*", extras = ["distributed"]}
 distributed = "2022.10.*"  # because conda-lock doesn't take dask extras into account
 fsspec = "2022.*"  # from simpeg[dask]
 geoana = "~0.4.0"  # from simpeg
-h5py = "*"  # from geoh5py
+h5py = "^3.2.1" # from geoh5py
 matplotlib = "~3.7.1"  # from simpeg and geoana
-mkl = "2022.*"  # from simpeg
+mkl = "2022.1.*"  # from simpeg
 pandas = "~2.2.1"  # from simpeg
-Pillow = "*"  # from geoh5py
+Pillow = "~10.1.0"  # from geoh5py
 pydiso = "~0.0.3"  # from simpeg
 pymatsolver = "~0.2.0"  # from simpeg
 scikit-learn = "~1.4.0"  # from simpeg
@@ -95,8 +96,8 @@ sphinx = "^5.0"
 readthedocs-sphinx-ext = "*"
 
 [tool.conda-lock]
-platforms = ['win-64', 'linux-64']
-channels = ['conda-forge']
+platforms = ["win-64", "linux-64"]
+channels = ["conda-forge"]
 
 [tool.isort]
 # settings for compatibility between ``isort`` and ``black`` formatting

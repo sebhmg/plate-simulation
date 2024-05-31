@@ -15,6 +15,7 @@ from simpeg_drivers.electromagnetics.time_domain.params import (
 from simpeg_drivers.params import InversionBaseParams
 from simpeg_drivers.potential_fields.gravity.params import GravityParams
 
+
 # pylint: disable=import-outside-toplevel, too-few-public-methods
 
 

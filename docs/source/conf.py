@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "plate-simulation"
-copyright = "2024, Benjamin Kary"
+project_copyright = "2024, Mira Geoscience"
 author = "Benjamin Kary"
 release = "2024"
 

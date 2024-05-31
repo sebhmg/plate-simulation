@@ -12,6 +12,7 @@ from pathlib import Path
 from geoh5py.groups import SimPEGGroup
 from geoh5py.ui_json import InputFile
 
+from plate_simulation.driver import PlateSimulationDriver
 from plate_simulation.params import PlateSimulationParams
 from plate_simulation.point_simulations.params import PointsSimulationParams
 
@@ -29,8 +30,24 @@ class PointsSimulationDriver:
 
     def run(self) -> SimPEGGroup:
         """Create octree mesh, fill model, and simulate."""
+        with self.params.geoh5.open():
+            input_data = InputFile(ui_json=self.params.simulation.options).data
 
-        simulation_params = PlateSimulationParams.build(self.params.simulation.options)
+            # Map parameters to modify
+            parameters = {
+                child.name: child.values
+                for child in self.params.points.children
+                if child.name in input_data
+            }
+
+            # Loop over vertices and update parameters
+            for ind, vertex in enumerate(self.params.points.vertices):
+                input_data.update(
+                    {name: values[ind] for name, values in parameters.items()}
+                )
+                simulation_params = PlateSimulationParams.build(input_data)
+                # Run the simulation
+                PlateSimulationDriver(simulation_params).run()
 
     @staticmethod
     def start(ifile: str | Path | InputFile):

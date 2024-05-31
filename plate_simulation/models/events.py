@@ -13,6 +13,7 @@ from simpeg_drivers.utils.utils import active_from_xyz
 from trimesh import Trimesh
 from trimesh.proximity import ProximityQuery
 
+
 # pylint: disable=too-few-public-methods
 
 

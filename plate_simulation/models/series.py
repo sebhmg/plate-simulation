@@ -18,6 +18,7 @@ from geoh5py.shared.utils import fetch_active_workspace
 
 from .events import Anomaly, Erosion, Overburden
 
+
 if TYPE_CHECKING:
     from .events import Deposition, Event
 

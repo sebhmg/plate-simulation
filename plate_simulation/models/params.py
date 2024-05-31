@@ -17,6 +17,7 @@ from pydantic import (
     model_validator,
 )
 
+
 T = TypeVar("T")
 
 

@@ -9,7 +9,6 @@ import numpy as np
 from geoh5py import Workspace
 from geoh5py.objects import Surface
 
-from plate_simulation.driver import PlateSimulationDriver
 from plate_simulation.models.events import Anomaly, Deposition, Erosion, Overburden
 from plate_simulation.models.params import PlateParams
 from plate_simulation.models.plates import Plate
@@ -72,7 +71,7 @@ def test_anomaly(tmp_path):
             dip_length=1.0,
         )
         plate = Plate(params, center_x=5.0, center_y=5.0, center_z=-1.5)
-        surface = PlateSimulationDriver.make_surface_from_plate(workspace, plate)
+        surface = plate.create_surface(workspace)
         anomaly = Anomaly(surface=surface, value=10.0)
         model = anomaly.realize(mesh=octree, model=np.ones(octree.n_cells))
         data = octree.add_data({"model": {"values": model}})

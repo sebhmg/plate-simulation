@@ -168,9 +168,10 @@ class LockFilePatcher:
         )
         with tempfile.TemporaryDirectory(dir=str(self.lock_file.parent)) as tmpdirname:
             patched_file = Path(tmpdirname) / self.lock_file.name
-            with open(patched_file, mode="w", encoding="utf-8") as patched, open(
-                self.lock_file, encoding="utf-8"
-            ) as f:
+            with (
+                open(patched_file, mode="w", encoding="utf-8") as patched,
+                open(self.lock_file, encoding="utf-8") as f,
+            ):
                 for line in f:
                     match = none_hash_re.match(line)
                     if not match:
@@ -203,9 +204,10 @@ class LockFilePatcher:
 
         with tempfile.TemporaryDirectory(dir=str(self.lock_file.parent)) as tmpdirname:
             patched_file = Path(tmpdirname) / self.lock_file.name
-            with open(patched_file, mode="w", encoding="utf-8") as patched, open(
-                self.lock_file, encoding="utf-8"
-            ) as f:
+            with (
+                open(patched_file, mode="w", encoding="utf-8") as patched,
+                open(self.lock_file, encoding="utf-8") as f,
+            ):
                 for line in f:
                     patched_line = self.sha_re.sub(r"\1", line)
                     patched.write(patched_line)

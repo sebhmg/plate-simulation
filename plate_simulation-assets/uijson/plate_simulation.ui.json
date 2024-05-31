@@ -199,7 +199,7 @@
     "enabled": true
   },
   "diagonal_balance": {
-      "group": "Basic",
+      "group": "Mesh",
       "label": "Diagonal Balance",
       "main": true,
       "value": true,
@@ -207,12 +207,12 @@
   },
   "minimum_level": {
       "enabled": true,
-      "group": "Basic",
+      "group": "Mesh",
       "label": "Minimum refinement level.",
       "main": true,
       "min": 1,
       "tooltip": "Minimum refinement in padding region: 2**(n-1) x base_cell.",
-      "value": 4
+      "value": 6
   },
   "export_model": {
     "main": false,

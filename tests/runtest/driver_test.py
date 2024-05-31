@@ -113,7 +113,7 @@ def test_plate_simulation(tmp_path):
     with Workspace(result.options["geoh5"]) as ws:
         data = ws.get_entity(result.options["data_object"]["value"].uid)[0]
         mesh = ws.get_entity(result.options["mesh"]["value"].uid)[0]
-        model = [k for k in mesh.children if k.name == "starting_model"][0]
+        model = next(k for k in mesh.children if k.name == "starting_model")
 
         assert len(data.property_groups) == 3
         assert all(

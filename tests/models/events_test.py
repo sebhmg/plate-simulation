@@ -60,8 +60,8 @@ def test_overburden(tmp_path):
 
 
 def test_anomaly(tmp_path):
-    with Workspace(tmp_path / "test.geoh5") as ws:
-        _, octree = get_topo_mesh(ws)
+    with Workspace(tmp_path / "test.geoh5") as workspace:
+        _, octree = get_topo_mesh(workspace)
         params = PlateParams(
             name="my plate",
             plate=10.0,
@@ -70,8 +70,9 @@ def test_anomaly(tmp_path):
             strike_length=10.0,
             dip_length=1.0,
         )
-        plate = Plate(ws, params, center_x=5.0, center_y=5.0, center_z=-1.5)
-        anomaly = Anomaly(surface=plate.surface, value=10.0)
+        plate = Plate(params, center_x=5.0, center_y=5.0, center_z=-1.5)
+        surface = plate.create_surface(workspace)
+        anomaly = Anomaly(surface=surface, value=10.0)
         model = anomaly.realize(mesh=octree, model=np.ones(octree.n_cells))
         data = octree.add_data({"model": {"values": model}})
         ind = (

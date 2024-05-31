@@ -11,13 +11,14 @@ import sys
 from pathlib import Path
 
 from geoh5py.data import FloatData
-from geoh5py.groups import SimPEGGroup
+from geoh5py.groups import UIJsonGroup
 from geoh5py.objects import Octree, Points, Surface
 from geoh5py.shared.utils import fetch_active_workspace
-from geoh5py.ui_json import InputFile
+from geoh5py.ui_json import InputFile, monitored_directory_copy
 from octree_creation_app.driver import OctreeDriver
 from param_sweeps.generate import generate
 from simpeg_drivers.driver import InversionDriver
+from simpeg_drivers.params import InversionBaseParams
 
 from plate_simulation.logger import get_logger
 from plate_simulation.models.events import Anomaly, Erosion, Overburden
@@ -41,42 +42,98 @@ class PlateSimulationDriver:
 
     def __init__(self, params: PlateSimulationParams):
         self.params = params
+
         self._surfaces: list[Surface] | None = None
         self._survey: Points | None = None
         self._mesh: Octree | None = None
         self._model: FloatData | None = None
+        self._simulation_parameters: InversionBaseParams | None = None
+        self._out_group = self.validate_out_group(self.params.out_group)
+
         self._logger = get_logger("Plate Simulation")
 
-    def run(self) -> SimPEGGroup:
+    def run(self) -> UIJsonGroup:
         """Create octree mesh, fill model, and simulate."""
-        with fetch_active_workspace(self.params.geoh5, mode="r+"):
-            self.params.simulation.mesh = self.mesh
-            self.params.simulation.starting_model = self.model
 
-            if not isinstance(self.params.simulation.topography_object, Surface):
+        with fetch_active_workspace(self.params.geoh5, mode="r+"):
+            self.simulation_parameters.mesh = self.mesh
+            self.simulation_parameters.starting_model = self.model
+
+            if not isinstance(self.simulation_parameters.topography_object, Surface):
                 raise ValueError(
                     "The topography object of the forward simulation must be a 'Surface'."
                 )
 
-        driver = InversionDriver(self.params.simulation)
-        self._logger.info("running the simulation...")
+            self.simulation_parameters.update_group_options()
 
+        driver = InversionDriver(self.simulation_parameters)
+
+        self._logger.info("running the simulation...")
         driver.run()
+
+        with fetch_active_workspace(self.params.geoh5, mode="r+"):
+            self.out_group.add_ui_json()
+            if (
+                self.params.monitoring_directory is not None
+                and Path(self.params.monitoring_directory).is_dir()
+            ):
+                monitored_directory_copy(
+                    str(Path(self.params.monitoring_directory).resolve()),
+                    self.out_group,
+                )
+
         self._logger.info("done.")
         self._logger.handlers.clear()
 
         return driver.out_group
 
     @property
+    def out_group(self) -> UIJsonGroup:
+        """
+        Returns the output group for the simulation.
+        """
+        return self._out_group
+
+    def validate_out_group(self, out_group: UIJsonGroup | None) -> UIJsonGroup:
+        """
+        Validate or create a UIJsonGroup to store results.
+
+        :param value: Output group from selection.
+        """
+        if isinstance(out_group, UIJsonGroup):
+            return out_group
+
+        with fetch_active_workspace(self.params.geoh5, mode="r+"):
+            out_group = UIJsonGroup.create(
+                self.params.geoh5,
+                name="Plate Simulation",
+            )
+            out_group.entity_type.name = "Plate Simulation"
+            self.params = self.params.model_copy(update={"out_group": out_group})
+            out_group.options = InputFile.stringify(
+                InputFile.demote(self.params.input_file.ui_json)
+            )
+            out_group.metadata = None
+
+        return out_group
+
+    @property
+    def simulation_parameters(self) -> InversionBaseParams:
+        if self._simulation_parameters is None:
+            self._simulation_parameters = self.params.inversion_parameters()
+
+        return self._simulation_parameters
+
+    @property
     def survey(self):
         if self._survey is None:
-            self._survey = self.params.simulation.data_object
+            self._survey = self.simulation_parameters.data_object
 
         return self._survey
 
     @property
     def topography(self) -> Surface:
-        return self.params.simulation.topography_object
+        return self.simulation_parameters.topography_object
 
     @property
     def surfaces(self) -> list[Surface]:
@@ -94,16 +151,16 @@ class PlateSimulationDriver:
                 depth_offset=-1 * offset,
             )
             plate = Plate(
-                self.params.geoh5,
                 self.params.model.plate,
                 *center,
             )
+            surface = plate.create_surface(self.params.geoh5, self.out_group)
 
             if self.params.model.plate.number == 1:
-                self._surfaces = [plate.surface]
+                self._surfaces = [surface]
             else:
                 self._surfaces = replicate(
-                    plate.surface,
+                    surface,
                     self.params.model.plate.number,
                     self.params.model.plate.spacing,
                     self.params.model.plate.dip_direction,
@@ -136,7 +193,7 @@ class PlateSimulationDriver:
 
         self._logger.info("making the mesh...")
         octree_params = self.params.mesh.octree_params(
-            self.survey, self.params.simulation.topography_object, self.surfaces
+            self.survey, self.simulation_parameters.topography_object, self.surfaces
         )
         octree_driver = OctreeDriver(octree_params)
         mesh = octree_driver.run()
@@ -149,7 +206,7 @@ class PlateSimulationDriver:
         self._logger.info("Building the model...")
 
         overburden = Overburden(
-            topography=self.params.simulation.topography_object,
+            topography=self.simulation_parameters.topography_object,
             thickness=self.params.model.overburden.thickness,
             value=self.params.model.overburden.overburden,
         )
@@ -159,7 +216,7 @@ class PlateSimulationDriver:
         )
 
         erosion = Erosion(
-            surface=self.params.simulation.topography_object,
+            surface=self.simulation_parameters.topography_object,
         )
 
         scenario = Scenario(

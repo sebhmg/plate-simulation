@@ -32,8 +32,9 @@ def vertical_east_striking_plate(workspace):
         dip=90.0,
         dip_direction=0.0,
     )
-    plate = Plate(workspace, params)
-    return plate.surface
+    plate = Plate(params)
+
+    return plate.create_surface(workspace)
 
 
 def test_vertical_east_striking_plate(tmp_path):
@@ -82,9 +83,8 @@ def test_dipping_plates_all_quadrants(tmp_path):
                 reference="center",
             )
 
-            plate_surface = Plate(workspace, params).surface
-            locs = rotate_xyz(
-                plate_surface.vertices, [0.0, 0.0, 0.0], dip_direction, 0.0
-            )
+            plate = Plate(params)
+            surface = plate.create_surface(workspace)
+            locs = rotate_xyz(surface.vertices, [0.0, 0.0, 0.0], dip_direction, 0.0)
             locs = rotate_xyz(locs, [0.0, 0.0, 0.0], 0.0, dip - 90.0)
             assert np.allclose(locs, reference.vertices)

@@ -11,6 +11,10 @@ from collections.abc import Sequence
 
 import numpy as np
 from geoapps_utils.transformations import rotate_xyz
+from geoh5py.groups import Group
+from geoh5py.objects import Surface
+from geoh5py.ui_json.utils import fetch_active_workspace
+from geoh5py.workspace import Workspace
 
 from plate_simulation.models.params import PlateParams
 
@@ -39,6 +43,26 @@ class Plate:
     def center(self) -> Sequence[float]:
         """Center of the block."""
         return [self.center_x, self.center_y, self.center_z]
+
+    def create_surface(
+        self, workspace: Workspace, out_group: Group | None = None
+    ) -> Surface:
+        """
+        Create a surface object from a plate object.
+
+        :param workspace: Workspace object to create the surface in.
+        :param out_group: Output group to store the surface.
+        """
+        with fetch_active_workspace(workspace, mode="r+") as ws:
+            surface = Surface.create(
+                ws,
+                vertices=self.vertices,
+                cells=self.triangles,
+                name=self.params.name,
+                parent=out_group,
+            )
+
+            return surface
 
     @property
     def triangles(self) -> np.ndarray:

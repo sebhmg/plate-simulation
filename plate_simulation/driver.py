@@ -10,7 +10,6 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-from geoh5py import Workspace
 from geoh5py.data import FloatData
 from geoh5py.groups import UIJsonGroup
 from geoh5py.objects import Octree, Points, Surface
@@ -155,10 +154,7 @@ class PlateSimulationDriver:
                 self.params.model.plate,
                 *center,
             )
-
-            surface = self.make_surface_from_plate(
-                self.params.geoh5, plate, self.out_group
-            )
+            surface = plate.create_surface(self.params.geoh5, self.out_group)
 
             if self.params.model.plate.number == 1:
                 self._surfaces = [surface]
@@ -171,28 +167,6 @@ class PlateSimulationDriver:
                 )
 
         return self._surfaces
-
-    @staticmethod
-    def make_surface_from_plate(
-        workspace: Workspace, plate: Plate, out_group: UIJsonGroup | None = None
-    ) -> Surface:
-        """
-        Create a surface object from a plate object.
-
-        :param workspace: Workspace object to create the surface in.
-        :param plate: Plate object to create a surface from.
-        :param out_group: Output group to store the surface.
-        """
-        with fetch_active_workspace(workspace, mode="r+") as ws:
-            surface = Surface.create(
-                ws,
-                vertices=plate.vertices,
-                cells=plate.triangles,
-                name=plate.params.name,
-                parent=out_group,
-            )
-
-        return surface
 
     @property
     def mesh(self) -> Octree:

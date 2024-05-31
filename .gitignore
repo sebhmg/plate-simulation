@@ -148,3 +148,4 @@ dmypy.json
 # tempory generated files
 pyproject-sha.toml
 /.idea/plate-simulation.iml
+/.idea/plate-simulation.iml

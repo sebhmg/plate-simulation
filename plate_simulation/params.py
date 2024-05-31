@@ -46,9 +46,15 @@ class PlateSimulationParams(BaseData):
     model: ModelParams
     simulation: SimPEGGroup
 
-    def from_simpeg_group(self, out_group: UIJsonGroup | None) -> InversionBaseParams:
+    def inversion_parameters(self) -> InversionBaseParams:
+        """
+        Create inversion parameters from the simulation options.
+
+        A new SimPEGGroup is created inside the out_group to store the
+        result of the forward simulation.
+        """
         with fetch_active_workspace(self.geoh5, mode="r+"):
-            group = self.simulation.copy(parent=out_group, copy_children=False)
+            group = self.simulation.copy(parent=self.out_group, copy_children=False)
 
         input_file = InputFile(
             ui_json=deepcopy(self.simulation.options), validate=False

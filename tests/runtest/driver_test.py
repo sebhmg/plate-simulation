@@ -185,7 +185,7 @@ def test_plate_simulation_params_from_input_file(tmp_path):
         params = PlateSimulationParams.build(ifile)
         assert isinstance(params.simulation, SimPEGGroup)
 
-        simulation_parameters = params.from_simpeg_group(None)
+        simulation_parameters = params.inversion_parameters()
 
         assert simulation_parameters.inversion_type == "gravity"
         assert simulation_parameters.forward_only

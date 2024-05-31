@@ -120,7 +120,7 @@ class PlateSimulationDriver:
     @property
     def simulation_parameters(self) -> InversionBaseParams:
         if self._simulation_parameters is None:
-            self._simulation_parameters = self.params.from_simpeg_group(self.out_group)
+            self._simulation_parameters = self.params.inversion_parameters()
 
         return self._simulation_parameters
 

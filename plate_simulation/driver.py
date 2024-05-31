@@ -32,7 +32,7 @@ class PlateSimulationDriver:
     Driver for simulating background + plate + overburden model.
 
     :param params: Parameters for plate simulation (mesh, model and
-        simulations).
+        point_simulations).
     :param plate: Plate object used to add anomaly to the model.
     :param mesh: Octree mesh in which model is built for the simulation.
     :param model: Model to simulate.

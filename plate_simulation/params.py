@@ -14,7 +14,7 @@ from pydantic import field_validator
 
 from .mesh.params import MeshParams
 from .models.params import ModelParams
-from .simulations.params import SimulationParams
+from .point_simulations.params import SimulationParams
 
 
 class PlateSimulationParams(BaseData):

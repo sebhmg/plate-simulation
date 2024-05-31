@@ -8,11 +8,12 @@
 
 from copy import deepcopy
 from pathlib import Path
+from uuid import UUID
 
 import numpy as np
 from geoh5py import Workspace
 from geoh5py.groups import SimPEGGroup
-from geoh5py.objects import ObjectBase, Surface
+from geoh5py.objects import AirborneTEMReceivers, ObjectBase, Octree, Surface
 from geoh5py.ui_json import InputFile
 from simpeg_drivers.electromagnetics.time_domain.constants import (
     default_ui_json as tdem_default_ui_json,
@@ -20,7 +21,6 @@ from simpeg_drivers.electromagnetics.time_domain.constants import (
 from simpeg_drivers.potential_fields.gravity.constants import (
     default_ui_json as gravity_default_ui_json,
 )
-from simpeg_drivers.potential_fields.gravity.params import GravityParams
 
 from plate_simulation import assets_path
 from plate_simulation.driver import PlateSimulationDriver, PlateSimulationParams
@@ -111,8 +111,11 @@ def test_plate_simulation(tmp_path):
         Path(tmp_path / "test_plate_simulation.ui.json")
     )
     with Workspace(result.options["geoh5"]) as ws:
-        data = ws.get_entity(result.options["data_object"]["value"].uid)[0]
-        mesh = ws.get_entity(result.options["mesh"]["value"].uid)[0]
+        out_group = ws.get_entity(UUID(result.options["out_group"]["value"]))[0]
+        data = next(
+            obj for obj in out_group.children if isinstance(obj, AirborneTEMReceivers)
+        )
+        mesh = next(obj for obj in out_group.children if isinstance(obj, Octree))
         model = next(k for k in mesh.children if k.name == "starting_model")
 
         assert len(data.property_groups) == 3
@@ -120,7 +123,7 @@ def test_plate_simulation(tmp_path):
             k.name in [f"Iteration_0_{i}" for i in "xyz"] for k in data.property_groups
         )
         assert all(len(k.properties) == 20 for k in data.property_groups)
-        assert mesh.n_cells == 15136
+        assert mesh.n_cells == 11300
         assert len(np.unique(model.values)) == 4
         assert all(
             k in np.unique(model.values) for k in [1.0 / 7500, 1.0 / 2000, 1.0 / 20]
@@ -156,7 +159,9 @@ def test_plate_simulation_params_from_input_file(tmp_path):
         ifile.data["v_cell_size"] = 10.0
         ifile.data["w_cell_size"] = 10.0
         ifile.data["depth_core"] = 400.0
+        ifile.data["minimum_level"] = 8
         ifile.data["max_distance"] = 200.0
+        ifile.data["diagonal_balance"] = False
         ifile.data["padding_distance"] = 1500.0
 
         # Add model parameters
@@ -179,12 +184,15 @@ def test_plate_simulation_params_from_input_file(tmp_path):
         ifile.data["reference_type"] = "mean"
 
         params = PlateSimulationParams.build(ifile)
-        assert isinstance(params.simulation, GravityParams)
-        assert params.simulation.inversion_type == "gravity"
-        assert params.simulation.forward_only
-        assert params.simulation.geoh5.h5file == ws.h5file
-        assert params.simulation.topography_object.uid == topography.uid
-        assert params.simulation.data_object.uid == survey.uid
+        assert isinstance(params.simulation, SimPEGGroup)
+
+        simulation_parameters = params.inversion_parameters()
+
+        assert simulation_parameters.inversion_type == "gravity"
+        assert simulation_parameters.forward_only
+        assert simulation_parameters.geoh5.h5file == ws.h5file
+        assert simulation_parameters.topography_object.uid == topography.uid
+        assert simulation_parameters.data_object.uid == survey.uid
 
         assert isinstance(params.mesh, MeshParams)
         assert params.mesh.u_cell_size == 10.0
@@ -207,7 +215,7 @@ def test_plate_simulation_params_from_input_file(tmp_path):
         assert params.model.plate.dip_length == 100.0
         assert params.model.plate.dip == 0.0
         assert params.model.plate.dip_direction == 0.0
-        assert params.model.plate.reference == "center"
+
         assert params.model.plate.number == 9
         assert params.model.plate.spacing == 10.0
         assert params.model.plate.relative_locations

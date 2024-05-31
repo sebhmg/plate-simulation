@@ -124,8 +124,7 @@ def check_commit_message(filepath: str) -> tuple[bool, str]:
     if branch_jira_id and message_jira_id and branch_jira_id != message_jira_id:
         return (
             False,
-            "Different JIRA ID in commit message %s and in branch name %s."
-            % (message_jira_id, branch_jira_id),
+            f"Different JIRA ID in commit message {message_jira_id} and in branch name {branch_jira_id}.",
         )
 
     stripped_message_line = ""
@@ -140,8 +139,8 @@ def check_commit_message(filepath: str) -> tuple[bool, str]:
     if len(stripped_message_line) < min_required_length:
         return (
             False,
-            "First line of commit message must be at least %s characters long, "
-            "beyond the JIRA ID." % min_required_length,
+            f"First line of commit message must be at least {min_required_length} characters long, "
+            "beyond the JIRA ID.",
         )
 
     return True, ""
@@ -156,9 +155,8 @@ def check_commit_msg(filepath: str) -> None:
     (is_valid, error_message) = check_commit_message(filepath)
     if not is_valid:
         print(
-            """commit-msg hook: **ERROR** %s
-            Message has been saved to %s."""
-            % (error_message, filepath)
+            f"""commit-msg hook: **ERROR** {error_message}
+            Message has been saved to {filepath}."""
         )
         sys.exit(1)
 

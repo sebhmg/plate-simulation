@@ -29,6 +29,7 @@ from plate_simulation.models.params import ModelParams
 
 from . import get_survey, get_topography
 
+
 # pylint: disable=duplicate-code
 
 
@@ -111,11 +112,11 @@ def test_plate_simulation(tmp_path):
     )
     with Workspace(result.options["geoh5"]) as ws:
         out_group = ws.get_entity(UUID(result.options["out_group"]["value"]))[0]
-        data = [
+        data = next(
             obj for obj in out_group.children if isinstance(obj, AirborneTEMReceivers)
-        ][0]
-        mesh = [obj for obj in out_group.children if isinstance(obj, Octree)][0]
-        model = [k for k in mesh.children if k.name == "starting_model"][0]
+        )
+        mesh = next(obj for obj in out_group.children if isinstance(obj, Octree))
+        model = next(k for k in mesh.children if k.name == "starting_model")
 
         assert len(data.property_groups) == 3
         assert all(

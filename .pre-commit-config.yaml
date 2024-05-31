@@ -11,29 +11,20 @@ ci:
     autoupdate_schedule: monthly
 
 repos:
--   repo: https://github.com/psf/black
-    rev: 23.10.0
+-   repo: https://github.com/hadialqattan/pycln
+    rev: v2.4.0
     hooks:
-    -   id: black
--   repo: https://github.com/PyCQA/isort
-    rev: 5.12.0
+    -   id: pycln
+        args: [ --config=pyproject.toml ]
+-   repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.4
     hooks:
-    -   id: isort
-        additional_dependencies: [tomli] # to read config from pyproject.toml
--   repo: https://github.com/humitos/mirrors-autoflake
-    rev: v1.1
-    hooks:
-    -   id: autoflake
--   repo: https://github.com/PyCQA/flake8
-    rev: 6.1.0
-    hooks:
-    -   id: flake8
--   repo: https://github.com/asottile/pyupgrade
-    rev: v3.15.0
-    hooks:
-    -   id: pyupgrade
-        args: [--py39-plus]
-#        exclude: plates
+    -   id: ruff
+        args:
+        -   --fix
+        -   --exit-non-zero-on-fix
+#        -   --unsafe-fixes
+    -   id: ruff-format
 -   repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.6.1
     hooks:

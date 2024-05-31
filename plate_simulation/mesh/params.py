@@ -36,7 +36,7 @@ class MeshParams(BaseModel):
             "Refinement B levels": "4, 2",
             "Refinement B type": "radial",
         }
-        for plate, letter in zip(plates, string.ascii_uppercase[2:]):
+        for plate, letter in zip(plates, string.ascii_uppercase[2:], strict=False):
             refinements.update(
                 {
                     f"Refinement {letter} object": plate,

@@ -17,6 +17,7 @@ from pydantic import (
     model_validator,
 )
 
+
 T = TypeVar("T")
 
 
@@ -100,7 +101,7 @@ class PlateParams(BaseModel):
         :param surface: surface object to reference plate depth from.
         :param depth_offset: Additional offset to be added to the depth of the plate.
         """
-        return self._get_xy(survey) + [self._get_z(surface, depth_offset)]
+        return [*self._get_xy(survey), self._get_z(surface, depth_offset)]
 
     def _get_xy(self, survey: ObjectBase) -> list[float]:
         """Return true or relative locations in x and y."""

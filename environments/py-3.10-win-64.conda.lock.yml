@@ -106,7 +106,7 @@ dependencies:
   - python_abi=3.10=4_cp310
   - pytz=2024.1=pyhd8ed1ab_0
   - pyyaml=6.0.1=py310h8d17308_1
-  - requests=2.32.2=pyhd8ed1ab_0
+  - requests=2.32.3=pyhd8ed1ab_0
   - rtree=1.2.0=py310h1cbd46b_0
   - scikit-learn=1.4.2=py310hf2a6c47_1
   - scipy=1.10.1=py310h578b7cb_3

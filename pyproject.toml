@@ -6,6 +6,7 @@ description = "plate-simulation is a Python package"
 authors = ["Mira Geoscience <support@mirageoscience.com>"]
 readme = "README.rst"
 repository = "https://github.com/MiraGeoscience/plate-simulation"
+documentation = "https://mirageoscience-plate-simulation.readthedocs-hosted.com/"
 homepage = "https://mirageoscience.com"
 keywords = []
 

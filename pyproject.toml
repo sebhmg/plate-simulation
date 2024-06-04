@@ -4,13 +4,11 @@ version = "0.1.0-beta.1"
 license = "MIT"
 description = "plate-simulation is a Python package"
 authors = ["Mira Geoscience <support@mirageoscience.com>"]
-repository = "https://github.com/MiraGeoscience/plate-simulation"
-homepage = "https://mirageoscience.com"
 readme = "README.rst"
-packages = [
-     { include = "plate_simulation" },
-     { include = "plate_simulation-assets" },
-]
+repository = "https://github.com/MiraGeoscience/plate-simulation"
+documentation  = "https://mirageoscience-plate-simulation.readthedocs-hosted.com/"
+homepage = "https://mirageoscience.com"
+keywords = []
 
 # TODO: adjust classifiers
 classifiers = [
@@ -27,6 +25,18 @@ classifiers = [
     "Natural Language :: English",
 ]
 
+packages = [
+    { include = "plate_simulation" },
+    { include = "plate_simulation-assets" },
+]
+
+include = [
+    "COPYING",
+    "COPYING.LESSER",
+    "LICENSE",
+    "README.rst",
+    "THIRD_PARTY_SOFTWARE.rst",
+]
 
 [tool.poetry.dependencies]
 python = "^3.10, <3.11"

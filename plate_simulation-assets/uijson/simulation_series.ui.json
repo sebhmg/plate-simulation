@@ -1,0 +1,47 @@
+{
+  "title": "Plate Simulation from Points",
+  "monitoring_directory": "",
+  "workspace_geoh5": "",
+  "geoh5": "",
+  "run_command": "plate_simulation.point_simulations.driver",
+  "conda_environment": "plate_simulation",
+  "plate_simulation": {
+    "fileDescription": [
+        "Plate Simulation UI.Json"
+    ],
+    "fileType": [
+        "ui.json"
+    ],
+    "main": true,
+    "value": "",
+    "label": "Plate Simulation JSON",
+    "tooltip": "Select a template Plate Simulation ui.json."
+  },
+  "point_parameters": {
+    "label": "Inference Points",
+    "main": true,
+    "value": "",
+    "meshType": [
+      "{202c5db1-a56d-4004-9cad-baafd8899406}"
+    ],
+    "tooltip": "Select Points containing simulation parameters.",
+    "enabled": true
+  },
+  "output_curve": {
+    "label": "Append data to",
+    "main": true,
+    "optional": true,
+    "enabled": false,
+    "meshType": [
+      "{19730589-fd28-4649-9de0-ad47249d9aba}"
+    ],
+    "value": "",
+    "tooltip": "Collect all forward data this curve object."
+  },
+  "save_all": {
+    "label": "Save all",
+    "main": true,
+    "value": false,
+    "tooltip": "Keep all simulation objects (Warnings - large file size!)"
+  }
+}

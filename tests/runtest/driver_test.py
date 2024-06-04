@@ -110,8 +110,10 @@ def test_plate_simulation(tmp_path):
     result = PlateSimulationDriver.start(
         Path(tmp_path / "test_plate_simulation.ui.json")
     )
-    with Workspace(result.options["geoh5"]) as ws:
-        out_group = ws.get_entity(UUID(result.options["out_group"]["value"]))[0]
+    with Workspace(result.out_group.options["geoh5"]) as ws:
+        out_group = ws.get_entity(UUID(result.out_group.options["out_group"]["value"]))[
+            0
+        ]
         data = next(
             obj for obj in out_group.children if isinstance(obj, AirborneTEMReceivers)
         )
@@ -186,7 +188,7 @@ def test_plate_simulation_params_from_input_file(tmp_path):
         params = PlateSimulationParams.build(ifile)
         assert isinstance(params.simulation, SimPEGGroup)
 
-        simulation_parameters = params.inversion_parameters()
+        simulation_parameters = params.simulation_parameters()
 
         assert simulation_parameters.inversion_type == "gravity"
         assert simulation_parameters.forward_only

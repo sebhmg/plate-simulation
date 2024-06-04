@@ -11,7 +11,7 @@ from typing import ClassVar
 
 from geoapps_utils.driver.data import BaseData
 from geoh5py.groups import SimPEGGroup, UIJsonGroup
-from geoh5py.shared.utils import fetch_active_workspace
+
 from geoh5py.ui_json import InputFile
 from simpeg_drivers.electromagnetics.time_domain.params import (
     TimeDomainElectromagneticsParams,
@@ -46,33 +46,31 @@ class PlateSimulationParams(BaseData):
     model: ModelParams
     simulation: SimPEGGroup
 
-    def inversion_parameters(self) -> InversionBaseParams:
+    def simulation_parameters(self) -> InversionBaseParams:
         """
-        Create inversion parameters from the simulation options.
+        Create SimPEG parameters from the simulation options.
 
         A new SimPEGGroup is created inside the out_group to store the
         result of the forward simulation.
         """
-        with fetch_active_workspace(self.geoh5, mode="r+"):
-            group = self.simulation.copy(parent=self.out_group, copy_children=False)
+        simulation_options = deepcopy(self.simulation.options)
+        simulation_options["out_group"] = None
+        simulation_options["geoh5"] = self.geoh5
 
-        input_file = InputFile(
-            ui_json=deepcopy(self.simulation.options), validate=False
-        )
+        input_file = InputFile(ui_json=simulation_options, validate=False)
         if input_file.ui_json is None:
             raise ValueError("Input file must have ui_json set.")
 
         input_file.ui_json["mesh"]["value"] = None
-        input_file.ui_json["geoh5"] = self.geoh5
 
         if input_file.data is None:
             raise ValueError("Input file data must be set.")
 
         if input_file.data["inversion_type"] == "gravity":
-            return GravityParams(input_file=input_file, out_group=group, validate=False)
+            return GravityParams(input_file=input_file, validate=False)
         if input_file.data["inversion_type"] == "tdem":
             return TimeDomainElectromagneticsParams(
-                input_file=input_file, out_group=group, validate=False
+                input_file=input_file, validate=False
             )
         raise NotImplementedError(
             f"Unknown inversion type: {input_file.data['inversion_type']}"

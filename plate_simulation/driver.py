@@ -5,9 +5,10 @@
 #  All rights reserved.
 #
 
+# pylint: disable=duplicate-code
+
 from __future__ import annotations
 
-import sys
 from pathlib import Path
 
 from geoh5py.data import FloatData
@@ -33,7 +34,7 @@ class PlateSimulationDriver:
     Driver for simulating background + plate + overburden model.
 
     :param params: Parameters for plate simulation (mesh, model and
-        point_simulations).
+        series).
     :param plate: Plate object used to add anomaly to the model.
     :param mesh: Octree mesh in which model is built for the simulation.
     :param model: Model to simulate.
@@ -48,28 +49,16 @@ class PlateSimulationDriver:
         self._mesh: Octree | None = None
         self._model: FloatData | None = None
         self._simulation_parameters: InversionBaseParams | None = None
+        self._simulation_driver: InversionDriver | None = None
         self._out_group = self.validate_out_group(self.params.out_group)
 
         self._logger = get_logger("Plate Simulation")
 
-    def run(self) -> UIJsonGroup:
+    def run(self) -> InversionDriver:
         """Create octree mesh, fill model, and simulate."""
 
-        with fetch_active_workspace(self.params.geoh5, mode="r+"):
-            self.simulation_parameters.mesh = self.mesh
-            self.simulation_parameters.starting_model = self.model
-
-            if not isinstance(self.simulation_parameters.topography_object, Surface):
-                raise ValueError(
-                    "The topography object of the forward simulation must be a 'Surface'."
-                )
-
-            self.simulation_parameters.update_group_options()
-
-        driver = InversionDriver(self.simulation_parameters)
-
         self._logger.info("running the simulation...")
-        driver.run()
+        self.simulation_driver.run()
 
         with fetch_active_workspace(self.params.geoh5, mode="r+"):
             self.out_group.add_ui_json()
@@ -85,7 +74,7 @@ class PlateSimulationDriver:
         self._logger.info("done.")
         self._logger.handlers.clear()
 
-        return driver.out_group
+        return self.simulation_driver
 
     @property
     def out_group(self) -> UIJsonGroup:
@@ -118,9 +107,29 @@ class PlateSimulationDriver:
         return out_group
 
     @property
+    def simulation_driver(self) -> InversionDriver:
+        if self._simulation_driver is None:
+            with fetch_active_workspace(self.params.geoh5, mode="r+"):
+                self.simulation_parameters.mesh = self.mesh
+                self.simulation_parameters.starting_model = self.model
+
+                if not isinstance(
+                    self.simulation_parameters.topography_object, Surface
+                ):
+                    raise ValueError(
+                        "The topography object of the forward simulation must be a 'Surface'."
+                    )
+
+                self.simulation_parameters.update_group_options()
+                self._simulation_driver = InversionDriver(self.simulation_parameters)
+                self._simulation_driver.out_group.parent = self.out_group
+
+        return self._simulation_driver
+
+    @property
     def simulation_parameters(self) -> InversionBaseParams:
         if self._simulation_parameters is None:
-            self._simulation_parameters = self.params.inversion_parameters()
+            self._simulation_parameters = self.params.simulation_parameters()
 
         return self._simulation_parameters
 
@@ -197,6 +206,7 @@ class PlateSimulationDriver:
         )
         octree_driver = OctreeDriver(octree_params)
         mesh = octree_driver.run()
+        mesh.parent = self.out_group
 
         return mesh
 
@@ -261,5 +271,6 @@ class PlateSimulationDriver:
 
 
 if __name__ == "__main__":
-    file = Path(sys.argv[1])
+    # file = Path(sys.argv[1])
+    file = r"C:\Users\dominiquef\Desktop\plate_simulation_standalone.ui.json"
     PlateSimulationDriver.start(file)

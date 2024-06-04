@@ -63,7 +63,7 @@ class SimulationSeriesDriver:
                     for child in self.params.point_parameters.children
                     if child.name in input_file.data
                 }
-                input_data = input_plate_parameters.flatten()
+                input_data = input_file.data
                 input_data["simulation"] = out_group
                 input_data["geoh5"] = workspace
 

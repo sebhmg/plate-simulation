@@ -7,6 +7,7 @@
 
 from pathlib import Path
 
+import numpy as np
 from geoapps_utils.driver.data import BaseData
 from geoh5py.objects import Curve, Points
 from geoh5py.ui_json import InputFile
@@ -23,6 +24,8 @@ class SimulationSeriesParams(BaseData):
     :param topography: Points-like object to use as topography.
     :param save_all: Keep all simulation objects to the workspace.
     """
+
+    _output_distances: np.ndarray | None = None
 
     plate_simulation: Path
     point_parameters: Points
@@ -46,3 +49,33 @@ class SimulationSeriesParams(BaseData):
             )
 
         return Path(v)
+
+    @property
+    def output_distances(self) -> np.ndarray:
+        """
+        Store the distance along each parts.
+        """
+        if self._output_distances is None and self.output_curve is not None:
+            distances = np.zeros(self.output_curve.n_vertices)
+            for part in np.unique(self.output_curve.parts):
+                vert_in_part = self.output_curve.parts == part
+                active_cells = np.all(vert_in_part[self.output_curve.cells], axis=1)
+
+                distances[self.output_curve.parts == part] = np.r_[
+                    0,
+                    np.cumsum(
+                        np.linalg.norm(
+                            self.output_curve.vertices[
+                                self.output_curve.cells[active_cells, 1], :
+                            ]
+                            - self.output_curve.vertices[
+                                self.output_curve.cells[active_cells, 0], :
+                            ],
+                            axis=1,
+                        )
+                    ),
+                ]
+
+            self._output_distances = distances
+
+        return self._output_distances

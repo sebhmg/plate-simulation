@@ -41,9 +41,9 @@ compatibly licensed.  We list these here.
    * - `simpeg-drivers <https://github.com/MiraGeoscience/simpeg-drivers>`_
      - MIT
      - Application to run SimPEG inversions with geoh5 files from Geoscience Analyst
-   * `threadpoolctl <https://github.com/joblib/threadpoolctl>`_
+   * - `threadpoolctl <https://github.com/joblib/threadpoolctl>`_
      - BSD-3-Clause
      - helpers to limit the number of threads used in the threadpool-backed of common native libraries used for scientific computing and data science
-   * `trimesh <https://trimesh.org/>`_
+   * - `trimesh <https://trimesh.org/>`_
      - MIT
      - Python library for loading and using triangular meshes

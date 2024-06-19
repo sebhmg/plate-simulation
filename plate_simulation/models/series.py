@@ -128,8 +128,9 @@ class Scenario(Series):
         with fetch_active_workspace(self.workspace, mode="r+"):
             if self.mesh.n_cells is None:
                 raise ValueError("Mesh must have n_cells.")
-            geology = super().realize(
-                self.mesh, np.ones(self.mesh.n_cells) * self.background
+            geology = (
+                super().realize(self.mesh, np.ones(self.mesh.n_cells) * self.background)
+                ** -1.0
             )
             model: FloatData = self.mesh.add_data(  # type: ignore
                 {self.name: {"values": geology}}

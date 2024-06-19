@@ -67,11 +67,6 @@ class PlateParams(BaseModel):
     reference_surface: str = "topography"
     reference_type: str = "mean"
 
-    @field_validator("plate", mode="before")
-    @classmethod
-    def reciprocal(cls, value: float) -> float:
-        return 1.0 / value
-
     @field_validator("reference_surface", "reference_type", mode="before")
     @classmethod
     def none_to_default(cls, value: T | None, info: ValidationInfo) -> T:
@@ -145,11 +140,6 @@ class OverburdenParams(BaseModel):
     thickness: float
     overburden: float
 
-    @field_validator("overburden", mode="before")
-    @classmethod
-    def reciprocal(cls, value: float) -> float:
-        return 1.0 / value
-
 
 class ModelParams(BaseModel):
     """
@@ -167,8 +157,3 @@ class ModelParams(BaseModel):
     background: float
     overburden: OverburdenParams
     plate: PlateParams
-
-    @field_validator("background", mode="before")
-    @classmethod
-    def reciprocal(cls, value: float) -> float:
-        return 1.0 / value

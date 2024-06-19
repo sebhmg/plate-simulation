@@ -10,9 +10,8 @@
 import numpy as np
 from geoh5py.objects import Surface
 from geoh5py.ui_json import InputFile
-from octree_creation_app.constants import default_ui_json
 from octree_creation_app.driver import OctreeDriver
-from octree_creation_app.params import OctreeParams
+from octree_creation_app.params import OctreeParams, default_ui_json
 
 
 def get_topo_mesh(workspace):
@@ -40,15 +39,11 @@ def get_topo_mesh(workspace):
         "minimum_level": 4,
         "diagonal_balance": False,
         "Refinement A object": topography.uid,
-        "Refinement A levels": [4, 2, 1],
+        "Refinement A levels": "4, 2, 1",
         "Refinement A horizon": True,
     }
-
-    # TODO - remove this when we fix octree-creation-app/driver.run method.
-    #   Prefer to just dump kwargs into params class
-    ifile = InputFile(ui_json=dict(default_ui_json, **kwargs), validate=False)
-    ifile.write_ui_json(name="octree.ui.json", path=workspace.h5file.parent)
-
-    driver = OctreeDriver(OctreeParams(ifile))
+    params = OctreeParams(**kwargs)
+    params.write_input_file(name="octree.ui.json", path=workspace.h5file.parent)
+    driver = OctreeDriver(params)
     octree = driver.run()
     return topography, octree

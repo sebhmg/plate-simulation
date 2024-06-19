@@ -9,7 +9,7 @@
 
 import numpy as np
 from geoh5py.objects import Points, Surface
-from SimPEG import utils
+from simpeg import utils
 
 
 def get_survey(workspace, n_receivers, n_lines):

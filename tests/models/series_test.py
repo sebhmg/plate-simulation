@@ -111,7 +111,7 @@ def test_scenario(tmp_path):
         scenario = Scenario(
             workspace=ws,
             mesh=octree,
-            background=0.0,
+            background=100.0,
             history=[lithology, overburden, erosion],
             name="model",
         )
@@ -121,12 +121,12 @@ def test_scenario(tmp_path):
         ind = octree.centroids[:, 2] > 0.0
         assert all(np.isnan(model.values[ind]))
         ind = (octree.centroids[:, 2] < 0.0) & (octree.centroids[:, 2] > -1.0)
-        assert all(model.values[ind] == 10.0)
+        assert all(model.values[ind] == 0.1)
         ind = (octree.centroids[:, 2] < -1.0) & (octree.centroids[:, 2] > -2.0)
-        assert all(model.values[ind] == 0.0)
+        assert all(model.values[ind] == 0.01)
         ind = (octree.centroids[:, 2] < -2.0) & (octree.centroids[:, 2] > -5.0)
         assert all(model.values[ind] == 1.0)
         ind = (octree.centroids[:, 2] < -5.0) & (octree.centroids[:, 2] > -10.0)
-        assert all(model.values[ind] == 2.0)
+        assert all(model.values[ind] == 0.5)
         ind = octree.centroids[:, 2] < -10.0
-        assert all(model.values[ind] == 3.0)
+        np.testing.assert_allclose(model.values[ind], 1 / 3.0)

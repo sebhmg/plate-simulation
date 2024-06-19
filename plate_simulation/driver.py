@@ -9,6 +9,7 @@
 
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
 from geoh5py.data import FloatData
@@ -271,6 +272,5 @@ class PlateSimulationDriver:
 
 
 if __name__ == "__main__":
-    # file = Path(sys.argv[1])
-    file = r"C:\Users\dominiquef\Desktop\plate_simulation_standalone.ui.json"
+    file = Path(sys.argv[1])
     PlateSimulationDriver.start(file)

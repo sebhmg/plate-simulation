@@ -11,7 +11,6 @@ from typing import ClassVar
 
 from geoapps_utils.driver.data import BaseData
 from geoh5py.groups import SimPEGGroup, UIJsonGroup
-
 from geoh5py.ui_json import InputFile
 from simpeg_drivers.electromagnetics.time_domain.params import (
     TimeDomainElectromagneticsParams,
